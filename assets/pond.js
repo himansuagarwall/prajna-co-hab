@@ -98,7 +98,184 @@
     setTimeout(kill, 2600);
   }
 
-  /* ── 3. ASSEMBLAGE — torn paper pieces floating in the water ─────────
+  /* ── 5. FOLK ART CANVAS ── Warli figures, diya lamps, lotus blooms, click ripples */
+  function folkArt() {
+    if (reduce) return;
+    var canvas = document.getElementById("pond-canvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var w = 0, h = 0, dpr = 1;
+    var warli = [], diyas = [], lotuses = [], ripples = [];
+    var lotusTimer = 0, lotusNext = 150;
+
+    function resize() {
+      var rect = canvas.parentElement.getBoundingClientRect();
+      w = rect.width; h = rect.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var hero = canvas.parentElement;
+    hero.addEventListener("click", function(e) {
+      var r = canvas.getBoundingClientRect();
+      ripples.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 0, a: 0.55 });
+    });
+
+    // Init warli figures
+    for (var i = 0; i < 3; i++) {
+      warli.push({
+        x: Math.random() * (w || 800),
+        y: (h || 600) * 0.55 + Math.random() * (h || 600) * 0.35,
+        vx: 0.12 + Math.random() * 0.22,
+        s: 14 + Math.random() * 10,
+        ph: Math.random() * 6.28
+      });
+    }
+    // Init diya lamps
+    for (var i = 0; i < 4; i++) {
+      diyas.push({
+        x: Math.random() * (w || 800),
+        y: (h || 600) * 0.58 + Math.random() * (h || 600) * 0.32,
+        vx: 0.06 + Math.random() * 0.1,
+        bob: Math.random() * 6.28,
+        s: 9 + Math.random() * 7
+      });
+    }
+
+    function drawWarli(fig, t) {
+      var s = fig.s;
+      var walk = Math.sin(t * 0.0018 + fig.ph) * 5;
+      ctx.save();
+      ctx.translate(fig.x, fig.y + walk);
+      ctx.strokeStyle = "#C75B3A";
+      ctx.lineWidth = 1.6;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.arc(0, -s * 0.75, s * 0.2, 0, 6.28);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, -s * 0.52);
+      ctx.lineTo(-s * 0.28, s * 0.12);
+      ctx.lineTo(s * 0.28, s * 0.12);
+      ctx.closePath();
+      ctx.stroke();
+      var arm = Math.sin(t * 0.0025 + fig.ph) * 0.35;
+      ctx.beginPath();
+      ctx.moveTo(0, s * 0.12);
+      ctx.lineTo(-s * 0.22, s * 0.72);
+      ctx.moveTo(0, s * 0.12);
+      ctx.lineTo(s * 0.22, s * 0.72);
+      ctx.moveTo(0, -s * 0.32);
+      ctx.lineTo(-s * 0.38 + Math.sin(arm) * s * 0.12, s * 0.04);
+      ctx.moveTo(0, -s * 0.32);
+      ctx.lineTo(s * 0.38 - Math.sin(arm) * s * 0.12, s * 0.04);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDiya(d, t) {
+      var s = d.s;
+      var bob = Math.sin(t * 0.0035 + d.bob) * 3;
+      ctx.save();
+      ctx.translate(d.x, d.y + bob);
+      var flicker = 0.28 + Math.sin(t * 0.012 + d.bob) * 0.12 + Math.sin(t * 0.027 + d.bob) * 0.08;
+      var g = ctx.createRadialGradient(0, -s * 0.25, s * 0.08, 0, 0, s * 0.7);
+      g.addColorStop(0, "rgba(255,200,100," + flicker + ")");
+      g.addColorStop(1, "rgba(199,91,58,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(0, 0, s * 0.7, 0, 6.28);
+      ctx.fill();
+      ctx.strokeStyle = "#D4A94C";
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(0, 0, s * 0.32, Math.PI, 0);
+      ctx.stroke();
+      ctx.strokeStyle = "#C75B3A";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.07, -s * 0.02);
+      ctx.quadraticCurveTo(0, -s * 0.42, s * 0.07, -s * 0.02);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawLotus(l, t) {
+      var s = l.size * l.scale;
+      if (s < 0.4) return;
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.strokeStyle = "#2D5F3F";
+      ctx.lineWidth = 1.1;
+      ctx.lineCap = "round";
+      for (var i = 0; i < 8; i++) {
+        var a = (i / 8) * 6.28;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, s * 0.45, s * 0.14, a, 0, 6.28);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "#D4A94C";
+      ctx.beginPath();
+      ctx.arc(0, 0, s * 0.07, 0, 6.28);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function frame(t) {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = ripples.length - 1; i >= 0; i--) {
+        var rp = ripples[i];
+        rp.r += 1.1;
+        rp.a -= 0.01;
+        if (rp.a <= 0) { ripples.splice(i, 1); continue; }
+        ctx.strokeStyle = "rgba(192,86,33," + rp.a.toFixed(2) + ")";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(rp.x, rp.y, rp.r, 0, 6.28);
+        ctx.stroke();
+      }
+      for (var i = 0; i < warli.length; i++) {
+        var f = warli[i];
+        f.x += f.vx;
+        if (f.x > w + 30) f.x = -30;
+        drawWarli(f, t);
+      }
+      for (var i = 0; i < diyas.length; i++) {
+        var d = diyas[i];
+        d.x += d.vx;
+        if (d.x > w + 20) d.x = -20;
+        drawDiya(d, t);
+      }
+      lotusTimer++;
+      if (lotusTimer >= lotusNext) {
+        lotusTimer = 0;
+        lotusNext = 140 + Math.random() * 200;
+        lotuses.push({
+          x: 50 + Math.random() * (w - 100),
+          y: (h || 600) * 0.5 + Math.random() * (h || 600) * 0.35,
+          size: 10 + Math.random() * 10,
+          scale: 0,
+          life: 0
+        });
+      }
+      for (var i = lotuses.length - 1; i >= 0; i--) {
+        var l = lotuses[i];
+        l.life++;
+        if (l.life < 50) l.scale = Math.min(1, l.scale + 0.025);
+        else if (l.life > 220) { lotuses.splice(i, 1); continue; }
+        drawLotus(l, t);
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ── 6. ASSEMBLAGE ─────────────────────────────────────────────────────
      The collage look is overlapping pieces of hand-torn paper: irregular
      clip-path outlines, a wash of colour, and a soft shadow so one sits
      above the next. Geometry is derived from the scene so the arrangement is
@@ -170,6 +347,7 @@
     collage(sc);
     transitions();
     reveal();
+    folkArt();
   }
 
   if (document.readyState === "loading") {
