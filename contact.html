@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://localhost:*;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Contact Us — Prajna Co-hab, Moshi, Pune</title>
 <meta name="description" content="Email Prajna Co-hab in Moshi, Pimpri-Chinchwad for room availability, visit times and rent details. We don't publish a phone number — write instead. No broker.">
@@ -25,8 +25,8 @@
 <link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/contact.html">
 <link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/contact.html">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/contact.html">
-<link rel="stylesheet" href="assets/style.css?v=69">
-  <link rel="stylesheet" href="assets/pond.css?v=69">
+<link rel="stylesheet" href="assets/style.css?v=70">
+  <link rel="stylesheet" href="assets/pond.css?v=70">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c05a2e'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia' fill='%23faf6f0' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 <noscript><style>.flow,.reveal{opacity:1!important;transform:none!important}</style></noscript>
 
@@ -99,12 +99,12 @@
       <div class="card tilt reveal">
         <h2>Email</h2>
         <p>Write to us for availability, photos, or to fix a visit time.</p>
-        <a class="btn sm mail-link" class="mt-2" href="#" data-mailsubject="Hi Prajna Co-hab, I have a question about rooms.">Email Us</a>
+        <a class="btn sm mail-link mt-2" href="#" data-mailsubject="Hi Prajna Co-hab, I have a question about rooms.">Email Us</a>
       </div>
       <div class="card tilt reveal">
         <h2>Visit</h2>
         <p>Anandrao Lande Road, Balaji Nagar, Moshi &mdash; off Bhosari Industrial Estate, Pimpri-Chinchwad.</p>
-        <a class="btn sm ghost" class="mt-2" href="https://www.google.com/maps/search/?api=1&amp;query=Anandrao+Lande+Road,+Balaji+Nagar,+Moshi,+Pimpri-Chinchwad,+Maharashtra" target="_blank" rel="noopener">Open in Maps</a>
+        <a class="btn sm ghost mt-2" href="https://www.google.com/maps/search/?api=1&amp;query=Anandrao+Lande+Road,+Balaji+Nagar,+Moshi,+Pimpri-Chinchwad,+Maharashtra" target="_blank" rel="noopener">Open in Maps</a>
       </div>
       <div class="card tilt reveal">
         <h2>Why there's no number here</h2>
@@ -114,17 +114,23 @@
 <form class="pform reveal" data-formtype="inquiry">
       <h2>Or leave your details</h2>
       <div class="row">
-        <div><label for="iname">Your name</label><input id="iname" name="name" required maxlength="60" placeholder="Full name"></div>
-        <div><label for="iphone">Your phone number (optional)</label><input id="iphone" name="phone" inputmode="tel" autocomplete="tel" placeholder="So we can call or reply"></div>
+        <div><label for="iname">Your name <span class="req">*</span></label><input id="iname" name="name" required maxlength="60" autocomplete="name" placeholder="Full name"></div>
+        <div><label for="iemail">Email <span class="req">*</span></label><input id="iemail" name="email" type="email" required maxlength="120" autocomplete="email" placeholder="you@example.com"></div>
       </div>
       <div class="row">
+        <div><label for="iphone">Phone number (optional)</label><input id="iphone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="15" placeholder="Only if you'd rather we call"></div>
         <div><label for="iinterest">Interested in</label><select id="iinterest" name="interest"><option>Twin-sharing bed</option><option>Single room</option><option>Just a visit first</option></select></div>
-        <div><label for="imovein">Move-in month</label><input id="imovein" name="movein" placeholder="e.g. November 2026"></div>
+      </div>
+      <div class="row">
+        <div><label for="imovein">Move-in month</label><input id="imovein" name="movein" maxlength="40" placeholder="e.g. November 2026"></div>
+        <div><label for="ibudget">Budget per month (optional)</label><input id="ibudget" name="budget" inputmode="numeric" maxlength="12" placeholder="e.g. 8000"></div>
       </div>
       <label for="imsg">Anything specific?</label>
       <textarea id="imsg" name="message" rows="3" maxlength="400" placeholder="Shift timing, food questions, visit preference..."></textarea>
-      <div class="mt-3"><button class="btn" type="submit" aria-label="Submit form">Send</button></div>
+      <div class="hp" aria-hidden="true"><label for="icompany">Company</label><input id="icompany" name="company" tabindex="-1" autocomplete="off"></div>
+      <div class="mt-3"><button class="btn" type="submit">Send</button></div>
       <div class="fresult"></div>
+      <p class="note">We reply by email, usually the same day. Your address is never published or shared.</p>
     </form>
   </section>
 
@@ -205,11 +211,10 @@
 </div>
 
   <div class="mobilebar">
-    <span class="miniopen" id="vacancy-mini" hidden></span><a href="#" data-mailsubject="Prajna Co-hab enquiry" class="wa mail-link">Email</a>
+    <span class="miniopen" id="vacancy-mini" hidden></span><a href="#" data-mailsubject="Prajna Co-hab enquiry" class="mail-link">Email</a>
   </div>
-<script src="config.js?v=69"></script><script src="assets/site.js?v=69"></script>
-<script src="assets/fluid.js?v=69" defer></script>
-<script src="assets/pond.js?v=68" defer></script><script src="assets/vendor/gsap-3.15.0.min.js?v=68"></script><script src="assets/vendor/ScrollTrigger-3.15.0.min.js?v=68"></script><script src="assets/vendor/SplitText-3.15.0.min.js?v=68"></script><script src="assets/vendor/Flip-3.15.0.min.js?v=68"></script><script src="assets/vendor/MotionPathPlugin-3.15.0.min.js?v=68"></script><script src="assets/vendor/CustomEase-3.15.0.min.js?v=68"></script><script src="assets/vendor/Observer-3.15.0.min.js?v=68"></script><script src="assets/motion.js?v=68" defer></script>
-  <a href="https://wa.me/919876543210?text=Hi%20Prajna%20Co-hab,%20I%20want%20to%20book%20a%20visit." class="btn btn-primary wa" target="_blank" rel="noopener">WhatsApp Us</a>
+<script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script>
+<script src="assets/fluid.js?v=70" defer></script>
+<script src="assets/pond.js?v=70" defer></script><script src="assets/vendor/gsap-3.15.0.min.js?v=70"></script><script src="assets/vendor/ScrollTrigger-3.15.0.min.js?v=70"></script><script src="assets/vendor/SplitText-3.15.0.min.js?v=70"></script><script src="assets/vendor/Flip-3.15.0.min.js?v=70"></script><script src="assets/vendor/MotionPathPlugin-3.15.0.min.js?v=70"></script><script src="assets/vendor/CustomEase-3.15.0.min.js?v=70"></script><script src="assets/vendor/Observer-3.15.0.min.js?v=70"></script><script src="assets/motion.js?v=70" defer></script>
 </body>
 </html>

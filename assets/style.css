@@ -154,7 +154,7 @@ form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-ra
 .pform label{display:block;font-family:var(--font-ui);font-size:.75rem;font-weight:700;margin:1rem 0 .3rem;color:var(--ink)}
 .pform label:first-of-type{margin-top:0}
 .pform input,.pform select,.pform textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:.85rem;background:var(--paper);color:var(--ink);transition:border-color .2s ease,box-shadow .2s ease}
-.pform input:focus,.pform select:focus,.pform textarea:focus{outline:none;border-color:var(--ochre);box-shadow:0 0 0 3px rgba(217,164,65,.22)}
+.pform input:focus,.pform select:focus,.pform textarea:focus{outline:2px solid var(--terra);outline-offset:2px;border-color:var(--terra)}
 .pform .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .stars{display:flex;gap:.3rem;flex-direction:row-reverse;justify-content:flex-end}
 .stars label{font-size:1.55rem;color:var(--line);cursor:pointer;margin:0;transition:color .15s ease,transform .15s ease}
@@ -194,7 +194,7 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 /* mobile bar + lightbox */
 .mobilebar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;z-index:50;box-shadow:0 -8px 24px rgba(43,38,32,.08)}
 .mobilebar a{flex:1;text-align:center;padding:.85rem 0;font-family:var(--font-ui);font-size:.85rem;font-weight:700;text-decoration:none}
-.mobilebar .wa{color:#fff;background:var(--terra);background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px}
+.mobilebar .mail-link{color:#fff;background:var(--terra);background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px}
 .lb{display:none;position:fixed;inset:0;background:rgba(30,25,18,.92);z-index:100;align-items:center;justify-content:center;cursor:zoom-out}
 .lb.show{display:flex}
 .lb img{max-width:92vw;max-height:88vh;border-radius:8px;animation:fadeUp .3s ease both}
@@ -483,7 +483,7 @@ footer{border-top:1px solid rgba(232,224,212,.8);background-image:linear-gradien
 footer{margin-top:2.4rem}
 .fbottom{border-top:1px solid rgba(232,224,212,.7);background:transparent}
 .mobilebar{border-top:1px solid rgba(232,224,212,.9)}
-.mobilebar .wa{background:var(--terra)}
+.mobilebar .mail-link{background:var(--terra)}
 /* no band may ever paint a flat rectangle over the ground again */
 .feature,.cta-strip,.tourbox,.plaque,.familyband,.mobilebar,footer,.statrow>div,.voice,.post,.card,
 .promises div,.amen div,.menucard .day,.faq details,.mapbox,form.pform,.costrows>div{
@@ -560,7 +560,7 @@ footer { background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(244
    ============================================================ */
 
 /* TERRACOTTA = action and money only. Never ornament, never headings. */
-.btn, .btn.primary, .mail-float, .mobilebar .wa,
+.btn, .btn.primary, .mail-float, .mobilebar .mail-link,
 .board .ask, .card .btn, a.cta {
   background-color: var(--terra) !important;
 }
@@ -662,8 +662,8 @@ footer,.fbottom,.mobilebar,.familyband{border:none!important}
 .card.tilt:hover,.card.tilt:hover{border:none!important;box-shadow:var(--sh)}
 .btn.ghost{border:none!important;background-color:var(--ochre-soft)!important;color:var(--ochre-ink)!important}
 .btn.ghost:hover{box-shadow:0 8px 18px rgba(217,164,65,.22)!important}
-.pform input,.pform select,.pform textarea{border:none!important}
-.pform input:focus,.pform select:focus,.pform textarea:focus{border:none!important;box-shadow:0 0 0 2.5px rgba(217,164,65,.35)!important}
+.pform input,.pform select,.pform textarea{border:1px solid rgba(58,50,42,.28)!important}
+.pform input:focus,.pform select:focus,.pform textarea:focus{border:1px solid var(--terra)!important;box-shadow:0 0 0 3px rgba(192,86,33,.18)!important;outline:2px solid var(--terra);outline-offset:1px}
 /* one side-padding rhythm for every page */
 .wrap{padding-left:var(--pad-x)!important;padding-right:var(--pad-x)!important}
 
@@ -894,7 +894,7 @@ body::before{transition:opacity .22s linear}
 /* --- 8. Seams: the two-tone call/WhatsApp bar was flattened to one colour by
    an !important override; restore the call button to paper so the bar reads
    as two decisions, not one slab. --- */
-.mobilebar .wa{
+.mobilebar .mail-link{
   background:var(--panel)!important;
   color:var(--ochre-ink)!important;
   border-right:1px solid var(--line);
@@ -1413,7 +1413,7 @@ header{
 #termsline{display:block;font-family:var(--font-ui);font-size:.8rem;color:var(--muted);margin-top:.7rem}
 
 /* the mobile bar is now a single email action - give it the full width */
-@media(max-width:860px){.mobilebar .wa{flex:1}}
+@media(max-width:860px){.mobilebar .mail-link{flex:1}}
 
 /* clipboard confirmation under the share button */
 #share-note{display:none;font-family:var(--font-ui);font-size:.78rem;color:var(--terra-dark);margin-top:.6rem}
@@ -1661,3 +1661,14 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .delay-3{animation-delay:.23s}
 .delay-2{animation-delay:.14s}
 .delay-1{animation-delay:.05s}
+
+/* ---- lead capture: honeypot + result states (2026-11-05) ----
+   The honeypot is off-screen for humans and still tabbable-skipped for
+   keyboards, so only a script fills it. Result states are colour-coded so
+   a failed send never looks like a successful one. */
+.hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fresult.fresult-ok{border-color:#2f6b46;background:rgba(47,107,70,.10);color:#1f4a30}
+.fresult.fresult-err{border-color:#9a4522;background:rgba(154,69,34,.10);color:#6f2f14}
+.fresult.fresult-info{border-color:var(--ochre);background:var(--ochre-soft);color:#5a4320}
+.fresult a{color:inherit;text-decoration:underline;font-weight:700}
+.pform .req{color:#9a4522;font-weight:700}

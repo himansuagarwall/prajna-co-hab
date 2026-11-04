@@ -4,7 +4,11 @@
   "description": "",
   "main": "config.js",
   "scripts": {
-    "test": "npx playwright test --reporter=json,html"
+    "serve": "python3 -m http.server 8888",
+    "test": "playwright test",
+    "test:prices": "playwright test prices",
+    "test:leads": "playwright test leads",
+    "test:ui": "playwright test --ui"
   },
   "repository": {
     "type": "git",

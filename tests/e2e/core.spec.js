@@ -33,12 +33,32 @@ test.describe('Prajna Co-hab E2E', () => {
     }
   });
 
-  test('WhatsApp CTA exists on every content page', async ({ page }) => {
+  test('the only published contact channel is email', async ({ page }) => {
     for (const { path, name } of CONTENT_PAGES) {
       await page.goto(path, { waitUntil: 'networkidle' });
-      const cta = page.locator('a[href*="wa.me/"]');
-      await expect(cta).toHaveCount(1, `${name} should have one WhatsApp CTA`);
+      // The site closes WhatsApp on purpose: config.js says the number is
+      // never published. This assertion used to require the opposite.
+      await expect(page.locator('a[href*="wa.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
+      await expect(page.locator('a[href*="api.whatsapp.com"]'), `${name} must not link WhatsApp`).toHaveCount(0);
+      // site.js rewrites .mail-link hrefs on load; wait for that to land
+      await page.waitForFunction(() => {
+        const links = Array.from(document.querySelectorAll('a.mail-link'));
+        return links.length === 0 || links.some((a) => (a.getAttribute('href') || '').startsWith('mailto:'));
+      }, null, { timeout: 5000 });
+      const emailCtas = await page.locator('a.mail-link[href^="mailto:"]').count();
+      expect(emailCtas, `${name} should expose at least one working mailto CTA`).toBeGreaterThan(0);
+      const telLinks = await page.locator('a[href^="tel:"]').count();
+      expect(telLinks, `${name} must not publish a phone number`).toBe(0);
     }
+  });
+
+  test('no page throws while loading', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(String(e)));
+    for (const { path } of CONTENT_PAGES) {
+      await page.goto(path, { waitUntil: 'networkidle' });
+    }
+    expect(errors, `page errors: ${errors.join(' | ')}`).toEqual([]);
   });
 
   test('JSON-LD schema is valid JSON on every page', async ({ page }) => {
