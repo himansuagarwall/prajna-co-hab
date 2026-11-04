@@ -1,0 +1,22 @@
+{
+  "name": "prajna-co-hab-github",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "test": "npx playwright test --reporter=json,html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himansuagarwall/prajna-co-hab.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/himansuagarwall/prajna-co-hab/issues"
+  },
+  "homepage": "https://github.com/himansuagarwall/prajna-co-hab#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
+}
