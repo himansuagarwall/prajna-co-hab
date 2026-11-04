@@ -388,24 +388,3 @@ window.PRAJNA = window.PRAJNA || {
     function qs(k){ var m=location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
   }
 })();
-
-/* v60: mobile nav drawer toggle */
-(function(){
-  var toggle = document.querySelector('.nav-toggle');
-  var navlinks = document.querySelector('.navlinks');
-  if(!toggle || !navlinks) return;
-  toggle.addEventListener('click', function(){
-    var open = navlinks.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  /* close on link click */
-  navlinks.addEventListener('click', function(e){
-    if(e.target.tagName === 'A'){ navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
-  });
-  /* close on Escape */
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && navlinks.classList.contains('open')){
-      navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.focus();
-    }
-  });
-})();
