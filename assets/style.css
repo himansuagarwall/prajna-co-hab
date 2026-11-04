@@ -1281,6 +1281,30 @@ html.reduce .lotusmark{transform:none}
   .gallery-motion-ready .gallery-item:not(.gallery-visible){opacity:1;transform:none}
 }
 
+/* immersive fullscreen lightbox with 3D parallax */
+.lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+.lightbox-backdrop.is-open{opacity:1;visibility:visible}
+.lightbox-container{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:clamp(1rem,3vw,3rem)}
+.lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center}
+.lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;transform:scale(.92) translateZ(0);transition:transform .55s cubic-bezier(.34,1.56,.64,1);will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
+.lightbox-backdrop.is-open .lightbox-image{transform:scale(1) translateZ(0)}
+.lightbox-image-wrapper.is-tilting .lightbox-image{transition:none}
+.lightbox-close{position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);z-index:10001;width:48px;height:48px;border-radius:50%;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
+.lightbox-close:hover{background:rgba(250,245,236,.18);transform:scale(1.05)}
+.lightbox-step{position:absolute;top:50%;transform:translateY(-50%);z-index:10001;width:48px;height:56px;border-radius:999px;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
+.lightbox-step:hover{background:rgba(250,245,236,.18);transform:translateY(-50%) scale(1.05)}
+.lightbox-prev{left:clamp(1rem,3vw,2rem)}.lightbox-next{right:clamp(1rem,3vw,2rem)}
+.lightbox-counter{position:absolute;bottom:clamp(1rem,3vw,2rem);left:50%;transform:translateX(-50%);z-index:10001;color:rgba(250,245,236,.8);font:500 .82rem var(--font-ui);font-variant-numeric:tabular-nums;margin:0}
+@media(max-width:900px){
+  .lightbox-image{max-width:95vw;max-height:80vh}
+  .lightbox-step{width:40px;height:48px;font-size:1.7rem}
+}
+@media(max-width:560px){
+  .lightbox-image{max-width:98vw;max-height:75vh}
+  .lightbox-close,.lightbox-step{width:40px;height:44px;font-size:1.5rem}
+  .lightbox-prev{left:.75rem}.lightbox-next{right:.75rem}
+}
+
 /* v50 — one owner per arrival transform, with hover states restored after it. */
 .promises div.flow.flow-in,.amen div.flow.flow-in,.post.flow.flow-in,
 .voice.flow.flow-in,.costrows>div.flow.flow-in,.menucard .day.flow.flow-in{
@@ -1472,3 +1496,107 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
    alone - WCAG 2.5.8 exempts those, and padding there would break the flow.
    ══════════════════════════════════════════════════════════════════════════ */
 .lede > a:only-child{display:inline-block;padding:.72rem 0;margin:-.72rem 0}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   v60 — DESIGN SYSTEM POLISH
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* --- 1. Consistent spacing scale (8px base) --- */
+:root{
+  --sp-xs:8px; --sp-sm:16px; --sp-md:24px; --sp-lg:32px; --sp-xl:48px; --sp-2xl:64px;
+}
+
+/* --- 2. Scroll-driven reveal animations via Intersection Observer --- */
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity var(--t3) var(--e-out),transform var(--t3) var(--e-out);will-change:opacity,transform}
+[data-reveal="scale-in"]{transform:scale(.96)}
+[data-reveal].revealed{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+}
+
+/* --- 3. Mobile nav: hamburger + slide-in drawer --- */
+.nav-toggle{display:none;width:44px;height:44px;border:none;background:transparent;cursor:pointer;position:relative;z-index:70;padding:0}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px auto;border-radius:2px;transition:transform var(--t1) var(--e-in-out),opacity var(--t1) var(--e-in-out)}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){
+  .nav-toggle{display:block}
+  .navlinks{position:fixed;inset:0;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out);pointer-events:none}
+  .navlinks.open{transform:translateX(0);pointer-events:auto}
+  .navlinks a{font-size:1.1rem;padding:.6rem 0}
+}
+
+/* --- 4. Micro-interaction refinements --- */
+/* nav link underline anim already exists; add a subtle scale on active */
+.navlinks a.on{transform:scale(1.04)}
+/* card hover: lift + shadow intensify */
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(58,50,42,.14)}
+/* button: press feedback already exists; add focus-visible glow */
+.btn:focus-visible{box-shadow:0 0 0 3px rgba(192,86,33,.35)}
+/* teasercard arrow: smooth slide */
+.teasercard .go{transition:transform var(--t1) var(--e-out),opacity var(--t1) var(--e-in-out)}
+.teasercard:hover .go{transform:translateX(6px);opacity:.8}
+/* statrow: subtle border color shift on hover */
+.statrow>div:hover{border-color:var(--ochre)}
+
+/* --- 5. Dark mode via prefers-color-scheme --- */
+@media(prefers-color-scheme:dark){
+  :root{
+    --paper:#1a1714;--panel:#211e19;--panel-2:#1e1b16;
+    --ink:#e8e0d2;--ink-deep:#f0e8da;--muted:#b8ad9c;
+    --line:#3a352c;--terra:#d97756;--terra-dark:#e8916e;
+    --ochre:#c9a243;--ochre-soft:#2a2418;--ochre-ink:#d9c08a;
+    --ink-soft:#9e9484;--paper-deep:#15120f;
+    --water-top:#1a1714;--water-mid:#15120f;--water-deep:#110e0b;
+    --sh:0 14px 34px rgba(0,0,0,.35);
+  }
+  html{color-scheme:dark}
+  body{color:var(--ink)}
+  p,li{color:var(--muted);text-shadow:none}
+  .card,.promises div,.amen div,.menucard .day,.post,.mapbox,form.pform,.plaque,.statrow>div,.faq details,.costrows>div,.voice{
+    background:var(--panel)!important;border-color:var(--line)!important;
+    box-shadow:0 1px 2px rgba(0,0,0,.25),0 8px 22px -14px rgba(0,0,0,.4)!important;
+  }
+  header{background:rgba(26,23,20,.78)!important;box-shadow:0 1px 0 rgba(255,255,255,.05)!important}
+  .mobilebar{background:rgba(26,23,20,.88)!important;border-top-color:var(--line)!important}
+  .feature,.cta-strip,.tourbox{
+    background-image:linear-gradient(180deg,rgba(26,23,20,.92),rgba(26,23,20,.86))!important;
+  }
+  .feature h2,.feature h3,.cta-strip h2,.cta-strip h3{color:var(--paper)!important}
+  .feature p,.cta-strip p,.feature li,.cta-strip li{color:var(--ink-soft)!important}
+  .navlinks a{color:var(--muted)}
+  .navlinks a:hover,.navlinks a.on{color:var(--terra)}
+  .nav-toggle span{background:var(--ink)}
+  .tag{color:var(--terra)}
+  .btn{color:#fff}
+  .btn.ghost{background-color:var(--ochre-soft);color:var(--ochre-ink);border-color:var(--ochre)}
+  .btn.ghost:hover{box-shadow:0 8px 18px rgba(217,164,65,.25)}
+  a{color:var(--terra-dark)}
+  footer{border-top-color:var(--line)!important}
+  .fbottom,.fbottom span{color:var(--muted)}
+  .fcols h4{color:var(--muted)}
+  .fcols a{color:var(--ink)}
+  .fcols a:hover{color:var(--terra)}
+  .shead h2::after{background:var(--ochre)}
+  .badge{background:var(--ochre-soft);border-color:var(--ochre);color:var(--ochre-ink)}
+  .fresult,.post .topic{background:var(--ochre-soft);border-color:var(--ochre);color:var(--ochre-ink)}
+  .post{border-left-color:var(--ochre)}
+  .price,.costrows b,.statrow b,.price-alt span{color:var(--terra-dark)}
+  .ph{background-color:var(--paper-deep)!important;border-color:var(--line)!important;color:var(--muted)}
+  .mapbox iframe{filter:saturate(.8) contrast(.92)}
+  .gallery-item{background:var(--panel);border-color:var(--line)}
+  .gallery-filters button{background:var(--panel);color:var(--ink);border-color:var(--line)}
+  .gallery-filters button[aria-pressed="true"]{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
+  .gallery-dialog{background:rgba(10,8,6,.97)}
+  .gallery-step,.gallery-close{border-color:rgba(250,245,236,.22);background:rgba(250,245,236,.1);color:#faf5ec}
+  .gallery-dialog-caption{color:#faf5ec}
+  .gallery-dialog-count{color:rgba(250,245,236,.68)}
+  .pform input,.pform select,.pform textarea{background:var(--paper)!important;color:var(--ink)!important;border-color:var(--line)!important}
+  .pform input:focus,.pform select:focus,.pform textarea:focus{box-shadow:0 0 0 3px rgba(217,164,65,.28)!important}
+  .stars label{color:var(--line)}
+  .stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra)}
+  .teasercard{color:var(--ink)}
+  .teasercard .go{color:var(--terra)}
+  .scrollbar-progress{background:linear-gradient(90deg,var(--terra),var(--ochre))}
+}
