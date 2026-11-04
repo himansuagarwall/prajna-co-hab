@@ -1601,3 +1601,63 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .teasercard .go{color:var(--terra)}
   .scrollbar-progress{background:linear-gradient(90deg,var(--terra),var(--ochre))}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   v61 — UTILITY STANDARDISATION
+   Replace inline styles with reusable classes so the whole site reads
+   from one stylesheet, not a dozen one-off values.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* spacing helpers derived from --sp scale */
+.mt-1{margin-top:var(--sp-xs)}     /* 8px */
+.mt-2{margin-top:var(--sp-sm)}     /* 16px */
+.mt-3{margin-top:var(--sp-md)}     /* 24px */
+.mt-4{margin-top:var(--sp-lg)}     /* 32px */
+.mt-5{margin-top:var(--sp-xl)}     /* 48px */
+.mb-1{margin-bottom:var(--sp-xs)}
+.mb-2{margin-bottom:var(--sp-sm)}
+.mb-3{margin-bottom:var(--sp-md)}
+
+/* cta-row is already the standard flex row for buttons */
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
+
+/* images that need the folk arch + responsive behaviour */
+.img-arch{width:100%;height:auto;border-radius:14px;display:block}
+
+/* caption style for figure captions */
+.caption{text-align:center;font-size:.85rem;color:var(--muted);margin-top:.6rem}
+
+/* animation delays for staggered reveals */
+.delay-1{animation-delay:.05s}
+.delay-2{animation-delay:.14s}
+.delay-3{animation-delay:.23s}
+.delay-4{animation-delay:.32s}
+
+/* link reset for image links */
+.img-link{text-decoration:none;display:block}
+
+/* form button wrappers */
+.form-actions{margin-top:1.2rem}
+
+/* visible to screen readers only */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* hide element completely */
+.hidden{display:none!important}
+
+/* meta text variant for captions/notes */
+.meta-text{font-size:.85rem;color:var(--muted)}
+
+/* centered block */
+.center-block{justify-content:center;display:flex}
+
+/* heading override for special cases */
+.heading-override{font-size:clamp(1.5rem,3vw,2rem);margin-top:.5rem}
+
+/* accent border + text for callout elements */
+.accent-border{color:var(--ochre);border-color:var(--ochre)}
+
+/* additional animation delays */
+.delay-3{animation-delay:.23s}
+.delay-2{animation-delay:.14s}
+.delay-1{animation-delay:.05s}
