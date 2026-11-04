@@ -10,6 +10,7 @@
   var filters = Array.prototype.slice.call(document.querySelectorAll("[data-filter]"));
   var count = document.getElementById("gallery-count");
   var photo = lightbox.querySelector(".lightbox-image");
+  var caption = lightbox.querySelector(".lightbox-caption");
   var wrapper = lightbox.querySelector(".lightbox-image-wrapper");
   var counter = lightbox.querySelector(".lightbox-counter");
   var active = [];
@@ -68,6 +69,7 @@
     var title = item.querySelector("figcaption > span");
     photo.src = link.href;
     photo.alt = image.alt;
+    caption.textContent = title ? title.textContent : image.alt;
     counter.textContent = (current + 1) + " / " + active.length;
     preloadAdjacent();
   }

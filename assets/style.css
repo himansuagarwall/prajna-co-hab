@@ -1285,7 +1285,7 @@ html.reduce .lotusmark{transform:none}
 .lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
 .lightbox-backdrop.is-open{opacity:1;visibility:visible}
 .lightbox-container{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:clamp(1rem,3vw,3rem)}
-.lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center}
+.lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem}
 .lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;transform:scale(.92) translateZ(0);transition:transform .55s cubic-bezier(.34,1.56,.64,1);will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
 .lightbox-backdrop.is-open .lightbox-image{transform:scale(1) translateZ(0)}
 .lightbox-image-wrapper.is-tilting .lightbox-image{transition:none}
@@ -1295,6 +1295,7 @@ html.reduce .lotusmark{transform:none}
 .lightbox-step:hover{background:rgba(250,245,236,.18);transform:translateY(-50%) scale(1.05)}
 .lightbox-prev{left:clamp(1rem,3vw,2rem)}.lightbox-next{right:clamp(1rem,3vw,2rem)}
 .lightbox-counter{position:absolute;bottom:clamp(1rem,3vw,2rem);left:50%;transform:translateX(-50%);z-index:10001;color:rgba(250,245,236,.8);font:500 .82rem var(--font-ui);font-variant-numeric:tabular-nums;margin:0}
+.lightbox-caption{color:#faf5ec;text-align:center;font-size:.95rem;margin-top:.8rem}
 @media(max-width:900px){
   .lightbox-image{max-width:95vw;max-height:80vh}
   .lightbox-step{width:40px;height:48px;font-size:1.7rem}
