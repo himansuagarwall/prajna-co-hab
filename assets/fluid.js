@@ -739,7 +739,37 @@
   /* v43: chrome() was called here but never defined anywhere - the header/chrome
    handling moved to site.js in an earlier pass and the call was left behind,
    so boot() threw ReferenceError on every page load. */
-  function boot(){ ambient(); lotuses(); ripples(); flow(); }
+  /* 4 — data-reveal: fade-up / scale-in via Intersection Observer */
+  function reveal(){
+    if(!("IntersectionObserver" in window)){
+      Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), function(el){
+        el.classList.add("revealed");
+      });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("revealed"); io.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.03 });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), function(el){
+      io.observe(el);
+    });
+    /* backstop sweep on scroll idle */
+    var t = null;
+    function sweep(){
+      Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]:not(.revealed)"), function(el){
+        if(el.getBoundingClientRect().top < (window.innerHeight || 800) + 40) el.classList.add("revealed");
+      });
+    }
+    window.addEventListener("scroll", function(){
+      if(t) clearTimeout(t);
+      t = setTimeout(sweep, 200);
+    }, { passive: true });
+    setTimeout(sweep, 1600);
+  }
+
+  function boot(){ ambient(); lotuses(); ripples(); flow(); reveal(); }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();

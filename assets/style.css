@@ -1523,7 +1523,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:860px){
   .nav-toggle{display:block}
-  .navlinks{position:fixed;inset:0;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out);pointer-events:none}
+  .navlinks{position:fixed;inset:0;width:100vw;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out);pointer-events:none}
   .navlinks.open{transform:translateX(0);pointer-events:auto}
   .navlinks a{font-size:1.1rem;padding:.6rem 0}
 }
