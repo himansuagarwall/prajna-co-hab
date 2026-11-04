@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="preload" as="image" href="assets/g/entrance.jpg">
+<link rel="dns-prefetch" href="//localhost:8088">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Photo Gallery — Prajna Co-hab, Moshi, Pune</title>
@@ -70,11 +72,11 @@
     <div class="gallery-toolbar">
       <p id="gallery-count" class="gallery-count" aria-live="polite">20 photographs</p>
       <div class="gallery-filters" role="group" aria-label="Filter photographs">
-        <button type="button" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" data-filter="rooms" aria-pressed="false">Rooms</button>
-        <button type="button" data-filter="shared" aria-pressed="false">Shared spaces</button>
-        <button type="button" data-filter="bathrooms" aria-pressed="false">Bathrooms</button>
-        <button type="button" data-filter="entry" aria-pressed="false">Entrance &amp; stairs</button>
+        <button type="button" data-filter="all" aria-pressed="true" aria-label="Show all photographs">All</button>
+        <button type="button" data-filter="rooms" aria-pressed="false" aria-label="Filter by rooms">Rooms</button>
+        <button type="button" data-filter="shared" aria-pressed="false" aria-label="Filter by shared spaces">Shared spaces</button>
+        <button type="button" data-filter="bathrooms" aria-pressed="false" aria-label="Filter by bathrooms">Bathrooms</button>
+        <button type="button" data-filter="entry" aria-pressed="false" aria-label="Filter by entrance and stairs">Entrance & stairs</button>
       </div>
     </div>
 
@@ -186,7 +188,7 @@
     <div class="gallery-viewer">
       <button class="gallery-close" type="button" aria-label="Close photo viewer">Close</button>
       <button class="gallery-step gallery-prev" type="button" aria-label="Previous photo">&#8249;</button>
-      <figure><img class="gallery-dialog-image" alt=""><figcaption class="gallery-dialog-caption"></figcaption></figure>
+      <figure><img class="gallery-dialog-image" alt="" loading="lazy"><figcaption class="gallery-dialog-caption"></figcaption></figure>
       <button class="gallery-step gallery-next" type="button" aria-label="Next photo">&#8250;</button>
       <p class="gallery-dialog-count" aria-live="polite"></p>
     </div>

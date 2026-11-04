@@ -78,6 +78,7 @@
 </script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <main id="main" tabindex="-1">
   <canvas id="tour-canvas"></canvas>
 
@@ -91,10 +92,10 @@
   <div class="tour-hint">Drag to orbit · Scroll to zoom</div>
 
   <div class="tour-controls">
-    <button class="tour-btn on" data-room="twin">Twin Room</button>
-    <button class="tour-btn" data-room="single">Single Room</button>
-    <button class="tour-btn" data-room="common">Common Floor</button>
-    <button class="tour-btn" data-room="living">Living Area</button>
+    <button class="tour-btn on" data-room="twin" aria-label="View twin-sharing room">Twin Room</button>
+    <button class="tour-btn" data-room="single" aria-label="View single room">Single Room</button>
+    <button class="tour-btn" data-room="common" aria-label="View common floor">Common Floor</button>
+    <button class="tour-btn" data-room="living" aria-label="View living area">Living Area</button>
   </div>
 
   <script type="importmap">
