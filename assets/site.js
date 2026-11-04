@@ -279,7 +279,7 @@ window.PRAJNA = window.PRAJNA || {
   /* one-time heal: if a previous deploy left a stale offline cache, clear it and reload once */
   if ("serviceWorker" in navigator && "caches" in window && !sessionStorage.getItem("prajna-healed")) {
     caches.keys().then(function(keys){
-      var stale = keys.filter(function(k){ return k.indexOf("prajna-") === 0 && k !== "prajna-v68"; });
+      var stale = keys.filter(function(k){ return k.indexOf("prajna-") === 0 && k !== "prajna-v69"; });
       if (!stale.length) return;
       Promise.all(stale.map(function(k){ return caches.delete(k); })).then(function(){
         sessionStorage.setItem("prajna-healed", "1");
@@ -296,7 +296,7 @@ window.PRAJNA = window.PRAJNA || {
   var th = document.createElement("meta");
   th.name = "theme-color"; th.content = "#c05a2e";
   document.head.appendChild(th);
-  if ("serviceWorker" in navigator && location.protocol === "https:") {
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || /^(http|https):\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(location.href))) {
     window.addEventListener("load", function(){
       navigator.serviceWorker.register("sw.js").then(function(reg){
         reg.update();

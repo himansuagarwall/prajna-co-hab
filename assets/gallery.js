@@ -119,14 +119,28 @@
   });
 
   var touchX = null;
+  var touchY = null;
   lightbox.addEventListener("touchstart", function (event) {
     touchX = event.touches[0].clientX;
+    touchY = event.touches[0].clientY;
   }, { passive: true });
+  lightbox.addEventListener("touchmove", function (event) {
+    if (touchX === null || touchY === null) return;
+    var dx = event.touches[0].clientX - touchX;
+    var dy = event.touches[0].clientY - touchY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+      event.preventDefault();
+    }
+  }, { passive: false });
   lightbox.addEventListener("touchend", function (event) {
     if (touchX === null) return;
     var delta = event.changedTouches[0].clientX - touchX;
-    if (Math.abs(delta) > 48) paint(current + (delta < 0 ? 1 : -1));
+    var vertDelta = event.changedTouches[0].clientY - touchY;
+    if (Math.abs(delta) > 48 && Math.abs(delta) > Math.abs(vertDelta)) {
+      paint(current + (delta < 0 ? 1 : -1));
+    }
     touchX = null;
+    touchY = null;
   }, { passive: true });
 
   /* 3D parallax tilt in lightbox */
