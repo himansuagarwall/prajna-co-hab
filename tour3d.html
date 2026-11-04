@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="3D virtual tour of Prajna Co-hab co-living PG near Bhosari Industrial Estate, Pune. Explore twin-sharing rooms, single rooms, and common floor in interactive Three.js viewer.">
+<meta name="keywords" content="Prajna Co-hab, 3D tour, virtual tour, co-living Pune, Bhosari PG, shared rooms">
 <title>3D Virtual Tour — Prajna Co-hab</title>
 <link rel="stylesheet" href="assets/style.css?v=68">
 <style>
@@ -46,6 +48,25 @@
     opacity: .8; pointer-events: none;
   }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Prajna Co-hab",
+  "description": "Co-living PG with twin-sharing and single rooms near Bhosari Industrial Estate, Pune. Full common floor with kitchen, dining, living and TV.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate",
+    "addressLocality": "Pimpri-Chinchwad",
+    "addressRegion": "Maharashtra",
+    "postalCode": "411026",
+    "addressCountry": "IN"
+  },
+  "telephone": "+91-0000000000",
+  "priceRange": "₹₹"
+}
+</script>
 </head>
 <body>
   <canvas id="tour-canvas"></canvas>
