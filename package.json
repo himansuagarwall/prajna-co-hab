@@ -8,7 +8,8 @@
     "test": "playwright test",
     "test:prices": "playwright test prices",
     "test:leads": "playwright test leads",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "test:backend": "node tests/backend/code-gs.test.js"
   },
   "repository": {
     "type": "git",
