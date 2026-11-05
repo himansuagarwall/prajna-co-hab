@@ -776,8 +776,8 @@ window.PRAJNA = window.PRAJNA || {};
   if("MutationObserver" in window){
     var mo = new MutationObserver(function(muts){
       muts.forEach(function(m){
-        var t = m.target.closest ? (m.target.closest("[data-cfg]") || m.target) : m.target;
-        if(t && t.nodeType === 1){ flash(t.closest ? (t.closest("[data-cfg]") || t) : t); }
+        var t = m.target.closest ? m.target.closest("[data-cfg]") : null;
+        if(t){ flash(t); }
       });
     });
     each(doc.querySelectorAll("[data-cfg]"), function(el){ mo.observe(el, { childList:true, characterData:true, subtree:true }); });
