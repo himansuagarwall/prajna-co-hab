@@ -521,3 +521,271 @@ window.PRAJNA = window.PRAJNA || {};
     }
   });
 })();
+
+/* ============================================================
+   INTERIOR rich-effects pass — vanilla port of interior.dev
+   headless hooks. Timings: press 140ms, hover 220ms, state
+   380ms, arrival 760ms. No new deps, no colours, reduced-motion
+   respected. Each block is defensive: absent element = no-op.
+   ============================================================ */
+(function(){
+  "use strict";
+  var doc = document, root = doc.documentElement;
+  var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  root.classList.add("ix-ready");
+  var cfg = window.PRAJNA || {};
+  function onReady(fn){ if(doc.readyState === "loading"){ doc.addEventListener("DOMContentLoaded", fn); } else { fn(); } }
+  function each(els, fn){ Array.prototype.forEach.call(els || [], fn); }
+
+  /* --- reading-progress (vanilla; skip if motion.js bar exists) --- */
+  function progressBar(){
+    if(doc.querySelector(".scrollbar-progress")){ return; }
+    var bar = doc.createElement("div");
+    bar.className = "reading-progress"; bar.setAttribute("aria-hidden","true");
+    doc.body.appendChild(bar);
+    var ticking = false;
+    function update(){
+      var h = doc.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? (h.scrollTop / max) : 0) + ")";
+      ticking = false;
+    }
+    window.addEventListener("scroll", function(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive:true });
+    update();
+  }
+  setTimeout(function(){
+    if(!doc.querySelector(".scrollbar-progress")){ progressBar(); }
+  }, 800);
+
+  /* --- hide-on-scroll (sticky-header already in CSS) --- */
+  if(!reduced){
+    var hd = doc.querySelector("header"), lastY = window.scrollY;
+    window.addEventListener("scroll", function(){
+      if(!hd){ return; }
+      var y = window.scrollY;
+      var drawerOpen = doc.querySelector(".navlinks.open");
+      if(drawerOpen || y < 240 || y < lastY - 4){ hd.classList.remove("hide-away"); }
+      else if(y > lastY + 6){ hd.classList.add("hide-away"); }
+      lastY = y;
+    }, { passive:true });
+  }
+
+  /* --- press-depth ripple + loading-button state --- */
+  if(!reduced){
+    doc.addEventListener("pointerdown", function(e){
+      var b = e.target.closest ? e.target.closest(".btn,button,.chip") : null;
+      if(!b){ return; }
+      var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2;
+      var s = doc.createElement("span");
+      s.className = "ripple";
+      s.style.width = s.style.height = d + "px";
+      s.style.left = (e.clientX - r.left - d/2) + "px";
+      s.style.top = (e.clientY - r.top - d/2) + "px";
+      b.appendChild(s);
+      setTimeout(function(){ s.remove(); }, 780);
+    }, { passive:true });
+  }
+  each(doc.querySelectorAll("form[data-formtype]"), function(f){
+    f.addEventListener("submit", function(){
+      var sub = f.querySelector("button[type=submit]");
+      if(sub){ sub.classList.add("is-loading"); }
+    });
+  });
+
+  /* --- blur-up-image + skeleton-swap --- */
+  each(doc.querySelectorAll("img"), function(img){
+    function done(){ img.classList.add("loaded"); }
+    if(img.complete && img.naturalWidth){ done(); }
+    else { img.addEventListener("load", done); img.addEventListener("error", done); }
+  });
+
+  /* --- accordion: single-open within .faq --- */
+  each(doc.querySelectorAll(".faq"), function(group){
+    each(group.querySelectorAll("details"), function(d){
+      d.addEventListener("toggle", function(){
+        if(!d.open){ return; }
+        each(group.querySelectorAll("details[open]"), function(o){ if(o !== d){ o.open = false; } });
+      });
+    });
+  });
+
+  /* --- segmented-control + tabs on rooms pricing --- */
+  each(doc.querySelectorAll("[data-segmented]"), function(seg){
+    var panel = doc.querySelector(seg.getAttribute("data-segmented"));
+    var tabs = seg.querySelectorAll('[role="tab"]');
+    function select(tab, focus){
+      each(tabs, function(t){ t.setAttribute("aria-selected", t === tab ? "true" : "false"); t.tabIndex = t === tab ? 0 : -1; });
+      if(panel){ panel.classList.toggle("plan-plain", tab.getAttribute("data-plan") === "plain"); panel.classList.toggle("plan-meal", tab.getAttribute("data-plan") === "meal"); }
+      if(focus){ tab.focus(); }
+    }
+    each(tabs, function(t, i){
+      t.addEventListener("click", function(){ select(t); });
+      t.addEventListener("keydown", function(e){
+        var n = null;
+        if(e.key === "ArrowRight"){ n = tabs[(i+1) % tabs.length]; }
+        if(e.key === "ArrowLeft"){ n = tabs[(i-1+tabs.length) % tabs.length]; }
+        if(n){ e.preventDefault(); select(n, true); }
+      });
+    });
+  });
+
+  /* --- scroll-spy for .spy-nav chips --- */
+  var spyNav = doc.querySelector(".spy-nav");
+  if(spyNav && "IntersectionObserver" in window){
+    var spyLinks = spyNav.querySelectorAll("a[href^='#']");
+    var spyMap = {};
+    each(spyLinks, function(a){ spyMap[a.getAttribute("href").slice(1)] = a; });
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          each(spyLinks, function(a){ a.classList.remove("on"); });
+          var link = spyMap[en.target.id];
+          if(link){ link.classList.add("on"); }
+        }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    each(spyLinks, function(a){
+      var sec = doc.getElementById(a.getAttribute("href").slice(1));
+      if(sec){ spyObs.observe(sec); }
+    });
+  }
+
+  /* --- show-more on inclusions lists --- */
+  var incl = doc.getElementById("inclusions");
+  if(incl && !reduced){
+    var btn = doc.createElement("button");
+    btn.type = "button"; btn.className = "btn ghost showmore-btn";
+    btn.setAttribute("aria-expanded","false");
+    btn.textContent = "Show more inclusions";
+    var lists = incl.querySelectorAll(".card ul");
+    var hidden = [];
+    function collapse(){
+      hidden = [];
+      each(lists, function(ul){
+        var items = ul.querySelectorAll("li");
+        for(var i = 4; i < items.length; i++){ items[i].style.display = "none"; hidden.push(items[i]); }
+      });
+    }
+    collapse();
+    btn.addEventListener("click", function(){
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      btn.textContent = open ? "Show more inclusions" : "Show fewer";
+      each(hidden, function(li){ li.style.display = open ? "none" : ""; });
+    });
+    var grid = incl.querySelector(".grid");
+    if(grid){ grid.after(btn); } else { incl.appendChild(btn); }
+  }
+
+  /* --- modal lightbox for room photos (rooms.html) --- */
+  var photos = doc.getElementById("room-photos");
+  if(photos && !doc.getElementById("lightbox-backdrop")){
+    var figs = Array.prototype.slice.call(photos.querySelectorAll("figure"));
+    if(figs.length && doc.createElement("dialog").showModal){
+      var dlg = doc.createElement("dialog");
+      dlg.className = "room-lb"; dlg.setAttribute("aria-label","Room photo viewer");
+      dlg.innerHTML = '<img alt=""><figcaption></figcaption><div class="lb-bar"><button type="button" class="lb-prev">Previous</button><span class="lb-count" style="color:#fff;font-family:var(--font-ui);font-size:.8rem"></span><button type="button" class="lb-next">Next</button><button type="button" class="lb-close">Close</button></div>';
+      doc.body.appendChild(dlg);
+      var lbImg = dlg.querySelector("img"), lbCap = dlg.querySelector("figcaption"), lbCount = dlg.querySelector(".lb-count");
+      var lbIdx = 0, returnFocus = null;
+      function paint(i){
+        lbIdx = (i + figs.length) % figs.length;
+        var src = figs[lbIdx].querySelector("img");
+        lbImg.src = src.src; lbImg.alt = src.alt;
+        var cap = figs[lbIdx].querySelector("figcaption");
+        lbCap.textContent = cap ? cap.textContent : src.alt;
+        lbCount.textContent = (lbIdx+1) + " / " + figs.length;
+      }
+      figs.forEach(function(fig, i){
+        fig.style.cursor = "zoom-in";
+        fig.setAttribute("tabindex","0");
+        fig.setAttribute("role","button");
+        fig.setAttribute("aria-label","View larger: " + (fig.querySelector("img")||{}).alt);
+        function open(){ returnFocus = fig; paint(i); dlg.showModal(); }
+        fig.addEventListener("click", open);
+        fig.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); open(); } });
+      });
+      dlg.querySelector(".lb-close").addEventListener("click", function(){ dlg.close(); });
+      dlg.querySelector(".lb-prev").addEventListener("click", function(){ paint(lbIdx-1); });
+      dlg.querySelector(".lb-next").addEventListener("click", function(){ paint(lbIdx+1); });
+      dlg.addEventListener("click", function(e){ if(e.target === dlg){ dlg.close(); } });
+      dlg.addEventListener("close", function(){ if(returnFocus){ returnFocus.focus({ preventScroll:true }); } });
+    }
+  }
+
+  /* --- floating-label + inline-validation on lead forms --- */
+  each(doc.querySelectorAll("form[data-formtype]"), function(f){
+    each(f.querySelectorAll("input,textarea,select"), function(input){
+      if(input.type === "hidden" || input.type === "radio" || input.type === "checkbox" || input.name === "company"){ return; }
+      var wrap = input.parentElement;
+      if(!wrap || wrap.classList.contains("fld")){ return; }
+      var label = wrap.querySelector("label");
+      if(!label){ return; }
+      wrap.classList.add("fld");
+      var err = doc.createElement("span");
+      err.className = "fld-err"; err.setAttribute("role","alert");
+      err.id = (input.id || input.name || "fld") + "-err";
+      wrap.appendChild(err);
+      input.setAttribute("aria-describedby", err.id);
+      function syncFloat(){ wrap.classList.toggle("is-float", !!(input.value && input.value.length)); }
+      function validate(){
+        var msg = "";
+        if(input.required && !input.value.trim()){ msg = "This field is required."; }
+        else if(input.type === "email" && input.value && !input.validity.valid){ msg = "That email address does not look right."; }
+        err.textContent = msg;
+        err.classList.toggle("show", !!msg);
+        if(msg){ input.setAttribute("aria-invalid","true"); } else { input.removeAttribute("aria-invalid"); }
+        return !msg;
+      }
+      syncFloat();
+      input.addEventListener("input", function(){ syncFloat(); if(input.getAttribute("aria-invalid")){ validate(); } });
+      input.addEventListener("blur", validate);
+    });
+  });
+
+  /* --- copy-button for email (contact + footer) --- */
+  function copyEmail(btn){
+    var email = cfg.email || "";
+    if(!email){ return; }
+    function done(){
+      btn.textContent = "Copied"; btn.classList.add("copied");
+      setTimeout(function(){ btn.textContent = btn.getAttribute("data-label") || "Copy email"; btn.classList.remove("copied"); }, 2000);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(email).then(done, done); }
+    else {
+      var ta = doc.createElement("textarea"); ta.value = email; doc.body.appendChild(ta);
+      ta.select(); try{ doc.execCommand("copy"); }catch(e){} ta.remove(); done();
+    }
+  }
+  each(doc.querySelectorAll("[data-copy-email]"), function(btn){ btn.addEventListener("click", function(){ copyEmail(btn); }); });
+  var footerMail = doc.querySelector("footer .fcols a[href^='mailto:'], footer a.mail-link");
+  if(footerMail && cfg.email && !doc.querySelector("[data-copy-email]")){
+    var cb = doc.createElement("button");
+    cb.type = "button"; cb.className = "copy-btn"; cb.setAttribute("data-copy-email","");
+    cb.setAttribute("data-label","Copy email"); cb.textContent = "Copy email";
+    cb.style.marginTop = ".6rem";
+    footerMail.parentElement.appendChild(cb);
+    cb.addEventListener("click", function(){ copyEmail(cb); });
+  }
+
+  /* --- value-flash for config price updates --- */
+  function flash(el){
+    if(reduced || !el){ return; }
+    el.classList.remove("value-flash"); void el.offsetWidth; el.classList.add("value-flash");
+  }
+  if("MutationObserver" in window){
+    var mo = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var t = m.target.closest ? (m.target.closest("[data-cfg]") || m.target) : m.target;
+        if(t && t.nodeType === 1){ flash(t.closest ? (t.closest("[data-cfg]") || t) : t); }
+      });
+    });
+    each(doc.querySelectorAll("[data-cfg]"), function(el){ mo.observe(el, { childList:true, characterData:true, subtree:true }); });
+  }
+  requestAnimationFrame(function(){ each(doc.querySelectorAll(".price [data-cfg], .pricerow [data-cfg]"), flash); });
+
+  /* --- tooltip-group keyboard access (amenities/promises) --- */
+  each(doc.querySelectorAll("[data-tip]"), function(el){
+    if(!el.hasAttribute("tabindex")){ el.setAttribute("tabindex","0"); }
+  });
+})();

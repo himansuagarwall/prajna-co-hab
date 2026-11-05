@@ -1690,3 +1690,95 @@ form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.25)}
 @media(prefers-reduced-motion:reduce){.btn,.card,.teasercard,.navlinks a,.flow,.reveal{transition:none!important;transform:none!important}}
 
 html{overflow-x:clip}
+
+/* ============================================================
+   INTERIOR rich-effects pass (vanilla port of interior.dev
+   timings: press 140ms, hover 220ms, state 380ms, arrival 760ms;
+   easing cubic-bezier(.22,.61,.36,1)). No new colours: only
+   --terra/--terra-dark/--ochre/--ochre-soft/--ink/--muted/--line.
+   Everything below is gated on html.ix-ready (added by site.js)
+   so no-JS visitors see the untouched static site.
+   ============================================================ */
+.reading-progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--terra);z-index:90;pointer-events:none}
+.scrollbar-progress + .reading-progress{display:none}
+html.ix-ready header{transition:transform 380ms cubic-bezier(.22,.61,.36,1),box-shadow .3s ease}
+html.ix-ready header.hide-away{transform:translateY(-100%)}
+html.ix-ready header.hide-away.scrolled{box-shadow:none}
+/* press-depth + ripple + loading-button */
+html.ix-ready .btn{overflow:hidden;position:relative}
+html.ix-ready .btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28),inset 0 0 0 4px var(--terra),0 2px 6px rgba(154,69,34,.18)}
+.ripple{position:absolute;border-radius:50%;background:rgba(250,246,240,.45);transform:scale(0);pointer-events:none;animation:rip 760ms cubic-bezier(.22,.61,.36,1) forwards}
+.btn.ghost .ripple{background:rgba(192,86,33,.22)}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+.btn.is-loading{opacity:.75;pointer-events:none}
+.btn.is-loading::before{content:"";display:inline-block;width:.85em;height:.85em;margin-right:.5em;vertical-align:-.12em;border:2px solid rgba(250,246,240,.4);border-top-color:#fff;border-radius:50%;animation:spin 760ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* blur-up-image + skeleton-swap */
+html.ix-ready img{background:linear-gradient(100deg,var(--paper-deep) 40%,var(--ochre-soft) 50%,var(--paper-deep) 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite;transition:filter 380ms cubic-bezier(.22,.61,.36,1),opacity 380ms}
+html.ix-ready img:not(.loaded){filter:blur(10px) saturate(.85);opacity:.7}
+html.ix-ready img.loaded{animation:none}
+@keyframes shimmer{to{background-position:-200% 0}}
+/* segmented-control + tabs (rooms pricing) */
+.segmented{display:inline-flex;background:var(--ochre-soft);border:1px solid var(--ochre);border-radius:999px;padding:3px;gap:2px;margin:.4rem 0 1rem;max-width:100%}
+.segmented [role="tab"]{border:none;background:transparent;font-family:var(--font-ui);font-size:.8rem;padding:.5rem 1rem;border-radius:999px;cursor:pointer;color:var(--ochre-ink);transition:background 220ms cubic-bezier(.22,.61,.36,1),color 220ms}
+.segmented [role="tab"][aria-selected="true"]{background:var(--terra);color:#fff}
+.segmented [role="tab"]:focus-visible{outline:2px solid var(--terra-dark);outline-offset:2px}
+.plan-plain .pricerow > :nth-child(3),.plan-meal .pricerow > :nth-child(2){opacity:.42;transition:opacity 380ms cubic-bezier(.22,.61,.36,1)}
+.plan-plain .pricerow > :nth-child(2),.plan-meal .pricerow > :nth-child(3){color:var(--terra-dark);font-weight:700}
+/* scroll-spy section chips */
+.spy-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
+.spy-nav a{font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:none;padding:.4rem .7rem;border:1px solid var(--line);border-radius:999px;transition:color 220ms,background 220ms,border-color 220ms}
+.spy-nav a.on{color:#fff;background:var(--terra);border-color:var(--terra)}
+/* accordion: animated details (progressive; native open/close still works) */
+html.ix-ready details::details-content{block-size:0;opacity:0;transition:block-size 380ms cubic-bezier(.22,.61,.36,1),opacity 380ms,content-visibility 380ms;overflow:hidden}
+html.ix-ready details[open]::details-content{block-size:auto;opacity:1}
+html.ix-ready .faq summary{cursor:pointer}
+html.ix-ready .faq summary::-webkit-details-marker{display:none}
+html.ix-ready .faq summary::after{content:"+";float:right;color:var(--terra);font-weight:700;transition:transform 220ms cubic-bezier(.22,.61,.36,1)}
+html.ix-ready details[open] > summary::after{transform:rotate(45deg)}
+/* show-more */
+.showmore-btn{margin-top:1rem}
+/* snap-carousel: room photos on small screens */
+@media(max-width:720px){
+  html.ix-ready #room-photos .grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;padding-bottom:.6rem;-webkit-overflow-scrolling:touch}
+  html.ix-ready #room-photos .grid > figure{flex:0 0 82%;scroll-snap-align:start}
+}
+/* modal lightbox (rooms photos) */
+.room-lb{border:none;padding:0;background:transparent;max-width:min(92vw,900px);width:100%}
+.room-lb::backdrop{background:rgba(43,38,32,.72)}
+.room-lb img{width:100%;max-height:76vh;object-fit:contain;border-radius:12px;background:var(--paper)}
+.room-lb figcaption{color:#fff;font-family:var(--font-ui);font-size:.85rem;text-align:center;margin-top:.6rem}
+.room-lb .lb-bar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.6rem}
+.room-lb button{background:var(--terra);color:#fff;border:none;border-radius:8px;padding:.5rem 1rem;font-family:var(--font-ui);cursor:pointer}
+/* floating-label + inline-validation */
+.pform .fld{position:relative;padding-top:1.15rem}
+.pform .fld > label{position:absolute;top:1.8rem;left:.85rem;font-size:.85rem;color:var(--muted);pointer-events:none;transition:top 220ms cubic-bezier(.22,.61,.36,1),font-size 220ms,color 220ms}
+.pform .fld input::placeholder,.pform .fld textarea::placeholder{color:transparent}
+.pform .fld input,.pform .fld textarea{padding-top:1.15rem}
+.pform .fld.is-float > label,.pform .fld:focus-within > label{top:.35rem;font-size:.68rem;color:var(--terra-dark)}
+.pform .fld-err{display:none;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);margin-top:.35rem}
+.pform .fld-err.show{display:block}
+.pform input[aria-invalid="true"]{border-color:var(--terra-dark);box-shadow:0 0 0 3px rgba(192,86,33,.16)}
+/* tooltip-group (amenities/promises) */
+[data-tip]{position:relative}
+[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);background:var(--ochre-soft);color:var(--ink);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.72rem;line-height:1.4;padding:.45rem .6rem;border-radius:8px;width:max-content;max-width:220px;white-space:normal;opacity:0;pointer-events:none;transition:opacity 220ms cubic-bezier(.22,.61,.36,1),transform 220ms cubic-bezier(.22,.61,.36,1);z-index:20}
+[data-tip]:hover::after,[data-tip]:focus-visible::after{opacity:1;transform:translate(-50%,0)}
+/* copy-button */
+.copy-btn{background:transparent;color:var(--terra-dark);border:1.5px dashed var(--ochre);border-radius:8px;padding:.45rem .9rem;font-family:var(--font-ui);font-size:.78rem;cursor:pointer;transition:background 220ms}
+.copy-btn:hover{background:var(--ochre-soft)}
+.copy-btn.copied{background:var(--terra);color:#fff;border-color:var(--terra)}
+/* live-activity pulse on vacancy dot */
+.vdot{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.65}}
+/* value-flash on config price updates */
+.value-flash{animation:vflash 760ms cubic-bezier(.22,.61,.36,1)}
+@keyframes vflash{0%{background:var(--ochre-soft);border-radius:4px}100%{background:transparent}}
+/* text-reveal for page headings (arrival) */
+html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:treveal 760ms cubic-bezier(.22,.61,.36,1) both}
+@keyframes treveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .reading-progress,.vdot,.value-flash,.ripple,html.ix-ready img,html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:none!important;transition:none!important}
+  html.ix-ready img:not(.loaded){filter:none;opacity:1}
+  html.ix-ready header.hide-away{transform:none}
+  html.ix-ready details::details-content{transition:none}
+}

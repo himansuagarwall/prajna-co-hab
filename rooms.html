@@ -157,6 +157,7 @@
       <a class="btn mail-link" href="#" data-mailsubject="Join the waiting list at Prajna Co-hab">Join the waiting list</a>
       <a class="btn ghost mail-link" href="#" data-mailsubject="Hi, I'd like to know more about rooms at Prajna Co-hab.">Email Us</a>
     </div>
+    <nav class="spy-nav" aria-label="On this page"><a href="#twin-sharing" class="on">Twin-sharing</a><a href="#single-rooms">Private</a><a href="#room-photos">Photos</a><a href="#inclusions">Inclusions</a><a href="#pricing">Pricing</a></nav>
   </div>
 
   <section class="flat" id="twin-sharing">
@@ -329,7 +330,10 @@
       <p class="lede">The first month includes housekeeping, water, WiFi and one linen set. Electricity is the only extra and it's billed at actual usage, shared across the house.</p>
     </div>
     <div class="costcard reveal">
-      <div class="pricetable">
+      <div class="segmented" role="tablist" aria-label="Dinner plan" data-segmented=".pricetable" >
+        <button type="button" role="tab" aria-selected="true" data-plan="plain">Without dinner</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-plan="meal">With dinner</button>
+      </div>
+      <div class="pricetable plan-plain" role="tabpanel" aria-label="Monthly rates">
         <div class="pricerow header">
           <span>Room type</span>
           <span>Without dinner</span>
