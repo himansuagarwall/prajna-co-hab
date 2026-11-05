@@ -33,7 +33,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-head);background:transparent;color:var(--ink);line-height:1.68;font-size:1.02rem;padding-bottom:64px;animation:bodyin .5s ease both}
+body{font-family:var(--font-body);background:transparent;color:var(--ink);line-height:1.68;font-size:1.02rem;padding-bottom:64px;animation:bodyin .5s ease both}
 @keyframes bodyin{from{opacity:0}to{opacity:1}}
 .wrap{max-width:1020px;margin:0 auto;padding:0 var(--pad-x)}
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.012em;line-height:1.18}
@@ -1736,4 +1736,160 @@ html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:treveal 760ms cubic-
   html.ix-ready img:not(.loaded){filter:none;opacity:1}
   html.ix-ready header.hide-away{transform:none}
   html.ix-ready details::details-content{transition:none}
+}
+
+/* ============================================================
+   premium-reset (2026-11-05) — header first, then vocabulary.
+   One row, max 95px desktop. No second-row slab: at 1024px the
+   nav becomes the glass drawer, so links never wrap or scroll
+   sideways at any width. Vacancy lives only in the header.
+   Timings are the interior set: 140 / 220 / 380 / 760.
+   ============================================================ */
+header{
+  max-height:95px;
+  padding:.55rem 0;
+}
+header .nav{
+  flex-wrap:nowrap;
+  gap:.75rem;
+  min-height:44px;
+}
+header .brand{
+  font-family:var(--font-head);
+  font-size:1.06rem;
+  font-weight:400;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  flex:none;
+}
+header .brand span{color:var(--terra)}
+header .navlinks{
+  flex-wrap:nowrap;
+  gap:.15rem;
+  margin-left:auto;
+}
+header .navlinks a{
+  font-size:.82rem;
+  font-weight:400;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  padding:.4rem .55rem;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+}
+header .vacancy{
+  flex:none;
+  margin-left:.5rem;
+  font-size:.76rem;
+  /* single status line: short plain text, never wraps */
+  max-width:15rem;
+}
+header .vacancy .vtxt{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+header .vacancy .vdot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--terra);flex:none;
+}
+/* hide-on-scroll already wired via html.ix-ready header.hide-away (380ms) */
+html.ix-ready header{transition:transform var(--t-state,380ms) var(--e-out),box-shadow var(--t-hover,220ms) var(--e-in-out)}
+/* 1024px and below: hamburger + glass drawer. No horizontal link strip. */
+@media(max-width:1024px){
+  /* mobile target 67px: 44px row + .72rem top/bottom padding */
+  header{padding:.72rem 0}
+  header .vacancy{display:none}
+  header .nav-toggle{display:block;flex:none;margin-left:auto}
+  header .navlinks{
+    position:fixed;
+    left:0;right:auto;top:0;bottom:0;
+    width:min(86vw,340px);
+    height:100dvh;
+    margin-left:0;
+    padding:5.5rem 1.5rem 2rem;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    gap:.25rem;
+    background:rgba(250,245,236,.94);
+    backdrop-filter:blur(16px) saturate(1.05);
+    -webkit-backdrop-filter:blur(16px) saturate(1.05);
+    box-shadow:var(--sh);
+    transform:translateX(-102%);
+    transition:transform var(--t-state,380ms) var(--e-out),visibility var(--t-state,380ms);
+    visibility:hidden;
+    pointer-events:none;
+    z-index:65;
+  }
+  header .navlinks.open{transform:translateX(0);visibility:visible;pointer-events:auto}
+  header .navlinks a{
+    font-family:var(--font-head);
+    font-size:1.25rem;
+    padding:.7rem .25rem;
+    border-bottom:1px solid var(--line);
+  }
+  header .navlinks a::after{display:none}
+}
+@media(prefers-color-scheme:dark){
+  @media(max-width:1024px){
+    header .navlinks{background:rgba(26,23,20,.82)}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  header,header .navlinks{transition:none!important}
+}
+
+/* ============================================================
+   premium-ui (2026-11-05) — index spacing / hierarchy / one CTA.
+   Appended BELOW the premium-reset header block; header lane
+   owns everything above. Existing tokens only: six colours,
+   Marcellus headings, arch crowns from v16, interior timings
+   140/220/380/760. No new motion, no new colour.
+   ============================================================ */
+/* Hero: breathe at the top, calm column, one primary action.
+   The two ghost buttons become quiet text links beside it. */
+.hero{padding:clamp(3rem,6vw,4.2rem) 0 clamp(2.6rem,5vw,3.4rem);gap:clamp(2rem,4vw,3.2rem)}
+.hero .tag{display:inline-block;margin-bottom:.9rem}
+.hero h1{font-family:var(--font-head);margin:.4rem 0 1rem;max-width:18ch}
+.hero .lede{margin:0 0 .4rem;max-width:34rem}
+.hero .cta-row{gap:.6rem 1.5rem;align-items:center;margin-top:1.8rem}
+.hero .cta-row .btn.ghost,.feature .cta-row .btn.ghost{
+  background:none!important;color:var(--terra-dark)!important;
+  font-weight:700;text-decoration:underline;text-underline-offset:.25em;
+  text-decoration-color:var(--ochre);padding:.6rem .1rem;min-height:44px}
+.hero .cta-row .btn.ghost::after,.feature .cta-row .btn.ghost::after{display:none}
+.hero .cta-row .btn.ghost:hover,.feature .cta-row .btn.ghost:hover{
+  background:none!important;color:var(--terra)!important;box-shadow:none!important;transform:none}
+.hero .share-btn{text-decoration:none}
+#share-note{font-family:var(--font-ui);font-size:.78rem;color:var(--muted)}
+/* Hero photo: arch crown stands, soft ground shadow only */
+a.ph.heroshot{box-shadow:var(--sh);transition:transform var(--t1,220ms) var(--e-out),box-shadow var(--t1,220ms) var(--e-out)}
+a.ph.heroshot:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+/* Section rhythm: generous air, clear hierarchy */
+main section{padding:clamp(3.2rem,6vw,4.6rem) 0}
+main section.flat{padding-top:clamp(2rem,4vw,3rem)}
+main .shead{margin-bottom:2rem}
+main .shead h2{font-family:var(--font-head);margin:.3rem 0 .6rem}
+main .shead .lede{margin:0}
+main .grid{gap:1.5rem;margin-top:1.8rem}
+main .costcard{margin-top:2rem}
+main .feature{padding:clamp(2.6rem,5vw,3.6rem) clamp(1.4rem,4vw,2.6rem)}
+main .cta-strip{padding:clamp(2.8rem,5vw,3.8rem) 1rem}
+main .familyband{padding:2.8rem 1rem 1.2rem}
+main .fblarge{font-family:var(--font-head)}
+main .daystrip{gap:1.25rem}
+main .loc{gap:clamp(1.6rem,4vw,2.6rem)}
+/* Cards lift on hover (existing shadow), never gain a border */
+main .card.tilt{transition:transform var(--t1,220ms) var(--e-out),box-shadow var(--t1,220ms) var(--e-out),border-color var(--t1,220ms) var(--e-in-out)}
+main .card.tilt:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+@media(max-width:720px){
+  .hero{padding-top:2.6rem}
+  .hero .cta-row{margin-top:1.5rem}
+  main .grid{gap:1.1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  a.ph.heroshot,main .card.tilt{transition:none}
+  a.ph.heroshot:hover,main .card.tilt:hover{transform:none}
 }
