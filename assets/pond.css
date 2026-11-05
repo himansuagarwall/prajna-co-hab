@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   POND — scenes, seamless reveal, torn-paper assemblage
+   POND - scenes, seamless reveal, torn-paper assemblage
    Loaded via assets/pond.js. Everything here is DOM + CSS so it adds nothing
    to the per-frame canvas cost measured at ~0.7ms.
 
@@ -31,7 +31,7 @@
   animation:pfdrift var(--pf-dur) linear infinite;
   animation-delay:var(--pf-delay);
 }
-/* a slow rise, a lazy side-to-side, and a barely-there roll — three motions
+/* a slow rise, a lazy side-to-side, and a barely-there roll - three motions
    on one transform so they compose instead of fighting */
 @keyframes pfdrift{
   0%   { transform:translate3d(0,0,0) rotate(0deg); }
@@ -50,7 +50,7 @@
    edge that needs to be ragged, and a 13-point polygon at radius 50-66% is a
    pebble. So: no blur, and .cp::before repeats the same clip-path as a pale
    sheet nudged 2px up-left, which leaves a torn white lip along the top edge
-   — the cue that reads unmistakably as paper rather than wash. */
+   - the cue that reads unmistakably as paper rather than wash. */
 .collage{
   position:fixed; inset:0; z-index:1; pointer-events:none;
   contain:strict; overflow:hidden;
@@ -81,7 +81,7 @@
 .collage .cp3{--wash:linear-gradient(120deg, rgba(122,111,96,.26), rgba(240,230,208,.12));}
 .collage .cp4{--wash:linear-gradient(240deg, rgba(192,86,33,.24), rgba(217,164,65,.20));}
 
-/* ── 3. THE REVEAL — the pond settling on load ──────────────────────────
+/* ── 3. THE REVEAL - the pond settling on load ──────────────────────────
    The page is already painted underneath, so this thins away rather than
    wiping in. Rings spread once, the surface fades, and pond.js removes the
    node entirely so nothing is left to intercept clicks. */

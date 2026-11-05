@@ -2,7 +2,7 @@
   /* v42: one side-padding rhythm for every container. */
   --pad-x:clamp(18px,4vw,28px);
 
-  /* v42: paper panels; header/cards use GlassKit-inspired glass at file end. */
+  /* v42: solid paper panels. No translucency, no glass on cards. */
   --panel:#fdfaf4;
   --panel-2:#fbf7ef;
 
@@ -24,16 +24,16 @@
   /* v40 water column: three steps DOWN from paper so the additive caustics
      have contrast to read against. Still warm cream, not grey - the water is
      a tint of the same earth, and every tone derives from --paper. */
-  --water-top:#efe5d2;    /* at the surface */
-  --water-mid:#eae0c9;    /* mid column */
-  --water-deep:#e4d8bd;   /* toward the bed */
+  --water-top:#f4ecdc;    /* at the surface */
+  --water-mid:#ede3cd;    /* mid column */
+  --water-deep:#e2d5b9;   /* toward the bed */
   --ochre-soft:#f6ead0;   /* ochre at whisper strength, for tag fills */
   --ochre-ink:#7a5a1c;    /* readable text on --ochre-soft */
   --ink-soft:#cdc4b6;     /* text inside the dark bands */
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:transparent;color:var(--ink);line-height:1.68;font-size:1.02rem;padding-bottom:64px;animation:bodyin .5s ease both}
+body{font-family:var(--font-body);background:transparent;color:var(--ink);line-height:1.68;font-size:1.02rem;padding-bottom:64px;animation:bodyin 760ms ease both}
 @keyframes bodyin{from{opacity:0}to{opacity:1}}
 .wrap{max-width:1020px;margin:0 auto;padding:0 var(--pad-x)}
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.012em;line-height:1.18}
@@ -51,18 +51,18 @@ img{max-width:100%}
 /* folk trim: dashes + dots, opens like a doorway */
 .folkline{height:6px;transform-origin:left;background:
   radial-gradient(circle at 10px 3.5px, var(--paper) 1.6px, transparent 2px) 0 0/28px 7px,
-  repeating-linear-gradient(90deg,var(--terra) 0 12px,var(--ochre) 12px 20px,var(--terra-dark) 20px 30px);opacity:.9;animation:folkopen .9s var(--ease) both}
+  repeating-linear-gradient(90deg,var(--terra) 0 12px,var(--ochre) 12px 20px,var(--terra-dark) 20px 30px);opacity:.9;animation:folkopen 760ms var(--ease) both}
 @keyframes folkopen{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 /* sticky header */
-header{position:sticky;top:0;z-index:40;background:rgba(250,246,240,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:.85rem 0 .6rem;transition:box-shadow .3s ease}
+header{position:sticky;top:0;z-index:40;background:rgba(250,246,240,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:.85rem 0 .6rem;transition:box-shadow 380ms ease}
 header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid var(--line)}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:nowrap}
 .brand{font-size:1.28rem;font-weight:700;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.55rem}
 .brand span{color:var(--terra-dark)}
 .fmark{width:30px;height:19px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat}
 .navlinks{display:flex;gap:.4rem;flex-wrap:nowrap}
-.navlinks a{font-family:var(--font-ui);font-size:.74rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:6px;position:relative;transition:color .2s ease,background .2s ease}
-.navlinks a::after{content:"";position:absolute;left:.6rem;right:.6rem;bottom:.18rem;height:2px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease)}
+.navlinks a{font-family:var(--font-ui);font-size:.74rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:6px;position:relative;transition:color 220ms ease,background 220ms ease}
+.navlinks a::after{content:"";position:absolute;left:.6rem;right:.6rem;bottom:.18rem;height:2px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform 220ms var(--ease)}
 .navlinks a:hover{color:var(--terra-dark);background:var(--ochre-soft)}
 .navlinks a:hover::after,.navlinks a.on::after{transform:scaleX(1)}
 .navlinks a.on{color:var(--terra-dark)}
@@ -72,7 +72,7 @@ header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid
   .navlinks a{white-space:nowrap}
 }
 /* buttons: folk stitch */
-.btn{display:inline-block;background:var(--terra);color:#fff;text-decoration:none;padding:.78rem 1.55rem;border-radius:6px;font-family:var(--font-ui);font-size:.85rem;border:none;cursor:pointer;transition:transform .18s var(--ease),background-color .2s ease,box-shadow .2s ease;
+.btn{display:inline-block;background:var(--terra);color:#fff;text-decoration:none;padding:.78rem 1.55rem;border-radius:6px;font-family:var(--font-ui);font-size:.85rem;border:none;cursor:pointer;transition:transform 140ms var(--ease),background-color 220ms ease,box-shadow 220ms ease;
   background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px;
   box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28), inset 0 0 0 4px var(--terra)}
 .btn:hover{background-color:var(--terra-dark);transform:translateY(-1px);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.36), inset 0 0 0 4px var(--terra-dark), 0 8px 18px rgba(154,69,34,.22)}
@@ -91,7 +91,7 @@ header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid
 @keyframes float{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(-14px) rotate(2deg)}}
 @media(max-width:720px){.hero{grid-template-columns:1fr;gap:1.6rem}}
 /* load-in for hero children */
-.fadeup{animation:fadeUp .7s var(--ease) both}
+.fadeup{animation:fadeUp 760ms var(--ease) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 /* pagehead */
 .pagehead{padding:3rem 0 2rem;position:relative}
@@ -109,11 +109,11 @@ section::before{content:"";position:absolute;left:0;right:0;top:-6px;height:10px
   background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 10' fill='%23d9a441'%3E%3Ccircle cx='8' cy='5' r='2.2'/%3E%3Crect x='30' y='1.5' width='7' height='7' transform='rotate(45 33.5 5)'/%3E%3Ccircle cx='70' cy='5' r='2.8'/%3E%3Crect x='103' y='1.5' width='7' height='7' transform='rotate(45 106.5 5)'/%3E%3Ccircle cx='132' cy='5' r='2.2'/%3E%3C/svg%3E") center/140px 10px no-repeat;opacity:.55;padding:0 6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:1.4rem}
 .grid.g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.card{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.5rem;position:relative;transition:box-shadow .3s ease,border-color .3s ease;box-shadow:0 1px 2px rgba(58,50,42,.05),0 8px 22px -14px rgba(58,50,42,.18)}
+.card{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.5rem;position:relative;transition:box-shadow 380ms ease,border-color 380ms ease;box-shadow:0 1px 2px rgba(58,50,42,.05),0 8px 22px -14px rgba(58,50,42,.18)}
 .card.tilt{transform-style:preserve-3d}
 .card.tilt:hover{box-shadow:var(--sh);border-color:var(--line);z-index:2}
 .card:before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;border-radius:0 0 3px 3px;
-  background:repeating-linear-gradient(90deg,var(--ochre) 0 8px,transparent 8px 14px);opacity:.35;transition:opacity .3s ease}
+  background:repeating-linear-gradient(90deg,var(--ochre) 0 8px,transparent 8px 14px);opacity:.35;transition:opacity 380ms ease}
 .card:hover:before{opacity:.8}
 .card h3{margin-bottom:.35rem}
 .price{color:var(--terra-dark);font-family:var(--font-ui);font-weight:700;margin:.5rem 0}
@@ -122,7 +122,7 @@ section::before{content:"";position:absolute;left:0;right:0;top:-6px;height:10px
 .card li{padding-left:1.15rem;position:relative}
 .card li:before{content:"";position:absolute;left:0;top:.55em;width:.45rem;height:.45rem;transform:rotate(45deg);background:var(--terra)}
 .teasercard{display:block;text-decoration:none;color:var(--ink)}
-.teasercard .go{display:inline-block;margin-top:.7rem;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);font-weight:700;transition:transform .25s var(--ease)}
+.teasercard .go{display:inline-block;margin-top:.7rem;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);font-weight:700;transition:transform 220ms var(--ease)}
 .teasercard:hover .go{transform:translateX(4px)}
 /* central feature panel (Auto Hub) */
 .feature{background:linear-gradient(180deg,rgba(43,38,32,.94),rgba(43,38,32,.88));border-radius:16px;padding:2.8rem 2.2rem;text-align:center;position:relative;overflow:hidden;
@@ -146,24 +146,24 @@ section::before{content:"";position:absolute;left:0;right:0;top:-6px;height:10px
 /* gallery */
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.05rem;margin-top:1.4rem}
 .gal figure{margin:0;cursor:zoom-in;overflow:hidden;border-radius:12px;position:relative}
-.gal img,.gal .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;transition:transform .45s var(--ease)}
+.gal img,.gal .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;transition:transform 760ms var(--ease)}
 .gal figure:hover img,.gal figure:hover .ph{transform:scale(1.045)}
 .gal figcaption{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);padding:.5rem .2rem}
 /* forms */
 form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.7rem;margin-top:1.4rem;position:relative;box-shadow:0 1px 2px rgba(58,50,42,.05),0 10px 26px -16px rgba(58,50,42,.20)}
 .pform label{display:block;font-family:var(--font-ui);font-size:.75rem;font-weight:700;margin:1rem 0 .3rem;color:var(--ink)}
 .pform label:first-of-type{margin-top:0}
-.pform input,.pform select,.pform textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:.85rem;background:var(--paper);color:var(--ink);transition:border-color .2s ease,box-shadow .2s ease}
+.pform input,.pform select,.pform textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:1rem;background:var(--paper);color:var(--ink);transition:border-color 220ms ease,box-shadow 220ms ease}
 .pform input:focus,.pform select:focus,.pform textarea:focus{outline:2px solid var(--terra);outline-offset:2px;border-color:var(--terra)}
 .pform .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .stars{display:flex;gap:.3rem;flex-direction:row-reverse;justify-content:flex-end}
-.stars label{font-size:1.55rem;color:var(--line);cursor:pointer;margin:0;transition:color .15s ease,transform .15s ease}
+.stars label{font-size:1.55rem;color:var(--line);cursor:pointer;margin:0;transition:color 140ms ease,transform 140ms ease}
 .stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra-dark);transform:scale(1.08)}
 .fresult{display:none;margin-top:1rem;padding:.8rem 1rem;border-radius:6px;background:var(--ochre-soft);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.8rem;color:var(--ochre-ink)}
 .fresult.show{display:block}
 /* board */
 .board{margin-top:1.4rem}
-.post{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ochre);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem;transition:transform .25s var(--ease),box-shadow .25s ease}
+.post{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ochre);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem;transition:transform 220ms var(--ease),box-shadow 220ms ease}
 .post:hover{transform:translateX(4px);box-shadow:var(--sh)}
 .post .meta{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
 .post .topic{display:inline-block;background:var(--ochre-soft);color:var(--ochre-ink);font-family:var(--font-ui);font-size:.68rem;padding:.15rem .55rem;border-radius:99px;margin-left:.5rem}
@@ -186,7 +186,7 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 .fbrandname span{color:var(--terra-dark)}
 .fcols p{font-size:.85rem;margin-top:.6rem;max-width:16rem}
 .fcols h4{font-family:var(--font-ui);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
-.fcols a{display:block;font-family:var(--font-ui);font-size:.82rem;color:var(--ink);text-decoration:none;padding:.22rem 0;transition:color .2s ease,transform .2s ease}
+.fcols a{display:block;font-family:var(--font-ui);font-size:.82rem;color:var(--ink);text-decoration:none;padding:.22rem 0;transition:color 220ms ease,transform 220ms ease}
 .fcols a:hover{color:var(--terra-dark);transform:translateX(3px)}
 .fbottom{border-top:1px solid var(--line);padding:1.1rem 0 2.6rem;font-family:var(--font-ui);font-size:.74rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 @media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
@@ -206,7 +206,7 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 .fbsub{max-width:40rem;margin:0}
 .persona{font-family:var(--font-ui);font-size:.78rem;color:var(--terra-dark);margin:-.3rem 0 .35rem}
 .promises{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem;margin-top:1.4rem}
-.promises div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.85rem .9rem .85rem 2.1rem;font-family:var(--font-ui);font-size:.83rem;position:relative;color:var(--ink);transition:transform .2s var(--ease),box-shadow .2s ease}
+.promises div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.85rem .9rem .85rem 2.1rem;font-family:var(--font-ui);font-size:.83rem;position:relative;color:var(--ink);transition:transform 220ms var(--ease),box-shadow 220ms ease}
 .promises div:hover{transform:translateY(-2px);box-shadow:var(--sh)}
 .promises div::before{content:"";position:absolute;left:.85rem;top:50%;transform:translateY(-50%) rotate(45deg);width:.5rem;height:.5rem;background:var(--terra)}
 .step .num{display:inline-flex;align-items:center;justify-content:center;width:2.3rem;height:2.3rem;border-radius:50%;background:var(--terra);color:#fff;font-family:var(--font-head);font-size:1.15rem;margin-bottom:.7rem;box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.3),inset 0 0 0 4px var(--terra)}
@@ -217,7 +217,7 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 .costcard .demo-tag{margin-top:.8rem}
 @media(max-width:640px){.costrows{grid-template-columns:1fr}}
 .menucard{margin-top:1.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.6rem}
-.menucard .day{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.75rem .8rem;transition:transform .2s var(--ease),box-shadow .2s ease}
+.menucard .day{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.75rem .8rem;transition:transform 220ms var(--ease),box-shadow 220ms ease}
 .menucard .day:hover{transform:translateY(-2px);box-shadow:var(--sh)}
 .menucard .day b{display:block;font-family:var(--font-ui);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.3rem}
 .menucard .day span{font-size:.8rem;color:var(--muted);line-height:1.5;display:block}
@@ -243,7 +243,7 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 @media(min-width:861px){.mobilebar{display:none!important}}
 
 /* ---------- v6: type system, modern hand ---------- */
-/* v55 — THIS BLOCK WAS NEVER APPLIED. It was written as SCSS: @font-face and a
+/* v55 - THIS BLOCK WAS NEVER APPLIED. It was written as SCSS: @font-face and a
    second :root nested INSIDE a :root rule. Plain CSS has no rule nesting, so
    the browser's parser discarded all of it - meaning --font-head, --font-ui and
    --font-body were never defined, and document.fonts.size was 0. Every
@@ -291,7 +291,7 @@ p{color:var(--muted);font-family:var(--font-body)}
 /* de-decorate: folk motifs stay, repetition goes */
 section:not(.flat)::before{display:none}
 .card:before{display:none}
-.card{border-radius:var(--r-md);box-shadow:none;transition:border-color .3s ease,transform .3s var(--ease)}
+.card{border-radius:var(--r-md);box-shadow:none;transition:border-color 380ms ease,transform 380ms var(--ease)}
 .card.tilt:hover{box-shadow:none;border-color:var(--ochre)}
 .promises div,.amen div,.menucard .day,.mapbox,form.pform{border-radius:var(--r-sm);box-shadow:none}
 .mapbox{box-shadow:none}
@@ -388,7 +388,7 @@ section>*:not(.ripplelotus){position:relative;z-index:1}
 .plaque{padding-bottom:1.6rem}
 .plaque .lotusdraw{top:auto;bottom:1.5rem;transform:translateX(-50%);width:180px;opacity:.13}
 @keyframes drawlotus{from{stroke-dashoffset:160}to{stroke-dashoffset:0}}
-.flow{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.flow{opacity:0;transform:translateY(16px);transition:opacity 760ms var(--ease),transform 760ms var(--ease)}
 .flow.flow-in{opacity:1;transform:none}
 .card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow{transform:translateY(12px)}
 .card.flow.flow-in,.promises div.flow.flow-in,.menucard .day.flow.flow-in,.amen div.flow.flow-in{transform:none}
@@ -405,7 +405,7 @@ html.reduce .flow{opacity:1;transform:none}
 /* v7: the pagehead lotus is redundant against the textured ground */
 .pagehead::after{content:none}
 
-/* v7: section separators are hairlines only — the ground carries the texture */
+/* v7: section separators are hairlines only - the ground carries the texture */
 section:not(.flat)::before{content:none}
 
 /* v7.1: never let a cached shell hide a new deploy */
@@ -463,7 +463,7 @@ p,li{text-shadow:0 1px 0 rgba(255,255,255,.35)}
 footer{border-top:1px solid rgba(232,224,212,.8);background-image:linear-gradient(180deg,rgba(255,255,255,0),rgba(244,236,223,.55)),var(--weave)}
 /* arrival rhythm: everything on the way down joins the same motion */
 .hero .cta-row,.familyband,.tourbox,.costrows>div,.voice,.statrow>div,.plaque,.board .post,.loc,.picker,.day{
-  opacity:0;transform:translateY(14px);transition:opacity .75s var(--ease),transform .75s var(--ease);
+  opacity:0;transform:translateY(14px);transition:opacity 760ms var(--ease),transform 760ms var(--ease);
 }
 .hero .cta-row.in,.familyband.in,.tourbox.in,.costrows>div.in,.voice.in,.statrow>div.in,.plaque.in,.board .post.in,.loc.in,.day.in{
   opacity:1;transform:none;
@@ -472,7 +472,7 @@ footer{border-top:1px solid rgba(232,224,212,.8);background-image:linear-gradien
 .folkline{background-image:radial-gradient(circle at 10px 3px, rgba(250,246,240,.9) 1.5px, transparent 2px),
   repeating-linear-gradient(90deg,var(--terra) 0 14px,var(--ochre) 14px 24px,var(--terra-dark) 24px 36px)}
 
-/* v9: the two remaining breakers — the footer strip and the bottom bar blend into the ground */
+/* v9: the two remaining breakers - the footer strip and the bottom bar blend into the ground */
 footer{margin-top:2.4rem}
 .fbottom{border-top:1px solid rgba(232,224,212,.7);background:transparent}
 .mobilebar{border-top:1px solid rgba(232,224,212,.9)}
@@ -484,7 +484,7 @@ footer{margin-top:2.4rem}
 }
 
 /* ============================================================
-   v12 — ONE SURFACE, TOP TO BOTTOM.
+   v12 - ONE SURFACE, TOP TO BOTTOM.
    Every band, panel and block lets the ambient layer read through.
    This block is last on purpose: it wins the cascade outright.
    ============================================================ */
@@ -548,7 +548,7 @@ footer { background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(244
 }
 
 /* ============================================================
-   v13 — ROLE DISCIPLINE.
+   v13 - ROLE DISCIPLINE.
    Six colours, one job each. This is what stops them contradicting.
    ============================================================ */
 
@@ -604,16 +604,16 @@ form.pform, .plaque, .statrow>div, .faq details, .costrows>div, .tourbox, .ph {
 /* dots and diamonds all take the ochre trim, at one opacity */
 .card li:before { background: var(--ochre) !important; }
 
-/* ============ v14 — real photos ============ */
+/* ============ v14 - real photos ============ */
 /* hero shot: same box the placeholder had, but a real photo fills it */
 a.ph.heroshot { border: 1px solid var(--line); padding: 0; background: none; overflow: hidden; display: block; border-radius: 12px; }
 a.ph.heroshot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 11px; }
 /* gallery figures: photos carry their own frame */
 .gal figure img { background: var(--paper-deep); }
 
-/* ================= v16 FOLK SHAPE PASS — doorways, not rectangles =================
+/* ================= v16 FOLK SHAPE PASS - doorways, not rectangles =================
    The house is the product. Every photo becomes a doorway (arched top, grounded
-   base) — the oldest Indian home signal. Buttons become little doorways too.
+   base) - the oldest Indian home signal. Buttons become little doorways too.
    No new colours: ochre stays ornament, terracotta stays action. */
 
 /* Doorway arches on all photos */
@@ -630,7 +630,7 @@ section.flat figure.reveal img,figure.reveal>img{border-radius:150px 150px 10px 
 .btn.ghost::after{background:rgba(217,164,65,.4)}
 .btn.sm::after{bottom:4px}
 
-/* A day in the house — the rhythm strip */
+/* A day in the house - the rhythm strip */
 .daystrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 .day .dtime{display:block;font-family:var(--font-ui);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem}
 .day .ddia{display:block;width:9px;height:9px;background:var(--ochre);transform:rotate(45deg);margin:0 0 .7rem 0}
@@ -640,12 +640,12 @@ section.flat figure.reveal img,figure.reveal>img{border-radius:150px 150px 10px 
 /* arches soften on small screens so images don't lose their tops */
 @media(max-width:520px){.gal img,.gal .ph,.ph,a.ph.heroshot{border-radius:80px 80px 8px 8px}}
 
-/* ============ v17 SCHEME CONSISTENCY — the site is a paper house ============ */
+/* ============ v17 SCHEME CONSISTENCY - the site is a paper house ============ */
 html{color-scheme:light}
 ::selection{background:var(--ochre-soft);color:var(--ink)}
 :focus-visible{outline-color:var(--terra)}
 
-/* ============ v18 BORDERLESS PASS — no seams anywhere, glass + shadow only ============
+/* ============ v18 BORDERLESS PASS - no seams anywhere, glass + shadow only ============
    Header, footer, sides, sections, cards, photos: zero lines. Separation comes from
    the translucent glass, soft shadows and spacing rhythm. Focus rings stay (a11y). */
 header.scrolled{border-bottom:none!important}
@@ -667,7 +667,7 @@ footer,.fbottom,.mobilebar,.familyband{border:none!important}
 @keyframes vpulse{0%,100%{opacity:1}50%{opacity:.3}}
 @media(max-width:900px){.vacancy{display:none}}
 
-/* ============ v20 BLOOMING LOTUS — the mark grows out of its pond ============ */
+/* ============ v20 BLOOMING LOTUS - the mark grows out of its pond ============ */
 .lotusmark{width:30px;height:20px;color:var(--terra)}
 .lotusmark .lp{transform-box:fill-box;transform-origin:50% 100%;animation:lbloom 7s var(--ease) infinite alternate}
 @keyframes lbloom{from{transform:scale(1) rotate(0deg)}to{transform:scale(1.05) rotate(-.6deg)}}
@@ -675,12 +675,12 @@ footer,.fbottom,.mobilebar,.familyband{border:none!important}
 @keyframes lrip{0%{transform:scale(.55);opacity:0}25%{opacity:.7}70%{transform:scale(1.18);opacity:0}100%{transform:scale(1.18);opacity:0}}
 @media(prefers-reduced-motion:reduce){.lotusmark .lp,.lotusmark .r1{animation:none}}
 
-/* ============ v21 BIG LOTUS — the emblem opens every page ============ */
+/* ============ v21 BIG LOTUS - the emblem opens every page ============ */
 .lotusbig{width:60px;height:40px;display:block;margin:0 0 .35rem 0;filter:drop-shadow(0 4px 8px rgba(154,69,34,.12))}
 .lotusmid{width:34px;height:23px;display:inline-block;vertical-align:-6px;margin:0 .45rem .15rem 0;filter:drop-shadow(0 2px 5px rgba(154,69,34,.10))}
 @media(max-width:520px){.lotusbig{width:48px;height:32px}.lotusmid{width:28px;height:19px;vertical-align:-5px}}
 
-/* ============ v42 SOLID — panels are opaque paper, not glass ============
+/* ============ v42 SOLID - panels are opaque paper, not glass ============
    This block used to be "v22 GLASS SLAB": every panel got a translucent
    rgba(250,246,240,.82) fill plus inset white highlights, and the header got
    backdrop-filter blur(10px) saturate(1.05). That is what read as "glass
@@ -703,7 +703,7 @@ header{
   -webkit-backdrop-filter:blur(10px) saturate(1.05)!important;
   box-shadow:0 1px 0 rgba(58,50,42,.08), 0 10px 30px rgba(58,50,42,.06)!important;
 }
-.flow{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);will-change:opacity,transform}
+.flow{opacity:0;transform:translateY(26px);transition:opacity 760ms var(--ease),transform 760ms var(--ease);will-change:opacity,transform}
 .card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow{transform:translateY(20px)}
 /* v42 FIX: the arrival END state must out-rank the START state. These two rules
    used to be !important on the start values only, so .card.flow (specificity
@@ -733,7 +733,7 @@ html.reduce .flow{opacity:1!important;transform:none!important}
 
 /* v24: the vacancy badge is a tap now */
 a.vacancy{color:inherit;text-decoration:none}
-/* ============ v27 FLUID — continuous adaptation, any screen, no steps ============ */
+/* ============ v27 FLUID - continuous adaptation, any screen, no steps ============ */
 body{font-size:clamp(.95rem,1.7vw,1.02rem);overflow-x:clip;-webkit-text-size-adjust:100%}
 .lede{font-size:clamp(.96rem,1.9vw,1.08rem)}
 .hero{gap:clamp(1.2rem,4vw,2.8rem)!important;padding-top:clamp(2rem,6vw,3.4rem)!important;padding-bottom:clamp(1.6rem,5vw,2.6rem)!important}
@@ -749,7 +749,7 @@ input,select,textarea{font-size:max(16px,.95rem)}
 .navlinks{gap:clamp(.9rem,2.4vw,1.6rem)}
 @media(max-width:480px){.navlinks a{padding-inline:.4rem;font-size:.82rem}.fblarge{font-size:clamp(1rem,4vw,1.2rem)}}
 
-/* ============ v29 MOBILE FOCUS — de-cluttered, thumb-first ============ */
+/* ============ v29 MOBILE FOCUS - de-cluttered, thumb-first ============ */
 .miniopen{flex:1.1;text-align:center;font-family:var(--font-ui);font-size:.72rem;font-weight:700;color:var(--ochre-ink);background:rgba(246,234,208,.95);padding:.45rem .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* v46: the footer's last line sat FLUSH against the fixed bottom bar on a phone
    - measured zero gap in a real render. body{padding-bottom} alone does not
@@ -771,7 +771,7 @@ body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 10px)}
 }
 @media(max-width:860px){.mail-float{display:none!important}}
 
-/* ============ v31 CRAFT — the details you feel more than see ============ */
+/* ============ v31 CRAFT - the details you feel more than see ============ */
 ::-webkit-scrollbar{width:10px}
 ::-webkit-scrollbar-track{background:#f2ead9}
 ::-webkit-scrollbar-thumb{background:#cdc4b6;border-radius:6px;border:2px solid #f2ead9}
@@ -779,14 +779,14 @@ body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 10px)}
 .btn:active{transform:translateY(1px) scale(.985)}
 .btn:hover::after{opacity:1}
 .shead h2{position:relative;padding-bottom:.45rem}
-.shead h2::after{content:"";position:absolute;left:0;bottom:0;width:2.4em;height:3px;border-radius:2px;background:var(--ochre);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease) .15s}
+.shead h2::after{content:"";position:absolute;left:0;bottom:0;width:2.4em;height:3px;border-radius:2px;background:var(--ochre);transform:scaleX(0);transform-origin:left;transition:transform 760ms var(--ease) 140ms}
 .flow-in .shead h2::after,html.reduce .shead h2::after{transform:scaleX(1)}
 .voice{position:relative}
-.gal figure{transition:transform .45s var(--ease),box-shadow .45s var(--ease);border-radius:150px 150px 10px 10px;overflow:hidden}
+.gal figure{transition:transform 760ms var(--ease),box-shadow 760ms var(--ease);border-radius:150px 150px 10px 10px;overflow:hidden}
 .gal figure:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(43,38,32,.14)}
 
 /* ==========================================================================
-   v34 — SEAMLESS PASS
+   v34 - SEAMLESS PASS
    Fixes the mobile blur no-op, gives glass panels real compositor layers so
    the ambient canvas can't force them to repaint, folds the vignette and
    grain into the canvas stack, and finishes the accessibility gaps.
@@ -838,7 +838,7 @@ body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 10px)}
    the grain/vignette overlays stop being recomputed, so they stay in CSS but
    lose their blend cost: multiply over a static frame is cheap. --- */
 html.is-scrolling body::before{opacity:.42}
-body::before{transition:opacity .22s linear}
+body::before{transition:opacity 220ms linear}
 
 /* --- 4. ONE easing. The file had five curves doing the same job; these are
    the two roles only: arrivals and interactions. --- */
@@ -871,7 +871,7 @@ body::before{transition:opacity .22s linear}
   width:clamp(28px,6vw,52px);
   transform-origin:left;
   transform:scaleX(.28);
-  transition:transform .7s var(--ease-in);
+  transition:transform 760ms var(--ease-in);
 }
 .flow-in .shead h2::after,html.reduce .shead h2::after{transform:scaleX(1)}
 
@@ -913,7 +913,7 @@ html{scrollbar-color:var(--ochre) transparent;scrollbar-width:thin}
    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
 /* ==========================================================================
-   v35 — ONE BODY OF WATER
+   v35 - ONE BODY OF WATER
    The canvas paints the water. These layers are the AIR ABOVE IT: the grain is
    suspended silt, the vignette is the depth falloff at the pond's edge, and the
    frame wash is the light pooling on the surface. They all share one light
@@ -956,7 +956,7 @@ body::before{
   75%  {transform:translate3d(7px,-8px,0)}
   100% {transform:translate3d(0,0,0)}
 }
-/* when the page moves, the water moves with it — and the silt settles */
+/* when the page moves, the water moves with it - and the silt settles */
 html.is-scrolling body::before{animation-play-state:paused;opacity:.34}
 html.was-scrolling body::before{opacity:.4}
 
@@ -966,7 +966,7 @@ html.was-scrolling body::before{opacity:.4}
   background:
     radial-gradient(125% 95% at 50% 44%,transparent 50%,rgba(43,38,32,.085) 100%),
     radial-gradient(150% 110% at 50% 120%,rgba(43,38,32,.055),transparent 58%);
-  transition:opacity .55s var(--tide-ease);
+  transition:opacity 760ms var(--tide-ease);
 }
 html.is-scrolling .vignette{opacity:.70}
 html.was-scrolling .vignette{opacity:.84}
@@ -980,19 +980,19 @@ body::after{
   mix-blend-mode:screen;
   opacity:.6;
   animation:surfacebr var(--tide) var(--tide-ease) infinite alternate;
-  transition:opacity .5s linear;
+  transition:opacity 760ms linear;
 }
 @keyframes surfacebr{
   from{transform:translate3d(0,0,0) scale(1)}
   to  {transform:translate3d(0,-1.6%,0) scale(1.035)}
 }
-html.is-scrolling body::after{opacity:.92;transition:opacity .22s linear}
+html.is-scrolling body::after{opacity:.92;transition:opacity 220ms linear}
 /* v39: the light LINGERS. It comes up with the water and takes nearly a
    second to sink back, so the surface reads as still settling rather than
    being switched off the instant the page stops. */
 html.was-scrolling body::after{opacity:.78;transition:opacity .85s var(--tide-ease)}
 
-/* --- arrival: content does not "drop in", it RESURFACES — rising with a
+/* --- arrival: content does not "drop in", it RESURFACES - rising with a
    little water drag, the way something floats up off a pond bed. --- */
 .flow{
   opacity:0;
@@ -1001,16 +1001,16 @@ html.was-scrolling body::after{opacity:.78;transition:opacity .85s var(--tide-ea
      reveal and then snapped back to the column. A reveal should lift. */
   transform:translate3d(0,20px,0);
   filter:blur(3px);
-  transition:opacity .78s var(--ease-in),
-             transform .9s cubic-bezier(.16,.84,.36,1),
-             filter .78s var(--ease-in);
+  transition:opacity 760ms var(--ease-in),
+             transform 760ms cubic-bezier(.16,.84,.36,1),
+             filter 760ms var(--ease-in);
 }
 .flow.flow-in{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
 /* cards get a longer float so they read as heavier, deeper objects */
 .card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow,
 .post.flow,.voice.flow,.costrows>div.flow{
   transform:translate3d(0,26px,0);
-  transition-duration:.95s,.95s,.8s;
+  transition-duration:760ms,760ms,760ms;
 }
 
 /* --- the ground itself drifts a hair as you scroll (parallax breathing),
@@ -1021,9 +1021,9 @@ html.was-scrolling body::after{opacity:.78;transition:opacity .85s var(--tide-ea
 .shead h2::after{transform-origin:left;will-change:transform}
 
 /* --- links and buttons get a ripple-scale nudge, not a jump --- */
-.btn,.fcols a{transition:transform .32s cubic-bezier(.2,.8,.3,1),
-                          background-color .32s var(--ease-io),
-                          color .32s var(--ease-io)}
+.btn,.fcols a{transition:transform 380ms cubic-bezier(.2,.8,.3,1),
+                          background-color 380ms var(--ease-io),
+                          color 380ms var(--ease-io)}
 
 /* --- reduced motion: keep the water as a still photograph --- */
 html.reduce body::before,
@@ -1046,7 +1046,7 @@ html{
 
 
 /* ==========================================================================
-   v38 — AUDIT PASS
+   v38 - AUDIT PASS
    Contrast repairs, the hidden-attribute fix, and killing dead selectors.
    ========================================================================== */
 
@@ -1072,7 +1072,7 @@ html{
 
 
 /* ==========================================================================
-   v38 — DEEP SWEEP
+   v38 - DEEP SWEEP
    ========================================================================== */
 
 
@@ -1123,8 +1123,8 @@ body::after{
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v48 — ONE MOTION SCALE
-   The site had ~8 different durations (.2s .22s .25s .32s .45s .65s .7s .8s)
+   v48 - ONE MOTION SCALE
+   The site had ~8 different durations (220ms 220ms 220ms 380ms 760ms 760ms .7s 760ms)
    for the same class of interaction, which is what makes a page feel assembled
    rather than designed: nothing shares a rhythm. Everything below is derived
    from four steps, so every hover, press and reveal is on the same beat.
@@ -1171,7 +1171,7 @@ a:active{transition-duration:var(--t0)}
    from scroll position - no per-frame JS, no rAF loop. ---- */
 @property --settle{syntax:"<number>";inherits:false;initial-value:0}
 
-/* v48 — the scroll-velocity response.
+/* v48 - the scroll-velocity response.
    --sv is set by motion.js from the user's actual scroll speed (0..1) and
    decays back to 0. Nothing here animates on its own; the page just leans
    into the scroll and settles when you stop. That settle is the "seamless"
@@ -1201,7 +1201,7 @@ html.is-moving .scrollbar-progress{filter:brightness(1.12)}
 }
 html.reduce .lotusmark{transform:none}
 
-/* v49 — Prajna gallery: real photos first, motion kept on a short leash. */
+/* v49 - Prajna gallery: real photos first, motion kept on a short leash. */
 .gallery-shell{padding:clamp(1rem,3vw,2rem) 0 3rem}
 .gallery-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem 1.5rem;flex-wrap:wrap;margin:0 0 1.25rem}
 .gallery-count{font-family:var(--font-ui);font-size:.8rem;color:var(--muted);margin:.45rem 0}
@@ -1224,7 +1224,7 @@ html.reduce .lotusmark{transform:none}
 .gallery-item figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;padding:.72rem .45rem .4rem;color:var(--ink);font-size:.9rem;font-weight:650}
 .gallery-kind{flex:none;color:var(--muted);font:500 .68rem var(--font-ui);letter-spacing:.035em}
 .gallery-motion-ready .gallery-item:not(.gallery-visible){opacity:0;transform:translateY(12px)}
-.gallery-motion-ready .gallery-item{transition:opacity 500ms var(--e-out),transform 500ms var(--e-out),box-shadow var(--t2) var(--e-out),border-color var(--t2) var(--e-in-out)}
+.gallery-motion-ready .gallery-item{transition:opacity 760ms var(--e-out),transform 760ms var(--e-out),box-shadow var(--t2) var(--e-out),border-color var(--t2) var(--e-in-out)}
 .gallery-motion-ready .gallery-item.gallery-visible{opacity:1;transform:translateY(0)}
 .gallery-item:hover{border-color:rgba(192,86,33,.22);box-shadow:0 14px 32px rgba(58,50,42,.12)}
 @media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -1242,16 +1242,16 @@ html.reduce .lotusmark{transform:none}
 }
 
 /* immersive fullscreen lightbox with 3D parallax */
-.lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+.lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 380ms ease,visibility 380ms ease}
 .lightbox-backdrop.is-open{opacity:1;visibility:visible}
 .lightbox-container{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:clamp(1rem,3vw,3rem)}
 .lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem}
-.lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;transform:scale(.92) translateZ(0);transition:transform .55s cubic-bezier(.34,1.56,.64,1);will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
+.lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;transform:scale(.92) translateZ(0);transition:transform 760ms cubic-bezier(.34,1.56,.64,1);will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
 .lightbox-backdrop.is-open .lightbox-image{transform:scale(1) translateZ(0)}
 .lightbox-image-wrapper.is-tilting .lightbox-image{transition:none}
-.lightbox-close{position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);z-index:10001;width:48px;height:48px;border-radius:50%;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
+.lightbox-close{position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);z-index:10001;width:48px;height:48px;border-radius:50%;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 220ms ease,transform 220ms ease}
 .lightbox-close:hover{background:rgba(250,245,236,.18);transform:scale(1.05)}
-.lightbox-step{position:absolute;top:50%;transform:translateY(-50%);z-index:10001;width:48px;height:56px;border-radius:999px;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
+.lightbox-step{position:absolute;top:50%;transform:translateY(-50%);z-index:10001;width:48px;height:56px;border-radius:999px;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:#faf5ec;font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 220ms ease,transform 220ms ease}
 .lightbox-step:hover{background:rgba(250,245,236,.18);transform:translateY(-50%) scale(1.05)}
 .lightbox-prev{left:clamp(1rem,3vw,2rem)}.lightbox-next{right:clamp(1rem,3vw,2rem)}
 .lightbox-counter{position:absolute;bottom:clamp(1rem,3vw,2rem);left:50%;transform:translateX(-50%);z-index:10001;color:rgba(250,245,236,.8);font:500 .82rem var(--font-ui);font-variant-numeric:tabular-nums;margin:0}
@@ -1266,7 +1266,7 @@ html.reduce .lotusmark{transform:none}
   .lightbox-prev{left:.75rem}.lightbox-next{right:.75rem}
 }
 
-/* v50 — one owner per arrival transform, with hover states restored after it. */
+/* v50 - one owner per arrival transform, with hover states restored after it. */
 .promises div.flow.flow-in,.amen div.flow.flow-in,.post.flow.flow-in,
 .voice.flow.flow-in,.costrows>div.flow.flow-in,.menucard .day.flow.flow-in{
   transform:translate3d(0,0,0)
@@ -1275,12 +1275,12 @@ html.reduce .lotusmark{transform:none}
 .post.flow.flow-in:hover{transform:translateX(4px)}
 .menucard .day.flow.flow-in:hover{transform:translateY(-2px)}
 /* ══════════════════════════════════════════════════════════════════════════
-   v51 — FRESH WATER. One coherent pond.
+   v51 - FRESH WATER. One coherent pond.
 
    MEASURED BEFORE (this is why, not vibes):
    The caustics were drawing at alpha 0.30/0.20 with additive 'lighter'
    compositing, onto a bed already sitting at luminance 247-251. Adding light
-   to near-white can only push toward 255 — the measured per-tile standard
+   to near-white can only push toward 255 - the measured per-tile standard
    deviation was 2.8-7, which is flat paper. The water could not possibly
    read, because there was no headroom left to draw into.
 
@@ -1288,7 +1288,7 @@ html.reduce .lotusmark{transform:none}
    tan column (#efe5d2 -> #e4d8bd, lum 230->217) while the canvas painted its
    own near-white bed on top of it. Neither one was ever fully seen. On top of
    that, a full-screen multiply grain at 0.5 plus a vignette was dragging tiles
-   down to luminance 155 with sd 22 — that is the mud, not water.
+   down to luminance 155 with sd 22 - that is the mud, not water.
 
    THE FIX, three parts:
    1. The ground is ONE column, tuned mid-tone so light has somewhere to go.
@@ -1299,7 +1299,7 @@ html.reduce .lotusmark{transform:none}
 :root{
   /* The column. A shallow pond over warm earth: the light end is lifted and
      barely cooled so it reads CLEAN, the deep end keeps the earth warmth so
-     it never goes grey. Luminance runs ~235 down to ~205 — deliberately NOT
+     it never goes grey. Luminance runs ~235 down to ~205 - deliberately NOT
      near-white, because near-white is exactly what killed the caustics. */
   --water-top:#f4ecdc;
   --water-mid:#ede3cd;
@@ -1322,7 +1322,7 @@ body::before{
   opacity:.22!important;
   mix-blend-mode:multiply;
 }
-/* The pond edge. Barely there — it should frame the water, not dim it. */
+/* The pond edge. Barely there - it should frame the water, not dim it. */
 .vignette{
   background:
     radial-gradient(128% 96% at 50% 44%,transparent 58%,rgba(58,50,42,.045) 100%),
@@ -1353,7 +1353,7 @@ header{
   -webkit-backdrop-filter:blur(8px) saturate(1.04)!important;
 }
 /* ══════════════════════════════════════════════════════════════════════════
-   v53 — EMAIL CHANNEL + REAL RATES
+   v53 - EMAIL CHANNEL + REAL RATES
    .mail-link replaces .wa-link everywhere; the floating desktop button is
    renamed too so no CSS still targets a channel we have closed.
    ══════════════════════════════════════════════════════════════════════════ */
@@ -1379,8 +1379,8 @@ header{
 #share-note{display:none;font-family:var(--font-ui);font-size:.78rem;color:var(--terra-dark);margin-top:.6rem}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v55 — POLISH PASS
-   1. The font stack was dead (SCSS nesting in a .css file) — fixed above.
+   v55 - POLISH PASS
+   1. The font stack was dead (SCSS nesting in a .css file) - fixed above.
    2. Tap targets: the brand, the vacancy pill and the skip link were all under
       44px, which is the WCAG 2.5.5 minimum and the single easiest thing to
       get wrong on a phone.
@@ -1388,7 +1388,7 @@ header{
       a silent 2x jump that read as a mistake rather than a choice.
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* 2. tap targets — hit area grows, the visual stays the same size */
+/* 2. tap targets - hit area grows, the visual stays the same size */
 .brand{min-height:44px;padding:.4rem 0;display:inline-flex;align-items:center}
 a.vacancy{min-height:44px;padding:0 .55rem;display:inline-flex;align-items:center;white-space:nowrap}
 .skip{min-height:44px;display:inline-flex;align-items:center}
@@ -1402,10 +1402,10 @@ section{padding:clamp(2.2rem,4.5vw,3.4rem) 0}
 section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v55.1 — CONTRAST: the money must be readable.
+   v55.1 - CONTRAST: the money must be readable.
    Measured, not assumed:
      .costrows b  (the rent + deposit figures) rendered #c05621 on #fdfaf4
-     = 4.39:1 at 0.83rem — normal-size text, so WCAG AA needs 4.5:1. It was
+     = 4.39:1 at 0.83rem - normal-size text, so WCAG AA needs 4.5:1. It was
      failing, on the single most important string on the page.
      .price       #c05621 on #fdfaf4 = 4.39:1, but it is 1.9rem so it passes
      as large text. Darkened anyway: the two prices should read as one voice,
@@ -1422,7 +1422,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .price-alt span{color:var(--terra-dark)}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v57 — GALLERY, REBUILT FOR "NOT CROPPED, EFFORTLESS, ELEGANT"
+   v57 - GALLERY, REBUILT FOR "NOT CROPPED, EFFORTLESS, ELEGANT"
    - every cell is exactly the photo's own 3:2 ratio, so nothing is cut
    - the decorative "+" badge is gone; the whole frame is the target and the
      cursor plus a real focus ring carry the affordance instead
@@ -1436,7 +1436,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .gallery-grid{gap:clamp(.7rem,1.6vw,1.1rem)}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v58.1 — FORM CONTROLS MEET THE 44px TOUCH TARGET
+   v58.1 - FORM CONTROLS MEET THE 44px TOUCH TARGET
    Measured at 390px: name 37.8px, phone 37.8px, interest select 39.8px,
    move-in 37.8px. All under the 44px minimum, and these are the four controls
    a visitor has to touch to reach you, so they matter more than a nav link.
@@ -1448,7 +1448,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .pform select{padding-right:2.2rem}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v59 — SENTENCE-LEVEL LINK GETS A REAL HIT AREA
+   v59 - SENTENCE-LEVEL LINK GETS A REAL HIT AREA
    pune.html's lede is a single link wrapping the whole sentence, so its hit
    area was only 19px tall - the visitor has to land on the glyphs. Padding
    grows the target to ~44px; the negative margin cancels the layout shift so
@@ -1459,7 +1459,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .lede > a:only-child{display:inline-block;padding:.72rem 0;margin:-.72rem 0}
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v60 — DESIGN SYSTEM POLISH
+   v60 - DESIGN SYSTEM POLISH
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* --- 1. Consistent spacing scale (8px base) --- */
@@ -1529,7 +1529,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .navlinks a{color:var(--muted)}
   .navlinks a:hover,.navlinks a.on{color:var(--terra-dark)}
   .nav-toggle span{background:var(--ink)}
-  .tag{color:var(--terra)}
+  .tag{color:var(--terra-dark)}
   .btn{color:#fff}
   .btn.ghost{background-color:var(--ochre-soft);color:var(--ochre-ink);border-color:var(--ochre)}
   .btn.ghost:hover{box-shadow:0 8px 18px rgba(217,164,65,.25)}
@@ -1538,7 +1538,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .fbottom,.fbottom span{color:var(--muted)}
   .fcols h4{color:var(--muted)}
   .fcols a{color:var(--ink)}
-  .fcols a:hover{color:var(--terra)}
+  .fcols a:hover{color:var(--terra-dark)}
   .shead h2::after{background:var(--ochre)}
   .badge{background:var(--ochre-soft);border-color:var(--ochre);color:var(--ochre-ink)}
   .fresult,.post .topic{background:var(--ochre-soft);border-color:var(--ochre);color:var(--ochre-ink)}
@@ -1552,14 +1552,14 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .pform input,.pform select,.pform textarea{background:var(--paper)!important;color:var(--ink)!important;border-color:var(--line)!important}
   .pform input:focus,.pform select:focus,.pform textarea:focus{box-shadow:0 0 0 3px rgba(192,86,33,.28)!important}
   .stars label{color:var(--line)}
-  .stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra)}
+  .stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra-dark)}
   .teasercard{color:var(--ink)}
-  .teasercard .go{color:var(--terra)}
+  .teasercard .go{color:var(--terra-dark)}
   .scrollbar-progress{background:linear-gradient(90deg,var(--terra),var(--ochre))}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   v61 — UTILITY STANDARDISATION
+   v61 - UTILITY STANDARDISATION
    Replace inline styles with reusable classes so the whole site reads
    from one stylesheet, not a dozen one-off values.
    ══════════════════════════════════════════════════════════════════════════ */
@@ -1582,9 +1582,9 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .caption{text-align:center;font-size:.85rem;color:var(--muted);margin-top:.6rem}
 
 /* animation delays for staggered reveals */
-.delay-2{animation-delay:.14s}
+.delay-2{animation-delay:140ms}
 .delay-3{animation-delay:.23s}
-.delay-4{animation-delay:.32s}
+.delay-4{animation-delay:380ms}
 
 /* link reset for image links */
 .img-link{text-decoration:none;display:block}
@@ -1611,14 +1611,14 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 
 /* additional animation delays */
 .delay-3{animation-delay:.23s}
-.delay-2{animation-delay:.14s}
+.delay-2{animation-delay:140ms}
 
 /* ---- lead capture: honeypot + result states (2026-11-05) ----
    The honeypot is off-screen for humans and still tabbable-skipped for
    keyboards, so only a script fills it. Result states are colour-coded so
    a failed send never looks like a successful one. */
 .hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.fresult.fresult-ok{border-color:#2f6b46;background:rgba(47,107,70,.10);color:#1f4a30}
+.fresult.fresult-ok{border-color:var(--ink);background:var(--panel);color:var(--ink)}
 .fresult.fresult-err{border-color:#9a4522;background:rgba(154,69,34,.10);color:#6f2f14}
 .fresult.fresult-info{border-color:var(--ochre);background:var(--ochre-soft);color:#5a4320}
 .fresult a{color:inherit;text-decoration:underline;font-weight:700}
@@ -1651,7 +1651,7 @@ html{overflow-x:clip}
    so no-JS visitors see the untouched static site.
    ============================================================ */
 .reading-progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--terra);z-index:90;pointer-events:none}
-html.ix-ready header{transition:transform 380ms cubic-bezier(.22,.61,.36,1),box-shadow .3s ease}
+html.ix-ready header{transition:transform 380ms cubic-bezier(.22,.61,.36,1),box-shadow 380ms ease}
 html.ix-ready header.hide-away{transform:translateY(-100%)}
 html.ix-ready header.hide-away.scrolled{box-shadow:none}
 /* press-depth + ripple + loading-button */
@@ -1718,7 +1718,7 @@ html.ix-ready details[open] > summary::after{transform:rotate(45deg)}
 .copy-btn:hover{background:var(--ochre-soft)}
 .copy-btn.copied{background:var(--terra);color:#fff;border-color:var(--terra)}
 /* live-activity pulse on vacancy dot */
-.vdot{animation:pulse 2.2s ease-in-out infinite}
+.vdot{animation:pulse 2220ms ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.65}}
 /* value-flash on config price updates */
 .value-flash{animation:vflash 760ms cubic-bezier(.22,.61,.36,1)}
@@ -1734,7 +1734,7 @@ html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:treveal 760ms cubic-
 }
 
 /* ============================================================
-   premium-reset (2026-11-05) — header first, then vocabulary.
+   premium-reset (2026-11-05) - header first, then vocabulary.
    One row, max 95px desktop. No second-row slab: at 1024px the
    nav becomes the glass drawer, so links never wrap or scroll
    sideways at any width. Vacancy lives only in the header.
@@ -1837,7 +1837,7 @@ html.ix-ready header{transition:transform var(--t-state,380ms) var(--e-out),box-
 }
 
 /* ============================================================
-   premium-ui (2026-11-05) — index spacing / hierarchy / one CTA.
+   premium-ui (2026-11-05) - index spacing / hierarchy / one CTA.
    Appended BELOW the premium-reset header block; header lane
    owns everything above. Existing tokens only: six colours,
    Marcellus headings, arch crowns from v16, interior timings
@@ -1890,7 +1890,7 @@ main .card.tilt:hover{transform:translateY(-3px);box-shadow:var(--sh)}
 }
 
 /* ============================================================
-   redesign-vague (2026-11-05) — index only.
+   redesign-vague (2026-11-05) - index only.
    Decide surface: one idea per section, one CTA per view.
    Overrides the accumulated layers above for the new index
    structure; other pages keep their existing treatment.
@@ -1935,19 +1935,19 @@ main .hero .cta-row,main .costrows>div,main .loc,main .cta-strip{opacity:1!impor
 main .hero .cta-row{margin-top:1.4rem}
 
 /* ============================================================
-   INTERIOR strict pass (2026-11-05) — styles for the vanilla
+   INTERIOR strict pass (2026-11-05) - styles for the vanilla
    headless-hook ports in assets/site.js. Timings 140/220/380/760,
    easing cubic-bezier(.22,.61,.36,1). Existing tokens only.
    ============================================================ */
 .ix-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 /* press-depth (strict): JS pointer tracking drives .is-pressed */
 html.ix-ready .btn.is-pressed,html.ix-ready button.is-pressed,html.ix-ready .chip.is-pressed,html.ix-ready .segmented [role="tab"].is-pressed{transform:translateY(2px) scale(.98);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28),inset 0 0 0 4px var(--terra),0 2px 6px rgba(154,69,34,.18);transition-duration:140ms}
-/* ripple (strict): minVisible 220ms, fade 320ms, max 4 */
+/* ripple (strict): minVisible 220ms, fade 380ms, max 4 */
 html.ix-ready .btn,html.ix-ready button,html.ix-ready .chip{position:relative;overflow:hidden}
-.ripple-ix{position:absolute;border-radius:50%;background:rgba(250,246,240,.45);transform:scale(0);pointer-events:none;animation:ripIx .5s cubic-bezier(.22,.61,.36,1) forwards;z-index:0}
+.ripple-ix{position:absolute;border-radius:50%;background:rgba(250,246,240,.45);transform:scale(0);pointer-events:none;animation:ripIx 760ms cubic-bezier(.22,.61,.36,1) forwards;z-index:0}
 .btn.ghost .ripple-ix{background:rgba(192,86,33,.22)}
 @keyframes ripIx{to{transform:scale(var(--rip-scale,2));opacity:.35}}
-.ripple-ix.released{opacity:0;transition:opacity 320ms cubic-bezier(.22,.61,.36,1)}
+.ripple-ix.released{opacity:0;transition:opacity 380ms cubic-bezier(.22,.61,.36,1)}
 /* loading-button (strict): pending/success/error */
 .btn.is-success{background:var(--terra-dark)!important;color:#fff!important}
 .btn.is-error{background:var(--terra)!important}
@@ -1960,11 +1960,11 @@ html.ix-ready img.img-error{filter:none;opacity:1;background:var(--paper-deep)}
 .ix-skeleton span{display:block;height:72px;border-radius:12px;background:linear-gradient(100deg,var(--paper-deep) 40%,var(--ochre-soft) 50%,var(--paper-deep) 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
 .ix-skeleton span:nth-child(2){height:52px}.ix-skeleton span:nth-child(3){height:52px}
 /* text-reveal (strict): 10px rise + blur(8px), .06s stagger */
-.tv-word{display:inline-block;opacity:0;transform:translateY(10px);filter:blur(8px);transition:opacity 600ms cubic-bezier(.22,.61,.36,1),transform 600ms cubic-bezier(.22,.61,.36,1),filter 600ms cubic-bezier(.22,.61,.36,1)}
+.tv-word{display:inline-block;opacity:0;transform:translateY(10px);filter:blur(8px);transition:opacity 760ms cubic-bezier(.22,.61,.36,1),transform 760ms cubic-bezier(.22,.61,.36,1),filter 760ms cubic-bezier(.22,.61,.36,1)}
 .tv-in .tv-word{opacity:1;transform:none;filter:blur(0)}
 .tv-done .tv-word{opacity:1;transform:none;filter:none;transition:none}
 /* live-activity */
-.vdot.is-live{animation:pulse 850ms ease-in-out infinite}
+.vdot.is-live{animation:pulse 760ms ease-in-out infinite}
 /* tooltip-group (strict): JS-driven .tip-open */
 [data-tip].tip-open .tip-body{opacity:1;transform:translate(-50%,0)}
 .tip-body{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);background:var(--ochre-soft);color:var(--ink);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.72rem;line-height:1.4;padding:.45rem .6rem;border-radius:8px;width:max-content;max-width:220px;white-space:normal;opacity:0;pointer-events:none;transition:opacity 220ms cubic-bezier(.22,.61,.36,1),transform 220ms cubic-bezier(.22,.61,.36,1);z-index:20}

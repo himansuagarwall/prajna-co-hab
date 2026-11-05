@@ -1,5 +1,5 @@
 /* ============================================================
-   Prajna Co-hab — site config
+   Prajna Co-hab - site config
    ------------------------------------------------------------
    LIVE DATA. Rent and deposit figures were supplied by the owner
    on 2026-10-02. The dinner prices were reconciled on 2026-11-05:
@@ -41,7 +41,7 @@ window.PRAJNA = {
 
   /* ---- AVAILABILITY: nothing free as of 2026-11-05 ---- */
   bedsOpen: 0,
-  availability: "No beds free right now — tell us when you’re looking and we’ll put you first when one opens",
+  availability: "No beds free right now - tell us when you’re looking and we’ll put you first when one opens",
 
   /* ---- TERMS ---- */
   lockInMonths: 3,

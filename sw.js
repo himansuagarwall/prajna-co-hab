@@ -1,4 +1,4 @@
-/* Prajna Co-hab — service worker (v71)
+/* Prajna Co-hab - service worker (v71)
    Caches the app shell for offline reading.
 
    What changed in v71:
@@ -13,7 +13,7 @@
    - blog.html and testimonials.html are in the shell.
    - a navigation miss retries by pathname, so ?utm_source=... still works. */
 
-var V = 'prajna-v73';
+var V = 'prajna-v74';
 
 var SHELL = [
   './',
@@ -32,15 +32,15 @@ var SHELL = [
   './404.html',
   './offline.html',
   './manifest.webmanifest',
-  './config.js?v=70',
-  './assets/style.css?v=73',
-  './assets/pond.css?v=71',
-  './assets/site.js?v=70',
-  './assets/micro.js?v=73',
-  './assets/fluid.js?v=70',
-  './assets/motion.js?v=70',
-  './assets/gallery.js?v=70',
-  './assets/pond.js?v=70',
+  './config.js?v=74',
+  './assets/style.css?v=74',
+  './assets/pond.css?v=74',
+  './assets/site.js?v=74',
+  './assets/micro.js?v=74',
+  './assets/fluid.js?v=74',
+  './assets/motion.js?v=74',
+  './assets/gallery.js?v=74',
+  './assets/pond.js?v=74',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/favicon-16x16.png',

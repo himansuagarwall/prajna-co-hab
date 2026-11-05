@@ -1,4 +1,4 @@
-/* Prajna Co-hab — micro-repo wiring (v73)
+/* Prajna Co-hab - micro-repo wiring (v73)
    Vanilla ports only. No React, no motion lib, no npm.
    Adds patterns NOT already in assets/site.js (interior strict pass:
    press-depth, ripple, loading-button, accordion, tabs, segmented,

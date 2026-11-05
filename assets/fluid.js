@@ -1,4 +1,4 @@
-/* Prajna Co-hab — the pond (v35)
+/* Prajna Co-hab - the pond (v35)
    One body of clear water behind every page. Four layers stack into depth:
    a still bed of light, caustics bending through the surface, a shallow
    ripple skin at the top, and body colour that tints the whole column.
@@ -40,7 +40,7 @@
 
   function uri(i){ return 'url("data:image/svg+xml,' + MOTIFS[i % MOTIFS.length].replace(/COL/g, COLS[i % COLS.length]) + '")'; }
 
-  /* 1 — the pond: clear spring water behind every page (v22).
+  /* 1 - the pond: clear spring water behind every page (v22).
      Light columns bend under the surface, folk motifs hang suspended and
      flow free on Lissajous paths, rings spread from unseen drops, and the
      water parallax-glides a touch slower than the glass above it. */
@@ -99,7 +99,7 @@
       /* seeded from the path so no two pages get the same water */
       alt = (location.pathname.split("/").pop() || "index").length;
 
-      /* BED — a still, very broad underlight. Kept to one pass: the pale
+      /* BED - a still, very broad underlight. Kept to one pass: the pale
          ground already lives in CSS, so this is only the lift of the dapples. */
       beds = [];
       for(var i=0;i<(phone?2:4);i++){
@@ -113,10 +113,10 @@
         });
       }
 
-      /* CAUSTICS — light folding through the surface. Same math as a real
+      /* CAUSTICS - light folding through the surface. Same math as a real
          caustic: the squared sum of two crossing wavefronts, which naturally
          leaves bright filaments rather than blobs. */
-      /* v51 — THE CAUSTIC WAVE WAS SUB-PIXEL.
+      /* v51 - THE CAUSTIC WAVE WAS SUB-PIXEL.
          `sc` used to be 0.0022, which put one full sine cycle every 0.009
          PIXELS. With samples 32px apart, consecutive samples landed ~3500
          cycles apart in phase, so f1 and f2 were uncorrelated noise and the
@@ -142,7 +142,7 @@
         });
       }
 
-      /* SKIN — the shallow wave at the top, what you actually see looking at
+      /* SKIN - the shallow wave at the top, what you actually see looking at
          a pond. Only the upper third, sitting above the caustics. */
       skins = [];
       var sn = phone ? 8 : 12;
@@ -158,7 +158,7 @@
         });
       }
 
-      /* SWELL — three long travelling waves that pass under everything.
+      /* SWELL - three long travelling waves that pass under everything.
          This is the layer's shared motion: one body of water moving, rather
          than N independent objects deciding to move. Periods 1 : 0.71 : 0.53
          of each other so the pattern takes minutes to repeat. */
@@ -173,7 +173,7 @@
         });
       }
 
-      /* MOTIFS — the folk marks, floating in the water rather than drifting
+      /* MOTIFS - the folk marks, floating in the water rather than drifting
          over it. They sink slowly, rock on the swell, and are brightest near
          the surface. Depth drives size, alpha and blur so they read as being
          at different distances inside the same water. */
@@ -216,7 +216,7 @@
         });
       }
 
-      /* COLOUR — ochre and terracotta, two slow pools. */
+      /* COLOUR - ochre and terracotta, two slow pools. */
       tinters = [];
       for(var b2=0;b2<(phone?2:3);b2++){
         tinters.push({
@@ -573,7 +573,7 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════════
-       v56 — CONTINUOUS WATER.
+       v56 - CONTINUOUS WATER.
 
        This used to pause the loop on every scroll event and, on resume, did
        `t0 = performance.now()`. Because every animated value in draw() is a
@@ -646,7 +646,7 @@
     requestAnimationFrame(draw);
   }
 
-  /* 2 — lotus line that draws itself once */
+  /* 2 - lotus line that draws itself once */
   function lotuses(){
     var bands = document.querySelectorAll(".familyband, .plaque, .cta-strip .wrap");
     Array.prototype.forEach.call(bands, function(el){
@@ -675,7 +675,7 @@
     });
   }
 
-  /* 3 — nested lotus watermark on the quiet sections */
+  /* 3 - nested lotus watermark on the quiet sections */
   function ripples(){
     var secs = document.querySelectorAll("section:not(.flat), .cta-strip, .feature");
     Array.prototype.forEach.call(secs, function(el, i){
@@ -688,7 +688,7 @@
     });
   }
 
-  /* 4 — arrival on scroll */
+  /* 4 - arrival on scroll */
   function flow(){
     var sel = "section, .card, .promises div, .menucard .day, .post, .faq details, .amen div, .step, " +
               ".hero .cta-row, .familyband, .tourbox, .costrows>div, .voice, .statrow>div, .plaque, " +
@@ -735,13 +735,13 @@
       el.classList.add("flow-in"); }); }, 1400);
   }
 
-  /* 5 — scroll chrome moved into site.js so only one listener
+  /* 5 - scroll chrome moved into site.js so only one listener
      toggles header.scrolled (two were racing). */
 
   /* v43: chrome() was called here but never defined anywhere - the header/chrome
    handling moved to site.js in an earlier pass and the call was left behind,
    so boot() threw ReferenceError on every page load. */
-  /* 4 — data-reveal: fade-up / scale-in via Intersection Observer */
+  /* 4 - data-reveal: fade-up / scale-in via Intersection Observer */
   function reveal(){
     if(!("IntersectionObserver" in window)){
       Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), function(el){

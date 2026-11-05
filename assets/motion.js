@@ -1,4 +1,4 @@
-/* Prajna Co-hab — v45 motion layer (GSAP 3.15.0, vendored, no build step)
+/* Prajna Co-hab - v45 motion layer (GSAP 3.15.0, vendored, no build step)
    ────────────────────────────────────────────────────────────────────────
    WHY THIS EXISTS
    The site already has an arrival system: fluid.js's .flow IntersectionObserver

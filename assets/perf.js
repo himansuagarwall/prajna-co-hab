@@ -1,4 +1,4 @@
-/* perf: lightweight monitoring — only active in dev (localhost / 127.0.0.1 / ?perf=1). No console output in production. */
+/* perf: lightweight monitoring - only active in dev (localhost / 127.0.0.1 / ?perf=1). No console output in production. */
 (function(){
   var isDev = location.hostname === '127.0.0.1' || location.hostname === 'localhost' || location.search.indexOf('perf=1') >= 0;
   if(!isDev) return;

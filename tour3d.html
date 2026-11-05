@@ -18,7 +18,7 @@
 <title>3D Virtual Tour - Prajna Co-hab</title>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-<link rel="stylesheet" href="assets/style.css?v=71">
+<link rel="stylesheet" href="assets/style.css?v=74">
 <style>
   #tour-canvas { width: 100vw; height: 100vh; display: block; }
   #fade-overlay {
@@ -174,11 +174,11 @@
       Single Room
       <span class="tooltip" aria-hidden="true">Single Room · 1 bed</span>
     </button>
-    <button class="tour-btn" data-room="common" data-beds="—" aria-label="View common floor">
+    <button class="tour-btn" data-room="common" data-beds="-" aria-label="View common floor">
       Common Floor
       <span class="tooltip" aria-hidden="true">Common Floor</span>
     </button>
-    <button class="tour-btn" data-room="living" data-beds="—" aria-label="View living area">
+    <button class="tour-btn" data-room="living" data-beds="-" aria-label="View living area">
       Living Area
       <span class="tooltip" aria-hidden="true">Living Area</span>
     </button>
@@ -279,14 +279,14 @@
     // Hotspots mark real inclusions; positions sit on the matching furniture.
     const HOTSPOTS = {
       twin: [
-        { id: 'storage-bed', label: 'Storage bed', pos: [-1.4, 0.85, -1.9], text: 'Hydraulic storage bed — extra bedding and luggage space under the mattress.' },
+        { id: 'storage-bed', label: 'Storage bed', pos: [-1.4, 0.85, -1.9], text: 'Hydraulic storage bed - extra bedding and luggage space under the mattress.' },
         { id: 'cupboard', label: 'Cupboard', pos: [3.6, 1.7, -3.2], text: 'Full-height cupboard with hanging rail and lockable drawer.' },
         { id: 'study', label: 'Study table', pos: [-3.1, 1.05, -2.6], text: 'Study table with chair, lamp and power point for work-from-home days.' },
-        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'High-speed WiFi throughout the floor — work and streaming ready.' }
+        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'High-speed WiFi throughout the floor - work and streaming ready.' }
       ],
       single: [
         { id: 'storage-bed', label: 'Storage bed', pos: [0, 0.85, -1.9], text: 'Storage bed with hydraulic lift and linen.' },
-        { id: 'cupboard', label: 'Cupboard', pos: [3.6, 1.7, -3.2], text: 'Private cupboard — lockable storage for your belongings.' },
+        { id: 'cupboard', label: 'Cupboard', pos: [3.6, 1.7, -3.2], text: 'Private cupboard - lockable storage for your belongings.' },
         { id: 'study', label: 'Study table', pos: [-3.1, 1.05, -2.6], text: 'Dedicated study table and chair in a quiet corner.' },
         { id: 'balcony', label: 'Balcony', pos: [2.7, 1.8, 3.9], text: 'Balcony access with natural light and ventilation.' },
         { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'High-speed WiFi throughout the floor.' }
@@ -297,7 +297,7 @@
         { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'Common-area WiFi for the whole floor.' }
       ],
       living: [
-        { id: 'balcony', label: 'Balcony', pos: [2.7, 1.8, 3.9], text: 'Balcony off the living area — evening chai spot.' },
+        { id: 'balcony', label: 'Balcony', pos: [2.7, 1.8, 3.9], text: 'Balcony off the living area - evening chai spot.' },
         { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'WiFi reaches the living area and TV wall.' },
         { id: 'cupboard', label: 'Storage', pos: [-3.6, 1.7, -3.2], text: 'Shared storage cupboard in the common space.' }
       ]
@@ -518,5 +518,5 @@
     })();
   </script>
 </main>
-<script src="config.js?v=70"></script><script src="assets/site.js?v=71"></script></body>
+<script src="config.js?v=74"></script><script src="assets/site.js?v=74"></script></body>
 </html>

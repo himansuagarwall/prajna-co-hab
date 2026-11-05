@@ -1,18 +1,18 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   POND — page scenes, a seamless load transition, and floating elements
+   POND - page scenes, a seamless load transition, and floating elements
    ---------------------------------------------------------------------------
    fluid.js owns the water itself (one shared canvas, one rAF loop, ~0.7ms a
    frame). This file never draws to that canvas. It adds three things on top,
    all of which are free per frame because they are DOM + CSS, not pixels:
 
-     1. SCENES  — every page currently gets the same five folk motifs. These
+     1. SCENES  - every page currently gets the same five folk motifs. These
                   are chosen per page instead, so the gallery is quiet and the
                   house feels like water. Data comes from <body data-pond="…">.
-     2. REVEAL  — a pond-surface overlay on first paint: rings spread, the
+     2. REVEAL  - a pond-surface overlay on first paint: rings spread, the
                   water settles, then the surface lifts. No white flash, and
                   the page is already visible underneath, so it reads as the
                   pond settling rather than a loader.
-     3. TRANSITION — cross-page navigation uses the View Transitions API where
+     3. TRANSITION - cross-page navigation uses the View Transitions API where
                   the browser supports it, so moving between pages is a single
                   continuous move instead of a cut. Falls back silently.
 
@@ -282,7 +282,7 @@
      The collage look is overlapping pieces of hand-torn paper: irregular
      clip-path outlines, a wash of colour, and a soft shadow so one sits
      above the next. Geometry is derived from the scene so the arrangement is
-     stable per page — a reload gives you the same collage, not a new one.
+     stable per page - a reload gives you the same collage, not a new one.
      Fixed and pointer-events:none, so it never costs layout or a click. */
   function torn(seed) {
     /* A torn scrap is NOT a lumpy circle. Two things sell it:

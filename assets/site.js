@@ -1,5 +1,5 @@
 /* =====================================================
-   PRAJNA CO-HAB — the runtime layer.
+   PRAJNA CO-HAB - the runtime layer.
    config.js owns every price and every contact detail; this file
    only renders it. If config.js is missing, the static HTML stands
    untouched instead of being overwritten with dashes.
@@ -186,7 +186,7 @@ window.PRAJNA = window.PRAJNA || {};
       if(k === "type" || k === "company" || k === "id" || k === "ts" || k === "page" || k === "ref"){ continue; }
       lines.push(k + ": " + data[k]);
     }
-    return mail(label(data.type) + " — Prajna Co-hab", "Hi,\n\n" + lines.join("\n") + "\n\nThanks.");
+    return mail(label(data.type) + " - Prajna Co-hab", "Hi,\n\n" + lines.join("\n") + "\n\nThanks.");
   }
   function doneText(type){
     return type === "board"
@@ -379,7 +379,7 @@ window.PRAJNA = window.PRAJNA || {};
   /* one-time heal: if a previous deploy left a stale offline cache, clear it and reload once */
   if ("serviceWorker" in navigator && "caches" in window && !sessionStorage.getItem("prajna-healed")) {
     caches.keys().then(function(keys){
-      var stale = keys.filter(function(k){ return k.indexOf("prajna-") === 0 && k !== "prajna-v73"; });
+      var stale = keys.filter(function(k){ return k.indexOf("prajna-") === 0 && k !== "prajna-v74"; });
       if (!stale.length) return;
       Promise.all(stale.map(function(k){ return caches.delete(k); })).then(function(){
         sessionStorage.setItem("prajna-healed", "1");
@@ -405,7 +405,7 @@ window.PRAJNA = window.PRAJNA || {};
     });
   }
 
-  /* desktop floating email button — mobile keeps its bottom bar.
+  /* desktop floating email button - mobile keeps its bottom bar.
      This used to draw the WhatsApp glyph on an email link, which is
      the worst of both: a logo for a channel we closed, on a control
      that opens a mail client. Envelope now, matching what it does. */
@@ -418,7 +418,7 @@ window.PRAJNA = window.PRAJNA || {};
     document.body.appendChild(wf);
   }
 })();
-/* v19: live vacancy badge — count from config, date always today (IST) */
+/* v19: live vacancy badge - count from config, date always today (IST) */
 (function(){
   var b=document.getElementById('vacancy-badge'); if(!b) return;
   var cfg=window.PRAJNA||{}; var n=cfg.bedsOpen;
@@ -522,7 +522,7 @@ window.PRAJNA = window.PRAJNA || {};
 })();
 
 /* ============================================================
-   INTERIOR rich-effects pass — vanilla port of interior.dev
+   INTERIOR rich-effects pass - vanilla port of interior.dev
    headless hooks. Timings: press 140ms, hover 220ms, state
    380ms, arrival 760ms. No new deps, no colours, reduced-motion
    respected. Each block is defensive: absent element = no-op.
@@ -806,7 +806,7 @@ window.PRAJNA = window.PRAJNA || {};
 })();
 
 /* ============================================================
-   INTERIOR strict pass (2026-11-05) — vanilla ports of the
+   INTERIOR strict pass (2026-11-05) - vanilla ports of the
    interior.dev headless hooks. Timings: press 140, hover 220,
    state 380, arrival 760. Easing cubic-bezier(.22,.61,.36,1).
    Reduced-motion = instant. No React, no motion package.
