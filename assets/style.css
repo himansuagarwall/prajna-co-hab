@@ -195,13 +195,6 @@ footer{margin-top:2.4rem;border-top:1px solid var(--line)}
 .mobilebar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;z-index:50;box-shadow:0 -8px 24px rgba(43,38,32,.08)}
 .mobilebar a{flex:1;text-align:center;padding:.85rem 0;font-family:var(--font-ui);font-size:.85rem;font-weight:700;text-decoration:none}
 .mobilebar .mail-link{color:#fff;background:var(--terra);background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px}
-.lb{display:none;position:fixed;inset:0;background:rgba(30,25,18,.92);z-index:100;align-items:center;justify-content:center;cursor:zoom-out}
-.lb.show{display:flex}
-.lb img{max-width:92vw;max-height:88vh;border-radius:8px;animation:fadeUp .3s ease both}
-/* v46: this caption was position:FIXED, so it was pinned to the VIEWPORT rather
-   than to the lightbox - it floated over whatever was underneath, including
-   the open image and any content behind the overlay. Anchor it inside .lb. */
-.lb .cap{position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;color:var(--line);font-family:var(--font-ui);font-size:.8rem}
 @media(max-width:720px){.loc{grid-template-columns:1fr}.pform .row{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -791,10 +784,6 @@ body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 10px)}
 .voice{position:relative}
 .gal figure{transition:transform .45s var(--ease),box-shadow .45s var(--ease);border-radius:150px 150px 10px 10px;overflow:hidden}
 .gal figure:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(43,38,32,.14)}
-.lb .lbprev,.lb .lbnext{position:absolute;top:50%;transform:translateY(-50%);background:rgba(250,246,240,.14);color:#faf5ec;border:none;width:52px;height:52px;border-radius:50%;font-size:2rem;line-height:1;cursor:pointer;font-family:Georgia,serif}
-.lb .lbprev{left:14px}.lb .lbnext{right:14px}
-.lb .lbprev:hover,.lb .lbnext:hover{background:rgba(217,164,65,.45)}
-@media(pointer:coarse){.lb .lbprev,.lb .lbnext{width:44px;height:44px;opacity:.85}}
 
 /* ==========================================================================
    v34 — SEAMLESS PASS
@@ -857,7 +846,7 @@ body::before{transition:opacity .22s linear}
   --ease-in:cubic-bezier(.22,.61,.36,1);   /* things arriving */
   --ease-io:cubic-bezier(.4,0,.2,1);       /* things responding */
 }
-.flow,.reveal,.card,.btn,.fcols a,.navlinks a::after,.ss-track,.ss-dot,
+.flow,.reveal,.card,.btn,.fcols a,.navlinks a::after,
 .pform input,.pform select,.pform textarea{
   transition-timing-function:var(--ease-in);
 }
@@ -866,13 +855,8 @@ body::before{transition:opacity .22s linear}
 /* --- 5. The slideshow caption sat UNDER the dot rail. Lift the caption,
    give the rail its own floor, and reserve the frame so an odd-sized photo
    can never bounce the track. --- */
-.ss figure img{aspect-ratio:3/2;object-fit:cover;width:100%;height:auto;display:block}
 /* v42: caption is in flow below the image, so the old overlay offset is removed. */
-.ss figure{background:var(--panel)}
-.ss-dots{bottom:.85rem}
-.ss{contain:layout paint}
 /* the caption faded on every auto-advance frame; promote it */
-.ss figcaption{will-change:opacity;transform:translate3d(0,0,0)}
 
 /* --- 6. Voice cards rendered TWO opening quotes: the HTML glyph and a CSS
    ::before. The ::before is the decorative one; suppress it when the quote
@@ -922,7 +906,6 @@ html{scrollbar-color:var(--ochre) transparent;scrollbar-width:thin}
    scrolling still animated. Both now honour the preference. --- */
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  .ss-track{transition:none!important}
 }
 
 /* v34: visible-to-screen-readers-only text (star rating names) */
@@ -1086,21 +1069,12 @@ html{
              align-items:center;justify-content:center}
 
 /* lightboxes had no dialog semantics */
-.lb{outline:none}
 
 
 /* ==========================================================================
    v38 — DEEP SWEEP
    ========================================================================== */
 
-/* .ss-dots were 8px with no accessible name or current-state. The glyph stays
-   small, the hit area and semantics become real. */
-.ss-dots{display:flex;gap:.5rem;justify-content:center;padding:.5rem 0}
-.ss-dot{position:relative;width:12px;height:12px}
-.ss-dot::after{content:"";position:absolute;inset:-16px;border-radius:50%}
-.ss-dot[aria-current="true"]{outline:2px solid var(--terra-dark);outline-offset:3px}
-/* captions were invisible to keyboard users (opacity:0 until hover) */
-.ss figure:focus-within figcaption{opacity:1}
 
 /* dead selectors: .chip and .pitstats match nothing in any page */
 
@@ -1253,17 +1227,6 @@ html.reduce .lotusmark{transform:none}
 .gallery-motion-ready .gallery-item{transition:opacity 500ms var(--e-out),transform 500ms var(--e-out),box-shadow var(--t2) var(--e-out),border-color var(--t2) var(--e-in-out)}
 .gallery-motion-ready .gallery-item.gallery-visible{opacity:1;transform:translateY(0)}
 .gallery-item:hover{border-color:rgba(192,86,33,.22);box-shadow:0 14px 32px rgba(58,50,42,.12)}
-.gallery-dialog{width:100vw;height:100dvh;max-width:none;max-height:none;padding:clamp(.75rem,3vw,2rem);border:0;background:rgba(28,25,21,.97);color:#faf5ec;overflow:hidden}
-.gallery-dialog::backdrop{background:rgba(22,20,17,.82);backdrop-filter:blur(8px)}
-.gallery-viewer{position:relative;width:100%;height:100%;display:grid;grid-template-columns:clamp(42px,7vw,72px) minmax(0,1fr) clamp(42px,7vw,72px);grid-template-rows:minmax(0,1fr) auto;align-items:center;gap:.5rem;max-width:1500px;margin:0 auto}
-.gallery-viewer figure{grid-column:1/-1;grid-row:1;display:grid;justify-items:center;align-content:center;gap:.8rem;min-width:0;min-height:0;margin:0;padding:2.75rem 0 0}
-.gallery-dialog-image{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100dvh - 8rem);object-fit:contain;border-radius:8px;box-shadow:0 22px 70px rgba(0,0,0,.28)}
-.gallery-dialog-caption{color:#faf5ec;text-align:center;font-size:.95rem}
-.gallery-step{z-index:1;grid-row:1;align-self:center;width:48px;height:56px;border:1px solid rgba(250,245,236,.26);border-radius:999px;background:rgba(250,245,236,.1);color:#faf5ec;font-size:2rem;line-height:1;cursor:pointer;transition:background-color var(--t1) var(--e-in-out),transform var(--t1) var(--e-out)}
-.gallery-step:hover{background:rgba(250,245,236,.2);transform:scale(1.04)}
-.gallery-prev{grid-column:1}.gallery-next{grid-column:3;justify-self:end}
-.gallery-close{position:absolute;z-index:2;top:0;right:0;min-width:72px;min-height:44px;border:1px solid rgba(250,245,236,.26);border-radius:999px;background:rgba(250,245,236,.1);color:#faf5ec;font:600 .8rem var(--font-ui);cursor:pointer}
-.gallery-dialog-count{grid-column:1/-1;grid-row:2;margin:0 0 .4rem;text-align:center;color:rgba(250,245,236,.72);font:500 .8rem var(--font-ui);font-variant-numeric:tabular-nums}
 @media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){
   .gallery-toolbar{gap:.35rem;margin-bottom:1rem}
@@ -1272,9 +1235,6 @@ html.reduce .lotusmark{transform:none}
   .gallery-grid{grid-template-columns:minmax(0,1fr);gap:.85rem}
   .gallery-image-link{aspect-ratio:3/2}
   .gallery-zoom{opacity:1;transform:none;width:34px;height:34px}
-  .gallery-viewer{grid-template-columns:42px minmax(0,1fr) 42px;gap:.25rem}
-  .gallery-step{width:40px;height:48px;font-size:1.7rem}
-  .gallery-dialog-image{max-height:calc(100dvh - 9rem)}
 }
 @media(prefers-reduced-motion:reduce){
   .gallery-image-link,.gallery-image-link img,.gallery-item,.gallery-filters button,.gallery-step,.gallery-zoom{transition:none!important}
@@ -1589,10 +1549,6 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .gallery-item{background:var(--panel);border-color:var(--line)}
   .gallery-filters button{background:var(--panel);color:var(--ink);border-color:var(--line)}
   .gallery-filters button[aria-pressed="true"]{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
-  .gallery-dialog{background:rgba(10,8,6,.97)}
-  .gallery-step,.gallery-close{border-color:rgba(250,245,236,.22);background:rgba(250,245,236,.1);color:#faf5ec}
-  .gallery-dialog-caption{color:#faf5ec}
-  .gallery-dialog-count{color:rgba(250,245,236,.68)}
   .pform input,.pform select,.pform textarea{background:var(--paper)!important;color:var(--ink)!important;border-color:var(--line)!important}
   .pform input:focus,.pform select:focus,.pform textarea:focus{box-shadow:0 0 0 3px rgba(192,86,33,.28)!important}
   .stars label{color:var(--line)}
@@ -1700,7 +1656,6 @@ html{overflow-x:clip}
    so no-JS visitors see the untouched static site.
    ============================================================ */
 .reading-progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--terra);z-index:90;pointer-events:none}
-.scrollbar-progress + .reading-progress{display:none}
 html.ix-ready header{transition:transform 380ms cubic-bezier(.22,.61,.36,1),box-shadow .3s ease}
 html.ix-ready header.hide-away{transform:translateY(-100%)}
 html.ix-ready header.hide-away.scrolled{box-shadow:none}
