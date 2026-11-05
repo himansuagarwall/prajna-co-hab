@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <link rel="preload" as="font" href="assets/fonts/marcellus-latin.woff2" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/g/entrance.jpg">
-<link rel="dns-prefetch" href="//localhost:8088">
+<link rel="preload" as="image" href="assets/g/entrance.jpg?v=70">
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -14,7 +13,7 @@
 <meta property="og:title" content="Prajna Co-hab — Co-living house near Moshi, Pune">
 <meta property="og:description" content="Owner-run co-living in Moshi, Pimpri-Chinchwad. Double sharing from Rs 7,200 a month, private from Rs 9,200. Dinner optional. Email to enquire — no broker, no agent.">
 <meta property="og:url" content="https://himansuagarwall.github.io/prajna-co-hab/">
-<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover-optimized.webp">
+<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -32,7 +31,6 @@
     "postalCode": "411026",
     "addressCountry": "IN"
   },
-  "priceRange": "₹₹",
   "amenityFeature": [
     {
       "@type": "LocationFeatureSpecification",
@@ -64,17 +62,15 @@
   <meta name="theme-color" content="#faf5ec">
 <meta name="geo.region" content="IN-MH">
 <meta name="geo.placename" content="Moshi, Pune">
-<link rel="alternate" hreflang="en-IN" href="https://himansuagarwall.github.io/prajna-co-hab/">
-<link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/">
-<link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/">
 <link rel="stylesheet" href="assets/style.css?v=70">
   <link rel="stylesheet" href="assets/pond.css?v=70">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-48x48.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <noscript><style>.flow,.reveal{opacity:1!important;transform:none!important}</style></noscript>
-<script src="assets/reviews.js?v=70" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the lock-in period?","acceptedAnswer":{"@type":"Answer","text":"Three months to start with, then one month of notice. The deposit is refundable."}}]}
+</script>
 </head>
 <body data-pond="home">
 <a class="skip" href="#main">Skip to content</a>
@@ -96,18 +92,18 @@
   <div class="hero">
     <canvas id="pond-canvas" aria-hidden="true"></canvas>
     <div>
-      <span class="badge" id="availbadge" class="hidden"></span>
+      
       <svg class="lotusmark lotusbig" viewBox="0 0 120 80" aria-hidden="true"><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg>
-      <span class="tag fadeup" class="delay-1">Co-hab</span>
-      <h1 class="fadeup" class="delay-2">Prajna Co-hab — Moshi</h1>
-      <p class="lede fadeup" class="delay-3">Ten beds: four twin-sharing rooms, two singles, and the whole ground floor for kitchen, dining and TV. Most of our residents work the Moshi–Chakan plants.</p>
-      <div class="cta-row fadeup" class="delay-4">
+      <span class="tag fadeup delay-1">Co-hab</span>
+      <h1 class="fadeup delay-2">Prajna Co-hab — Moshi</h1>
+      <p class="lede fadeup delay-3">Ten beds: four twin-sharing rooms, two singles, and the whole ground floor for kitchen, dining and TV. Most of our residents work the Moshi–Chakan plants.</p>
+      <div class="cta-row fadeup delay-4">
         <a class="btn mail-link" href="#" data-mailsubject="Email Us">Email Us</a>
         <a class="btn ghost" href="rooms.html">See Rooms</a>
-        <a class="btn ghost share-btn" href="#">Send to a friend</a>
+        <a class="btn ghost share-btn" href="#">Send to a friend</a><span id="share-note"></span>
       </div>
     </div>
-    <div class="fadeup" class="delay-4"><a href="gallery.html" class="ph heroshot tilt" class="img-link"><img src="assets/g/entrance.jpg?v=70" width="1200" height="800" alt="The entrance of Prajna Co-hab" loading="eager" decoding="async"></a></div>
+    <div class="fadeup delay-4"><a href="gallery.html" class="ph heroshot tilt img-link"><img src="assets/g/entrance.jpg?v=70" width="1200" height="800" alt="The entrance of Prajna Co-hab" loading="eager" decoding="async"></a></div>
   </div>
 
   <div class="familyband reveal" data-reveal="fade-up">
@@ -203,13 +199,14 @@
           <div class="card"><h3>2. Visit unannounced once</h3><p>Look at the place at 8pm on a weekday, not just in the morning. Ours looks the same as the photos.</p></div>
           <div class="card"><h3>3. Ask who already lives there</h3><p>Shifts, how long they've stayed, whether the kitchen actually runs every day. A house is its people.</p></div>
         </div>
-        <p class="lede" class="mt-3">Then look at ours. The photos are the actual rooms, and we'll answer anything you ask.</p>
+        <p class="lede mt-3">Then look at ours. The photos are the actual rooms, and we'll answer anything you ask.</p>
     </section>
 
   <section>
     <div class="shead reveal">
       <h2>What it costs</h2>
     </div>
+    <p class="lede">Twin-sharing <b><span data-cfg="twinRent">₹7,200 / month</span></b> without dinner, <b><span data-cfg="twinRentMeal">₹10,000 / month</span></b> with dinner. Single <b><span data-cfg="singleRent">₹9,200 / month</span></b>, <b><span data-cfg="singleRentMeal">₹12,000 / month</span></b> with dinner. Deposit <span data-cfg="twinDeposit">₹12,000</span> twin, <span data-cfg="singleDeposit">₹14,000</span> single, refundable.</p>
     <div class="promises reveal">
       <div>No broker.</div>
       <div>One price, written down.</div>
@@ -255,7 +252,7 @@
 
   <section>
     <div class="shead reveal">
-      <h2>What residents say</h2>
+      <h2>Share your experience</h2>
       <p class="lede">Real quotes land here as people send them.</p>
     </div>
     <div class="grid g3">
@@ -305,8 +302,8 @@
     <div class="loc">
       <div class="reveal">
         <h2 class="mb-2">Where we are</h2>
-        <p class="lede" class="mb-3">Anandrao Lande Road, Balaji Nagar, Moshi — off Bhosari Industrial Estate, Pimpri-Chinchwad. Walkable to many factory gates on the Moshi–Chakan corridor.</p>
-        <a class="btn ghost mail-link" href="#" data-mailsubject="Hi, please send me the location pin for Prajna Co-hab.">Get the Location Pin</a>
+        <p class="lede mb-3">Anandrao Lande Road, Balaji Nagar, Bhosari — off Bhosari Industrial Estate, Pimpri-Chinchwad. Walkable to many factory gates on the Moshi–Chakan corridor.</p>
+        <a class="btn ghost mail-link" href="#" data-mailsubject="Hi, please send me the location pin for Prajna Co-hab.">Email for directions</a>
       </div>
       <div class="mapbox reveal">
         <iframe title="Prajna Co-hab location" width="600" height="260" loading="lazy" src="https://www.google.com/maps?q=Anandrao+Lande+Road,+Balaji+Nagar,+Bhosari+Industrial+Estate,+Pimpri-Chinchwad,+Maharashtra&output=embed"></iframe>

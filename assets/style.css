@@ -40,7 +40,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.012em;line-height:1.18}
 h1{font-size:clamp(1.95rem,4.2vw,2.75rem)}
 h2{font-size:clamp(1.35rem,2.6vw,1.8rem)}
 h3{font-size:1.08rem}
-p{color:var(--muted)}
+p{color:var(--ink)}
 a{color:var(--terra-dark)}
 .lede{font-size:1.05rem;max-width:40rem}
 img{max-width:100%}
@@ -56,7 +56,7 @@ img{max-width:100%}
 /* sticky header */
 header{position:sticky;top:0;z-index:40;background:rgba(250,246,240,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:.85rem 0 .6rem;transition:box-shadow .3s ease}
 header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid var(--line)}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:nowrap}
 .brand{font-size:1.28rem;font-weight:700;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.55rem}
 .brand span{color:var(--terra)}
 .fmark{width:30px;height:19px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat}
@@ -181,7 +181,7 @@ form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-ra
 .cta-strip p{color:var(--ink-soft);margin:.5rem 0 1.3rem}
 /* footer */
 footer{margin-top:2.4rem;border-top:1px solid var(--line)}
-.fcols{display:grid;grid-template-columns:1.3fr .7fr .7fr .8fr;gap:2rem;padding:2.4rem 0 1.6rem}
+.fcols{display:grid;grid-template-columns:1.4fr repeat(4,.8fr);gap:2rem;padding:2.4rem 0 1.6rem}
 .fbrandname{font-size:1.15rem;font-weight:700}
 .fbrandname span{color:var(--terra)}
 .fcols p{font-size:.85rem;margin-top:.6rem;max-width:16rem}
@@ -353,7 +353,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;ba
   background:radial-gradient(120% 90% at 50% 45%,transparent 52%,rgba(43,38,32,.07) 100%)}
 /* v10: content sits on top via normal flow, NOT via a positive z-index that
    would bury the ambient canvas. .bgfx/.vignette stay at negative depth. */
-body>*:not(.bgfx):not(.vignette):not(.vignette){position:relative;z-index:auto}
+body>*:not(.bgfx):not(.vignette):not(.mobilebar):not(.mail-float):not(.pondfloat):not(.collage):not(.pondreveal){position:relative;z-index:auto}
 /* v8: motion lives BEHIND everything, never beside it */
 /* v40: this bare duplicate used to re-flatten the ground. Removed - the
    single water wash further down is the only thing allowed to set it. */
@@ -581,7 +581,7 @@ h1, h2, h3, h4 { color: var(--ink); }
 
 /* INK = weight. All body and secondary text resolves to two values only. */
 body, p, li, .voice p { color: var(--ink); }
-p, .lede, .fbottom, .who, .muted, .familyband p, .fblarge { color: var(--muted); }
+p, .lede, .fbottom, .who, .familyband p, .fblarge { color: var(--ink); }
 .feature p, .cta-strip p, .feature li, .cta-strip li { color: var(--ink-soft); }
 
 /* THE DARK BANDS: warm brown veils, not black slabs. Minimal, on-surface. */
@@ -650,7 +650,7 @@ section.flat figure.reveal img,figure.reveal>img{border-radius:150px 150px 10px 
 /* ============ v17 SCHEME CONSISTENCY — the site is a paper house ============ */
 html{color-scheme:light}
 ::selection{background:var(--ochre-soft);color:var(--ink)}
-:focus-visible{outline-color:var(--ochre)}
+:focus-visible{outline-color:var(--terra)}
 
 /* ============ v18 BORDERLESS PASS — no seams anywhere, glass + shadow only ============
    Header, footer, sides, sections, cards, photos: zero lines. Separation comes from
@@ -1397,7 +1397,7 @@ header{
    .mail-link replaces .wa-link everywhere; the floating desktop button is
    renamed too so no CSS still targets a channel we have closed.
    ══════════════════════════════════════════════════════════════════════════ */
-.mail-float{position:fixed;right:22px;bottom:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:var(--terra);display:none;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(154,69,34,.35),inset 0 0 0 1.5px rgba(250,246,240,.3),inset 0 0 0 4px var(--terra);transition:transform var(--t1) var(--e-out),background-color var(--t1) var(--e-in-out)}
+.mail-float{position:fixed;right:22px;left:auto;bottom:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:var(--terra);display:none;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(154,69,34,.35),inset 0 0 0 1.5px rgba(250,246,240,.3),inset 0 0 0 4px var(--terra);transition:transform var(--t1) var(--e-out),background-color var(--t1) var(--e-in-out)}
 .mail-float:hover{transform:translateY(-3px) scale(1.05);background-color:var(--terra-dark)}
 .mail-float svg{width:24px;height:24px;fill:#fff}
 .mail-float::after{content:"Email us";position:absolute;right:66px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--paper);font-family:var(--font-ui);font-size:.72rem;padding:.4rem .7rem;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--t1) var(--e-in-out)}
@@ -1523,8 +1523,8 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:860px){
   .nav-toggle{display:block}
-  .navlinks{position:fixed;inset:0;width:100vw;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out);pointer-events:none}
-  .navlinks.open{transform:translateX(0);pointer-events:auto}
+  .navlinks{position:fixed;inset:0;width:100vw;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out),visibility var(--t2);pointer-events:none;visibility:hidden}
+  .navlinks.open{transform:translateX(0);pointer-events:auto;visibility:visible}
   .navlinks a{font-size:1.1rem;padding:.6rem 0}
 }
 
@@ -1594,7 +1594,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
   .gallery-dialog-caption{color:#faf5ec}
   .gallery-dialog-count{color:rgba(250,245,236,.68)}
   .pform input,.pform select,.pform textarea{background:var(--paper)!important;color:var(--ink)!important;border-color:var(--line)!important}
-  .pform input:focus,.pform select:focus,.pform textarea:focus{box-shadow:0 0 0 3px rgba(217,164,65,.28)!important}
+  .pform input:focus,.pform select:focus,.pform textarea:focus{box-shadow:0 0 0 3px rgba(192,86,33,.28)!important}
   .stars label{color:var(--line)}
   .stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra)}
   .teasercard{color:var(--ink)}
@@ -1672,3 +1672,21 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .fresult.fresult-info{border-color:var(--ochre);background:var(--ochre-soft);color:#5a4320}
 .fresult a{color:inherit;text-decoration:underline;font-weight:700}
 .pform .req{color:#9a4522;font-weight:700}
+
+/* --- audit fix pass: price table, form panel, interior timings --- */
+.pricetable{display:grid;gap:.5rem}
+.pricerow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:1rem;padding:.7rem .4rem;border-bottom:1px solid var(--line);align-items:center}
+.pricerow.header{font-family:var(--font-ui);font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+@media(max-width:640px){.pricerow{grid-template-columns:1fr 1fr}.pricerow.header{display:none}}
+form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.25)}
+.pform input,.pform select,.pform textarea{border:1px solid rgba(58,50,42,.35);background:#fff}
+:root{--t-press:140ms;--t-hover:220ms;--t-state:380ms;--t-arrival:760ms}
+.btn{transition:transform var(--t-press) var(--e-out),background-color var(--t-hover) var(--e-in-out),box-shadow var(--t-hover) var(--e-in-out)}
+.btn:hover{transition-duration:var(--t-hover)}
+.btn:active{transform:scale(.97);transition-duration:var(--t-press)}
+.card,.teasercard{transition:transform var(--t-hover) var(--e-out),box-shadow var(--t-hover) var(--e-out)}
+.navlinks a{transition:color var(--t-hover) var(--e-in-out),background var(--t-hover) var(--e-in-out),transform var(--t-state) var(--e-out)}
+.flow,.reveal{transition-duration:var(--t-arrival)}
+@media(prefers-reduced-motion:reduce){.btn,.card,.teasercard,.navlinks a,.flow,.reveal{transition:none!important;transform:none!important}}
+
+html{overflow-x:clip}

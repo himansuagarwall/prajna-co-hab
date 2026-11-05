@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
@@ -22,9 +22,6 @@
 <meta name="theme-color" content="#faf5ec">
 <meta name="geo.region" content="IN-MH">
 <meta name="geo.placename" content="Moshi, Pune">
-<link rel="alternate" hreflang="en-IN" href="https://himansuagarwall.github.io/prajna-co-hab/rooms.html">
-<link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/rooms.html">
-<link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/rooms.html">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/rooms.html">
 <link rel="stylesheet" href="assets/style.css?v=70">
 <link rel="stylesheet" href="assets/pond.css?v=70">
@@ -36,6 +33,9 @@
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   "name": "Prajna Co-hab",
+  "email": "srijna2b@gmail.com",
+  "url": "https://himansuagarwall.github.io/prajna-co-hab/rooms.html",
+  "image": "https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg",
   "description": "Owner-run co-living house with 4 twin-sharing rooms (2 beds each) and 2 single rooms near Moshi, Pune. Full common floor with kitchen, dining and TV lounge.",
   "address": {
     "@type": "PostalAddress",
@@ -45,8 +45,6 @@
     "postalCode": "411026",
     "addressCountry": "IN"
   },
-  "telephone": "+91-84280-38212",
-  "priceRange": "₹₹",
   "amenityFeature": [
     {
       "@type": "LocationFeatureSpecification",
@@ -127,6 +125,9 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is there a notice period?","acceptedAnswer":{"@type":"Answer","text":"Three months to start with, then one month notice to leave."}},{"@type":"Question","name":"Is food included?","acceptedAnswer":{"@type":"Answer","text":"Optional dinner plan. Breakfast and lunch are not included."}}]}
+</script>
 </head>
 <body data-pond="rooms">
 <a class="skip" href="#main">Skip to content</a>
@@ -151,8 +152,9 @@
     <span class="tag">Rooms & pricing</span>
     <h1>Ten beds. Four twin-sharing rooms, two singles.</h1>
     <p class="lede">Every room has an attached balcony, WiFi and a clean linen set. The ground floor is yours — kitchen, dining, TV lounge. Rent is the rent you pay. Electricity is the only extra, and it's metered at actual usage.</p>
-    <div class="cta-row" class="mt-3">
-      <a class="btn mail-link" href="#" data-mailsubject="Book a room at Prajna Co-hab">Email to book</a>
+    <p id="availbadge" class="lede">No beds free right now. Tell us when you are looking and we will put you first when one opens.</p>
+    <div class="cta-row mt-3">
+      <a class="btn mail-link" href="#" data-mailsubject="Join the waiting list at Prajna Co-hab">Join the waiting list</a>
       <a class="btn ghost mail-link" href="#" data-mailsubject="Hi, I'd like to know more about rooms at Prajna Co-hab.">Email Us</a>
     </div>
   </div>
@@ -270,9 +272,9 @@
         </ul>
       </div>
     </div>
-    <div class="card costcard reveal" class="mt-3">
+    <div class="card costcard reveal mt-3">
       <h3>What else is in the house</h3>
-      <div class="grid g3" class="mt-1">
+      <div class="grid g3 mt-1">
         <div>
           <b>Utilities</b>
           <ul>
@@ -302,6 +304,25 @@
     </div>
   </section>
 
+  <section class="flat" id="room-photos">
+    <div class="shead reveal"><h2>Room photos</h2><p class="lede">The actual rooms, from the gallery.</p></div>
+    <div class="grid g3">
+      <figure class="card"><img src="assets/g/twin.jpg?v=70" width="1200" height="800" alt="Twin-sharing room at Prajna Co-hab" loading="lazy" decoding="async"><figcaption>Twin-sharing room</figcaption></figure>
+      <figure class="card"><img src="assets/g/single.jpg?v=70" width="1200" height="800" alt="Single private room at Prajna Co-hab" loading="lazy" decoding="async"><figcaption>Single private room</figcaption></figure>
+      <figure class="card"><img src="assets/g/room.jpg?v=70" width="1200" height="800" alt="Room at Prajna Co-hab" loading="lazy" decoding="async"><figcaption>Room</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="flat" id="inclusions">
+    <div class="shead reveal"><h2>What is included</h2><p class="lede">In writing, so nothing is a surprise later.</p></div>
+    <div class="grid g3">
+      <div class="card"><h3>Double sharing, in-room</h3><ul><li>Storage bed with mattress and pillow</li><li>Cupboard</li><li>Bedside table</li><li>Curtains</li><li>1 set bedsheet</li><li>Attached balcony</li><li>Wi-fi</li></ul></div>
+      <div class="card"><h3>Private, in-room</h3><ul><li>Storage bed with mattress and pillow</li><li>Cupboard</li><li>Curtains</li><li>1 set bedsheet</li><li>Attached balcony</li><li>Wi-fi</li><li>Study table and chair</li></ul></div>
+      <div class="card"><h3>Common</h3><ul><li>24hr water with geyser</li><li>RO drinking water</li><li>Fully automatic washing machine</li><li>TV in living room</li><li>Sofa set</li><li>Dining table in open kitchen</li><li>Kitchen access: Refrigerator, Microwave oven, Induction, Toaster, Electric kettle, Gas stove</li></ul></div>
+    </div>
+    <div class="card mt-3"><h3>Utilities</h3><ul><li>24hr caretaker</li><li>Electricity chargeable</li><li>Water included</li><li>Housekeeping included</li></ul></div>
+  </section>
+
   <section class="flat" id="pricing">
     <div class="shead reveal">
       <h2>Monthly Rates</h2>
@@ -317,14 +338,14 @@
         </div>
         <div class="pricerow">
           <span><b>Twin-sharing</b> — 4 rooms, 2 beds each</span>
-          <span>₹ 7,200 / mo</span>
-          <span>₹ 10,000 / mo</span>
+          <span>₹ <span data-cfg="twinRentFlat">7,200</span> / mo</span>
+          <span>₹ <span data-cfg="twinRentMealFlat">10,000</span> / mo</span>
           <span>₹ 12,000</span>
         </div>
         <div class="pricerow">
           <span><b>Single private</b> — 2 rooms, 1 bed each</span>
-          <span>₹ 9,200 / mo</span>
-          <span>₹ 12,000 / mo</span>
+          <span>₹ <span data-cfg="singleRentFlat">9,200</span> / mo</span>
+          <span>₹ <span data-cfg="singleRentMealFlat">12,000</span> / mo</span>
           <span>₹ 14,000</span>
         </div>
       </div>
@@ -354,8 +375,8 @@
         <p>One-page agreement, deposit and first month's rent. Keys in hand.</p>
       </div>
     </div>
-    <div class="cta-row reveal" class="center-block mt-4">
-      <a class="btn mail-link" href="#" data-mailsubject="Book a room at Prajna Co-hab">Email to book</a>
+    <div class="cta-row reveal center-block mt-4">
+      <a class="btn mail-link" href="#" data-mailsubject="Join the waiting list at Prajna Co-hab">Join the waiting list</a>
       <a class="btn ghost mail-link" href="#" data-mailsubject="Hi, I'd like to enquire about availability at Prajna Co-hab.">Email Enquiry</a>
     </div>
   </section>
@@ -381,7 +402,7 @@
 <footer>
     <div class="fcols">
       <div class="fbrand">
-        <div class="fbrandname"><svg class="lotusmark" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient id="lgA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a441"/><stop offset="1" stop-color="#c05621"/></linearGradient><linearGradient id="lgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c05621"/><stop offset="1" stop-color="#9a4522"/></linearGradient></defs><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg> Prajna <span>Co-hab</span></div>
+        <div class="fbrandname"><svg class="lotusmark" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a441"/><stop offset="1" stop-color="#c05621"/></linearGradient><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c05621"/><stop offset="1" stop-color="#9a4522"/></linearGradient></defs><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg> Prajna <span>Co-hab</span></div>
         <p>Owner-run co-hab at Moshi, Pune.</p>
       </div>
       <div>

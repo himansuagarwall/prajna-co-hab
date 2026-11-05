@@ -40,7 +40,6 @@ var SHELL = [
   './assets/motion.js?v=70',
   './assets/gallery.js?v=70',
   './assets/pond.js?v=70',
-  './assets/reviews.js?v=70',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/favicon-16x16.png',

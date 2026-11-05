@@ -37,7 +37,10 @@
     discover: { motifs: [4, 1],          count: 6,  spread: 1.00, size: [62, 124], rise: [0.09, 0.18] },
     pune:     { motifs: [4, 2],          count: 6,  spread: 1.00, size: [62, 124], rise: [0.09, 0.18] },
     feedback: { motifs: [0, 3],          count: 4,  spread: 0.90, size: [56, 104], rise: [0.07, 0.14] },
-    notfound: { motifs: [3],             count: 3,  spread: 0.90, size: [54,  98], rise: [0.06, 0.12] }
+    notfound: { motifs: [3],             count: 3,  spread: 0.90, size: [54,  98], rise: [0.06, 0.12] },
+    blog: { motifs: [4, 0], count: 5, spread: 0.95, size: [58, 108], rise: [0.08, 0.15] },
+    testimonials: { motifs: [0, 3], count: 4, spread: 0.90, size: [56, 104], rise: [0.07, 0.14] },
+    rooms: { motifs: [0, 4, 3], count: 6, spread: 1.00, size: [60, 116], rise: [0.08, 0.16] }
   };
 
   function scene() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
@@ -11,12 +11,11 @@
 <meta property="og:title" content="3D Virtual Tour — Prajna Co-hab">
 <meta property="og:description" content="Explore Prajna Co-hab in 3D. Twin-sharing and single rooms near Bhosari Industrial Estate, Pune.">
 <meta property="og:url" content="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/tour-poster.webp">
+<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="675">
 <meta name="twitter:card" content="summary_large_image">
 <title>3D Virtual Tour — Prajna Co-hab</title>
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-48x48.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <link rel="stylesheet" href="assets/style.css?v=70">
@@ -86,14 +85,9 @@
     "addressRegion": "Maharashtra",
     "postalCode": "411026",
     "addressCountry": "IN"
-  },
-  "telephone": "+91-0000000000",
-  "priceRange": "₹₹"
+  }
 }
 </script>
-<link rel="alternate" hreflang="en-IN" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
 
 <script type="application/ld+json">
@@ -109,8 +103,9 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<header><nav class="nav" aria-label="Primary navigation"><a class="brand" href="index.html">Prajna <span>Co-hab</span></a><button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button><div class="navlinks" id="primary-nav"><a href="index.html">Home</a><a href="rooms.html">Rooms</a><a href="gallery.html">Gallery</a><a href="tour3d.html">3D Tour</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div></nav></header>
 <main id="main" tabindex="-1">
-  <canvas id="tour-canvas"></canvas>
+  <canvas id="tour-canvas"></canvas><p id="tour-fallback" hidden>3D needs WebGL. See the <a href="gallery.html">photos</a> instead, or <a href="rooms.html">read about the rooms</a>.</p>
   <div id="fade-overlay"></div>
 
   <div class="tour-info" id="room-info">
@@ -147,7 +142,7 @@
 
   <style>
     .tour-mail{position:fixed;top:1.1rem;right:1.1rem;z-index:20;font-family:var(--font-ui,system-ui);font-size:.78rem;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;background:#c05621;color:#faf6f0;text-decoration:none;box-shadow:0 6px 18px -8px rgba(58,50,42,.5)}
-    .tour-mail:focus-visible{outline:2px solid #3a322a;outline-offset:3px}
+    .tour-mail:focus-visible{outline:2px solid #3a322a;outline-offset:3px}.tour-controls{max-width:calc(100vw - 2rem);flex-wrap:wrap;justify-content:center;left:50%;transform:translateX(-50%)}header{position:sticky;top:0;z-index:30;background:#faf6f0;padding:.5rem 1rem}
     @media(max-width:600px){.tour-mail{top:auto;bottom:5.4rem;right:.8rem;font-size:.74rem;padding:.5rem .85rem}}
   </style>
   <script type="importmap">
@@ -172,7 +167,8 @@
     const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 1.6, 4.5);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+    var renderer;
+    try { if(!window.WebGLRenderingContext) throw new Error('no webgl'); renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' }); } catch(e) { var fb=document.getElementById('tour-fallback'); if(fb) fb.hidden=false; canvas.style.display='none'; } if(!renderer) { /* fallback shown */ } else {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -470,7 +466,7 @@
       renderer.render(scene, camera);
     }
     animate();
+    }
   </script>
-<script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script>
-</body>
+<script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script></body>
 </html>

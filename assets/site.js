@@ -49,6 +49,7 @@ window.PRAJNA = window.PRAJNA || {};
   if(rjm){ set("twinRentMeal", rjm + " / month"); set("twinRentMealFlat", Number(C.twinRentMeal).toLocaleString("en-IN")); }
   if(rs){ set("singleRent", rs + " / month"); set("singleRentFlat", Number(C.singleRent).toLocaleString("en-IN")); }
   if(rsm){ set("singleRentMeal", rsm + " / month"); set("singleRentMealFlat", Number(C.singleRentMeal).toLocaleString("en-IN")); }
+  if(C.twinDeposit){ set("twinDeposit", inr(C.twinDeposit)); } if(C.singleDeposit){ set("singleDeposit", inr(C.singleDeposit)); }
 
   /* the dinner add-on, derived in config.js, shown the same way everywhere */
   if(typeof C.twinMealDelta === "number"){ set("twinMealDelta", "+" + inr(C.twinMealDelta)); }
@@ -435,6 +436,8 @@ window.PRAJNA = window.PRAJNA || {};
   b.hidden=false;
 })();
 
+/* vacancy-mini: footer mini badge mirrors vacancy-badge */
+(function(){var m=document.getElementById('vacancy-mini');if(!m)return;var cfg=window.PRAJNA||{};var n=cfg.bedsOpen;m.hidden=false;m.textContent=(typeof n==='number'&&n>0)?(n+' bed'+(n===1?'':'s')+' open'):'No beds free right now';})();
 /* v24: visit + intent analytics - own backend, no cookies, no third party */
 (function(){
   var cfg=window.PRAJNA||{}, EP=cfg.endpoint;
@@ -469,8 +472,13 @@ window.PRAJNA = window.PRAJNA || {};
     var cfg = window.PRAJNA || {}, from = (typeof cfg.fromRent === 'number') ? cfg.fromRent.toLocaleString('en-IN') : null;
     var txt = 'Prajna Co-hab - owner-run co-living in Moshi, Pimpri-Chinchwad.' + (from ? ' Rooms from Rs ' + from + ' a month.' : '');
     if(navigator.share){ navigator.share({title:'Prajna Co-hab', text:txt, url:url}).catch(function(){}); }
+    else if(!navigator.clipboard || !navigator.clipboard.writeText){
+      var t2 = document.getElementById("share-note");
+      if(!t2){ var b=document.querySelector('.share-btn'); if(b){ t2=document.createElement('span'); t2.id='share-note'; b.after(t2); } }
+      if(t2){ t2.textContent = "Copy this link: " + url; t2.style.display = "block"; }
+    }
     else if(navigator.clipboard && navigator.clipboard.writeText){
-      /* v53: the old fallback opened a wa.me share link. The number is never
+      /* v53: the old fallback opened a chat share link. The number is never
          public, so sharing goes through the clipboard instead - works with
          no WhatsApp involved. */
       navigator.clipboard.writeText(txt + ' ' + url).then(function(){
@@ -495,18 +503,21 @@ window.PRAJNA = window.PRAJNA || {};
   var toggle = document.querySelector('.nav-toggle');
   var navlinks = document.querySelector('.navlinks');
   if(!toggle || !navlinks) return;
+  function setInert(el, off){ try{ el.inert = !!off; }catch(e){ if(off){ el.setAttribute('aria-hidden','true'); } else { el.removeAttribute('aria-hidden'); } } }
+  setInert(navlinks, true);
   toggle.addEventListener('click', function(){
     var open = navlinks.classList.toggle('open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    setInert(navlinks, !open);
   });
   /* close on link click */
   navlinks.addEventListener('click', function(e){
-    if(e.target.tagName === 'A'){ navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+    if(e.target.tagName === 'A'){ navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); setInert(navlinks, true); }
   });
   /* close on Escape */
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && navlinks.classList.contains('open')){
-      navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.focus();
+      navlinks.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); setInert(navlinks, true); toggle.focus();
     }
   });
 })();

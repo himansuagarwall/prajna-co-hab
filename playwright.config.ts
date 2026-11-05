@@ -5,7 +5,9 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // two workers, not one per core: eight parallel browsers saturate the
+  // single python server and every third test dies on ECONNRESET
+  workers: process.env.CI ? 1 : 2,
   reporter: [['json', { outputFile: 'test-results/results.json' }], ['html']],
   use: {
     baseURL: 'http://127.0.0.1:8888',

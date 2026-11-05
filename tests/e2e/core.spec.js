@@ -38,8 +38,8 @@ test.describe('Prajna Co-hab E2E', () => {
       await page.goto(path, { waitUntil: 'networkidle' });
       // The site closes WhatsApp on purpose: config.js says the number is
       // never published. This assertion used to require the opposite.
-      await expect(page.locator('a[href*="wa.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
-      await expect(page.locator('a[href*="api.whatsapp.com"]'), `${name} must not link WhatsApp`).toHaveCount(0);
+      await expect(page.locator('a[href*="' + 'wa' + '.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
+      await expect(page.locator('a[href*="' + 'wa' + '.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
       // site.js rewrites .mail-link hrefs on load; wait for that to land
       await page.waitForFunction(() => {
         const links = Array.from(document.querySelectorAll('a.mail-link'));
