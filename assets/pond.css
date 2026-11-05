@@ -17,7 +17,7 @@
    layer, so the whole set costs the GPU almost nothing. */
 .pondfloat{
   position:fixed; inset:0; z-index:2; pointer-events:none;
-  contain:strict;
+  contain:strict; overflow:hidden;
 }
 .pondfloat .pf{
   position:absolute;
@@ -53,7 +53,7 @@
    — the cue that reads unmistakably as paper rather than wash. */
 .collage{
   position:fixed; inset:0; z-index:1; pointer-events:none;
-  contain:strict;
+  contain:strict; overflow:hidden;
 }
 .collage .cp{
   position:absolute; display:block;
