@@ -27,17 +27,22 @@
   background-image:var(--pf-m);
   background-repeat:no-repeat; background-position:center; background-size:contain;
   opacity:var(--pf-op);
-  filter:blur(.25px);
-  will-change:transform,opacity;
-  animation:pfdrift var(--pf-dur) linear infinite;
+  filter:blur(var(--pf-blur,.25px));
+  will-change:transform;
+  /* Closed-loop drift (starts/ends at origin, so it wraps seamlessly) on
+     the outer element + an alternate bob on the same element would fight
+     over transform, so bob lives on a second property via translate in
+     the same keyframes: midpoints sway then return to origin. */
+  animation:pfdrift var(--pf-dur) ease-in-out infinite;
   animation-delay:var(--pf-delay);
+  transform:translateZ(0);
 }
 /* a slow rise, a lazy side-to-side, and a barely-there roll - three motions
    on one transform so they compose instead of fighting */
 /* the loop closes: 100% is exactly 0%, so the wrap is invisible. The fall
    is the rise played backwards, which reads as settling, not snapping */
 @keyframes pfdrift{
-  0%   { transform:translate3d(0,0,0) rotate(0deg); }
+  0%,100% { transform:translate3d(0,0,0) rotate(0deg); }
   25%  { transform:translate3d(10px,calc(var(--pf-rise) * -26px),0) rotate(var(--pf-tilt)); }
   50%  { transform:translate3d(-8px,calc(var(--pf-rise) * -54px),0) rotate(calc(var(--pf-tilt) * -.6)); }
   75%  { transform:translate3d(4px,calc(var(--pf-rise) * -26px),0) rotate(calc(var(--pf-tilt) * .3)); }
@@ -130,7 +135,7 @@
    Nothing drifts, nothing wipes in, the paper stays put. The house is still
    a house, it just holds still. */
 @media (prefers-reduced-motion: reduce){
-  .pondfloat{display:none}
+  .pondfloat .pf{animation:none; transform:none; opacity:.55}
   .pondreveal{display:none}
   .pondwater .pw-caustic,.pondwater .pw-sheen{animation:none}
   .pondripple{display:none}
@@ -196,9 +201,19 @@
 @keyframes pondripple{
   0%   { transform:scale(.35); opacity:.9; }
   100% { transform:scale(11); opacity:0; }
+/* ── 8. FOLK ART CANVAS ──────────────────────────────────────────────────
+   Warli figures, diya lamps and lotus blooms drawn by pond.js on one canvas,
+   fixed behind the water surface, pointer-events:none, so it never takes a
+   click. Under reduced-motion it draws one static frame (see pond.js). */
+#pond-canvas{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  width:100vw; height:100vh; max-width:100%; overflow:hidden;
+}
+@media (prefers-reduced-motion: reduce){
+  #pond-canvas{display:block}
 }
 
-/* ── 7. SMALL SCREENS ───────────────────────────────────────────────────
+/* ── 9. SMALL SCREENS ───────────────────────────────────────────────────
    Fewer, smaller pieces: on a phone the same count reads as clutter and
    costs more compositing than it is worth. */
 @media (max-width:700px){
@@ -207,8 +222,8 @@
   .collage .cp3,.collage .cp4{display:none}
 }
 
-/* ── 7. PRINT ───────────────────────────────────────────────────────────
+/* ── 10. PRINT ───────────────────────────────────────────────────────────
    Paper collage on a printed page is just grey mud. */
 @media print{
-  .pondfloat,.collage,.pondreveal,.pondwater,.pondripple{display:none !important}
+  .pondfloat,.collage,.pondreveal,.pondwater,.pondripple,#pond-canvas{display:none !important}
 }
