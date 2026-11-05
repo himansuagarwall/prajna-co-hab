@@ -24,6 +24,64 @@
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/autohub.html">
 <link rel="stylesheet" href="assets/style.css?v=70">
   <link rel="stylesheet" href="assets/pond.css?v=70">
+
+<!-- Pit-local UX (pit-local branch): scoped .pit-* only; global style.css untouched. -->
+<style>
+.pit-hero{margin:1.2rem 0 1rem;padding:clamp(1.4rem,4vw,2.6rem);border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,var(--panel),var(--ochre-soft));box-shadow:var(--sh);animation:pit-blur-up .76s var(--ease) both}
+@keyframes pit-blur-up{from{opacity:0;filter:blur(8px);transform:translateY(10px)}to{opacity:1;filter:blur(0);transform:none}}
+.pit-hero h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.05;margin:.2rem 0 .5rem}
+.pit-hero .pit-lede{max-width:56ch;color:var(--muted);font-size:1.02rem}
+.pit-kickers{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 .4rem}
+.pit-chip{font-family:var(--font-ui);font-size:.75rem;font-weight:700;padding:.32rem .7rem;border-radius:var(--r-pill);background:var(--ochre-soft);color:var(--ochre-ink);border:1px solid var(--line)}
+.pit-ctas{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.pit-btn{display:inline-flex;align-items:center;min-height:44px;padding:.7rem 1.3rem;border-radius:8px;background:var(--terra);color:#fff;font-family:var(--font-ui);font-size:.88rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:transform .14s var(--ease),background-color .22s ease,box-shadow .22s ease;box-shadow:0 4px 0 var(--terra-dark)}
+.pit-btn:hover{background:var(--terra-dark)}
+.pit-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--terra-dark)}
+.pit-btn.ghost{background:var(--panel);color:var(--terra);border:1.5px solid var(--ochre);box-shadow:0 4px 0 rgba(217,164,65,.55)}
+.pit-btn.ghost:active{box-shadow:0 1px 0 rgba(217,164,65,.55)}
+.pit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pit-mailnote{font-size:.85rem;color:var(--muted);margin-top:.7rem}
+.pit-tools{margin:1.4rem 0 .6rem}
+.pit-searchwrap{margin:.4rem 0 1rem}
+.pit-search{width:100%;min-height:48px;padding:.7rem .9rem;border:1px solid var(--line);border-radius:10px;font-family:var(--font-ui);font-size:.95rem;background:var(--card);color:var(--ink)}
+.pit-search:focus{outline:2px solid var(--terra);outline-offset:2px}
+.pit-tabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.pit-tab{flex:0 0 auto;min-height:44px;padding:.55rem 1rem;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--panel);color:var(--ink);font-family:var(--font-ui);font-size:.85rem;font-weight:700;cursor:pointer;transition:transform .14s var(--ease),background-color .38s var(--ease),color .38s var(--ease)}
+.pit-tab:active{transform:translateY(2px)}
+.pit-tab[aria-selected="true"]{background:var(--terra);border-color:var(--terra);color:#fff}
+.pit-panel{display:none}
+.pit-panel.active{display:block;animation:pit-blur-up .38s var(--ease) both}
+.pit-cards{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+@media(min-width:760px){.pit-cards{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+.pit-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.2rem}
+.pit-card h3{margin:.2rem 0 .4rem}
+.pit-card p{color:var(--muted);font-size:.93rem;margin:.2rem 0 .6rem}
+.pit-example-tag{display:inline-block;font-family:var(--font-ui);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.25rem .55rem;border-radius:var(--r-pill);background:var(--ochre-soft);color:var(--ochre-ink);border:1px dashed var(--ochre)}
+.pit-card dl{margin:.6rem 0;font-size:.9rem}
+.pit-card dt{font-family:var(--font-ui);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-top:.5rem}
+.pit-card dd{margin:.1rem 0;color:var(--ink)}
+.pit-boardhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem;margin-top:1.6rem}
+.pit-count{font-size:.85rem;color:var(--muted)}
+.pit-empty{border:1px dashed var(--line);border-radius:12px;padding:1.2rem;color:var(--muted);margin-top:1rem}
+#board .post{scroll-margin-top:1rem}
+.pit-accordion{margin-top:1.6rem}
+.pit-accordion details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:.6rem;padding:.9rem 1.1rem}
+.pit-accordion summary{font-family:var(--font-ui);font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.pit-accordion details[open]{border-color:var(--ochre)}
+.pit-accordion li{color:var(--muted);font-size:.93rem;margin:.3rem 0}
+.pit-form{margin-top:1.6rem}
+.pit-field{position:relative;margin-top:1.1rem}
+.pit-field input,.pit-field textarea,.pit-field select{width:100%;padding:1.05rem .85rem .55rem;border:1px solid var(--line);border-radius:8px;font-family:var(--font-ui);font-size:.92rem;background:var(--paper);color:var(--ink)}
+.pit-field label{position:absolute;left:.85rem;top:.78rem;font-size:.85rem;color:var(--muted);pointer-events:none;transition:top .38s var(--ease),font-size .38s var(--ease),color .38s var(--ease);background:transparent}
+.pit-field input:focus,.pit-field textarea:focus{outline:2px solid var(--terra);outline-offset:2px;border-color:var(--terra)}
+.pit-field input:focus+label,.pit-field input:not(:placeholder-shown)+label,.pit-field textarea:focus+label,.pit-field textarea:not(:placeholder-shown)+label{top:.28rem;font-size:.68rem;font-weight:700;color:var(--terra);text-transform:uppercase;letter-spacing:.04em}
+.pit-field.static label{position:static;display:block;font-size:.75rem;font-weight:700;color:var(--ink);margin:0 0 .3rem;text-transform:none;letter-spacing:0}
+.pit-field.static select{padding:.7rem .85rem}
+.pit-copyrow{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.8rem}
+@media(max-width:480px){.pit-hero{padding:1.2rem}.pit-ctas .pit-btn{flex:1 1 auto;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.pit-hero,.pit-panel.active{animation:none}.pit-btn,.pit-tab,.pit-field label{transition:none}}
+</style>
+
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c05a2e'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia' fill='%23faf6f0' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 <noscript><style>.flow,.reveal{opacity:1!important;transform:none!important}</style></noscript>
 
@@ -64,6 +122,42 @@
   ]
 }
 </script>
+<style>
+/* pit: Ask form, listing templates, filters, trust. All pit- prefixed so
+   nothing else on the page (or the shared sheet) can leak in or out. */
+.pit-grid{margin-top:1.2rem}
+.pit-tpl-card{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:var(--r-md,12px);padding:1.3rem 1.4rem;transition:transform .14s var(--ease),box-shadow .38s var(--ease),border-color .38s var(--ease)}
+.pit-tpl-card:active{transform:translateY(1px) scale(.995)}
+.pit-tpl-card h3{margin:.35rem 0 .4rem}
+.pit-tpl-card p{font-family:var(--font-ui);font-size:.88rem}
+.pit-meta{font-family:var(--font-ui);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-dark)}
+.pit-fields{list-style:none;margin:.7rem 0 .3rem;font-family:var(--font-ui);font-size:.84rem;color:var(--ink)}
+.pit-fields li{padding:.28rem 0 .28rem 1.35rem;position:relative;border-top:1px dashed var(--line)}
+.pit-fields li::before{content:"✓";position:absolute;left:.25rem;color:var(--ochre-ink);font-weight:700}
+.pit-fields li:first-child{border-top:none}
+.pit-tpl-card .btn{margin-top:.9rem}
+.pit-filters{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:1rem;align-items:end;margin-top:1.2rem}
+.pit-filters label{display:block;font-family:var(--font-ui);font-size:.75rem;font-weight:700;margin:0 0 .3rem;color:var(--ink)}
+.pit-filters select,.pit-filters input{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:.85rem;background:var(--paper);color:var(--ink);min-height:44px;transition:border-color .22s var(--ease),box-shadow .22s var(--ease)}
+.pit-filters select:focus,.pit-filters input:focus{border-color:var(--terra);outline:none;box-shadow:0 0 0 3px rgba(192,86,33,.18)}
+.pit-tpl-count{font-family:var(--font-ui);font-size:.8rem;color:var(--muted);white-space:nowrap}
+.pit-tpl-empty{margin-top:1.2rem;padding:1.2rem 1.4rem;border:1px dashed var(--line);border-radius:var(--r-md,12px);background:var(--panel);font-family:var(--font-ui);font-size:.88rem;color:var(--muted)}
+.pit-ask-form{margin-top:1.2rem}
+.pit-ask-form .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pit-ask-form select,.pit-ask-form textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:.85rem;background:var(--paper);color:var(--ink);transition:border-color .22s var(--ease),box-shadow .22s var(--ease)}
+.pit-ask-form select:focus,.pit-ask-form textarea:focus{border-color:var(--terra);outline:none;box-shadow:0 0 0 3px rgba(192,86,33,.18)}
+.pit-req{color:var(--terra-dark);font-weight:700}
+.pit-result{margin-top:1rem;font-family:var(--font-ui);font-size:.85rem;color:var(--ink);background:var(--ochre-soft);border:1px solid var(--line);border-radius:6px;padding:.75rem .9rem}
+.pit-result a{color:var(--terra-dark);font-weight:700}
+.pit-trust{margin-top:1.8rem}
+.pit-trust ul{list-style:none;text-align:left;max-width:38rem;margin:.6rem auto 0;font-family:var(--font-ui);font-size:.9rem;color:var(--ink)}
+.pit-trust li{padding:.4rem 0 .4rem 1.6rem;position:relative;border-top:1px dashed var(--line)}
+.pit-trust li:first-child{border-top:none}
+.pit-trust li::before{content:"—";position:absolute;left:.4rem;color:var(--terra-dark);font-weight:700}
+.pit-note{font-size:.8rem;color:var(--muted);margin-top:.9rem}
+@media(max-width:720px){.pit-filters{grid-template-columns:1fr}.pit-ask-form .row{grid-template-columns:1fr}.pit-tpl-count{white-space:normal}}
+@media(prefers-reduced-motion:reduce){.pit-tpl-card,.pit-filters select,.pit-ask-form select,.pit-ask-form textarea{transition:none!important}.pit-tpl-card:active{transform:none}}
+</style>
 </head>
 <body data-pond="pit">
 <a class="skip" href="#main">Skip to content</a>
@@ -82,70 +176,237 @@
   </header>
 <main id="main" tabindex="-1">
 
-  <div class="pagehead">
-    <svg class="lotusmark lotusmid" viewBox="0 0 120 80" aria-hidden="true"><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg>
-    <span class="tag gold">The community pit</span>
-    <h1>The Pit</h1>
-    <p class="lede">Mechanics who don’t loot you, where the right part lives, which RTO counter to avoid, who’s riding to your gate at shift hour. Straight answers, no spam. We moderate.</p>
-  </div>
+  <section class="pit-hero" aria-labelledby="pit-title">
+    <div class="pit-kickers"><span class="pit-chip">The community pit</span><span class="pit-chip">Moshi–Chakan belt, Pune</span><span class="pit-chip">No fee · no membership</span></div>
+    <h1 id="pit-title">The Pit</h1>
+    <p class="pit-lede">Pune's Moshi–Chakan auto &amp; bike board: trusted mechanics, where the right part lives, used bikes, and RTO / insurance answers — straight from people who just did it. Tell us what you need; we read every post before it goes up.</p>
+    <div class="pit-ctas">
+      <a class="pit-btn" href="#pit-board">Browse the board</a>
+      <a class="pit-btn ghost" href="#pit-post">Write a post</a>
+      <a class="pit-btn ghost mail-link" href="#" data-mailsubject="The Pit — a question">Email us</a>
+    </div>
+    <p class="pit-mailnote">Email only — no phone numbers are published here. Replies and introductions come through us at <b>srijna2b@gmail.com</b>.</p>
+  </section>
 
-  <section class="flat">
-    <div class="statrow reveal">
-      <div><b>No fee</b><span>no membership</span></div>
-      <div><b>Free</b><span>to post, no membership</span></div>
-      <div><b>Us</b><span>reads every post first</span></div>
+  <section aria-labelledby="pit-cat-title">
+    <div class="pit-tools">
+      <h2 id="pit-cat-title">What do you need?</h2>
+      <div class="pit-searchwrap">
+        <label for="pit-search" class="pit-sr">Search the board</label>
+        <input class="pit-search" id="pit-search" type="search" placeholder="Search posts — e.g. tyre, PUC, brake pads…" autocomplete="off">
+      </div>
+      <div class="pit-tabs" role="tablist" aria-label="Pit categories">
+        <button class="pit-tab" role="tab" id="pit-tab-all" aria-selected="true" aria-controls="pit-panel-all" data-pit-cat="all">All</button>
+        <button class="pit-tab" role="tab" id="pit-tab-mechanics" aria-selected="false" aria-controls="pit-panel-mechanics" data-pit-cat="mechanics" tabindex="-1">Mechanics</button>
+        <button class="pit-tab" role="tab" id="pit-tab-parts" aria-selected="false" aria-controls="pit-panel-parts" data-pit-cat="parts" tabindex="-1">Parts</button>
+        <button class="pit-tab" role="tab" id="pit-tab-used" aria-selected="false" aria-controls="pit-panel-used" data-pit-cat="used" tabindex="-1">Used bikes</button>
+        <button class="pit-tab" role="tab" id="pit-tab-rto" aria-selected="false" aria-controls="pit-panel-rto" data-pit-cat="rto" tabindex="-1">RTO / Insurance</button>
+        <button class="pit-tab" role="tab" id="pit-tab-questions" aria-selected="false" aria-controls="pit-panel-questions" data-pit-cat="questions" tabindex="-1">Questions</button>
+      </div>
     </div>
-    <div class="grid g3">
-      <div class="card tilt reveal"><h2>Ask and recommend</h2><p>Mechanics, puncture shops, battery and tyre places, spare-part dealers — post what you know, ask what you don't.</p></div>
-      <div class="card tilt reveal"><h3>Buy, sell, carpool</h3><p>Used bikes and gear, and shared rides for people working the same gate or shift timing.</p></div>
-      <div class="card tilt reveal"><h3>RTO and insurance</h3><p>Licence, transfer, PUC, insurance renewals — plain answers from people who just did it.</p></div>
+
+    <div class="pit-panel active" role="tabpanel" id="pit-panel-all" aria-labelledby="pit-tab-all">
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>How this board works</h3><p>Pick a category, search, or write a post. Everything is read by us first, and replies come through email.</p><button class="pit-btn ghost" type="button" data-pit-goto="#pit-post">Write a post</button></article>
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: mechanic recommendation</h3><p>Real posts will name a shop, what they fixed, and roughly where in Moshi–Chakan. No phone numbers — contact goes through us.</p><dl><dt>Shop / person</dt><dd>Your mechanic's name here</dd><dt>What they do</dt><dd>e.g. bike servicing, tyres, batteries</dd><dt>Area</dt><dd>e.g. Moshi / Chakan / Talegaon</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="Mechanic">Ask about a mechanic</button></article>
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: spare part wanted</h3><p>Real posts will name the part, which vehicle it fits, and whether it's new or used. No prices are listed until a member posts them.</p><dl><dt>Part</dt><dd>Part name here</dd><dt>Fits</dt><dd>Vehicle model here</dd><dt>Condition</dt><dd>New / used</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="Spare parts">Ask about a part</button></article>
+      </div>
     </div>
+
+    <div class="pit-panel" role="tabpanel" id="pit-panel-mechanics" aria-labelledby="pit-tab-mechanics" hidden>
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: mechanic card</h3><p>Use this shape when you post: shop name, work done, area, and what you paid attention to — not a price promise.</p><dl><dt>Shop</dt><dd>Shop name here</dd><dt>Known for</dt><dd>e.g. honest estimates, quick puncture fix</dd><dt>Area</dt><dd>Moshi–Chakan belt</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="Mechanic">Recommend or ask</button></article>
+      </div>
+    </div>
+
+    <div class="pit-panel" role="tabpanel" id="pit-panel-parts" aria-labelledby="pit-tab-parts" hidden>
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: parts card</h3><p>Use this shape when you post: part, vehicle it fits, new or used, and which dealer or shop area stock it.</p><dl><dt>Part</dt><dd>Part name here</dd><dt>Fits</dt><dd>Vehicle model here</dd><dt>Condition</dt><dd>New / used</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="Spare parts">Ask about parts</button></article>
+      </div>
+    </div>
+
+    <div class="pit-panel" role="tabpanel" id="pit-panel-used" aria-labelledby="pit-tab-used" hidden>
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: used-bike card</h3><p>Use this shape when you post: model, year, condition, kilometres, and documents status. Price only once you post it yourself.</p><dl><dt>Bike</dt><dd>Model — year here</dd><dt>Condition</dt><dd>Kilometres / condition here</dd><dt>Documents</dt><dd>RC / insurance status here</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="Used bike / sale">List or ask</button></article>
+      </div>
+    </div>
+
+    <div class="pit-panel" role="tabpanel" id="pit-panel-rto" aria-labelledby="pit-tab-rto" hidden>
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: RTO / insurance question</h3><p>Use this shape when you post: licence, transfer, PUC, or renewal — and what happened when you did it. No agent numbers.</p><dl><dt>Topic</dt><dd>e.g. licence renewal, ownership transfer, PUC</dd><dt>What helped</dt><dd>Steps / documents that worked</dd><dt>Area</dt><dd>Which RTO office (Moshi–Chakan belt)</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="RTO / insurance">Ask a question</button></article>
+      </div>
+    </div>
+
+    <div class="pit-panel" role="tabpanel" id="pit-panel-questions" aria-labelledby="pit-tab-questions" hidden>
+      <div class="pit-cards">
+        <article class="pit-card"><span class="pit-example-tag">Example — replace with a real post</span><h3>Example: general question</h3><p>Anything else — carpool for a shift gate, a shop you can't find, a sound your bike noise makes. Keep it useful and on-topic.</p><dl><dt>Question</dt><dd>Your question here</dd><dt>Context</dt><dd>Vehicle / area / timing</dd></dl><button class="pit-btn ghost" type="button" data-pit-topic="General">Ask a question</button></article>
+      </div>
+    </div>
+
+    <div class="pit-boardhead" id="pit-board">
+      <h2>Latest posts</h2><span class="pit-count" id="pit-count" role="status" aria-live="polite"></span>
+    </div>
+    <div class="board" id="board"></div>
+    <div class="pit-empty" id="pit-empty" hidden>No posts match that search and category yet. Try a shorter word, or <a href="#pit-post">write the first one</a>.</div>
+
+    <div class="pit-accordion pit-form" id="pit-post">
+      <h2>Write a post</h2>
+      <form class="pform" data-formtype="board" action="mailto:srijna2b@gmail.com" method="post" enctype="text/plain">
+        <div class="row">
+          <div class="pit-field"><input id="bname" name="name" required maxlength="40" autocomplete="name" placeholder=" "><label for="bname">Your name</label></div>
+          <div class="pit-field static"><label for="btopic">Topic</label><select id="btopic" name="topic"><option>Mechanic</option><option>Spare parts</option><option>Used bike / sale</option><option>Carpool</option><option>RTO / insurance</option><option>General</option></select></div>
+        </div>
+        <div class="pit-field"><input id="bemail" name="email" type="email" maxlength="120" autocomplete="email" placeholder=" "><label for="bemail">Email (optional — so we can tell you when it's up)</label></div>
+        <div class="pit-field"><textarea id="bmsg" name="message" rows="4" required maxlength="500" placeholder=" "></textarea><label for="bmsg">Message — no phone-number spam; replies come through us</label></div>
+        <div class="hp" aria-hidden="true"><label for="bcompany">Company</label><input id="bcompany" name="company" tabindex="-1" autocomplete="off"></div>
+        <div class="pit-copyrow"><button class="pit-btn" type="submit">Post to Board</button><span class="pit-count">Posts appear after we've read them.</span></div>
+        <div class="fresult"></div>
+      </form>
+      <div class="pit-copyrow">
+        <a id="communitylink" class="pit-btn ghost" href="#">Ask about joining</a>
+        <button class="pit-btn ghost" type="button" id="pit-copy-email">Copy email</button>
+        <span class="pit-count" id="pit-copy-note" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div class="pit-accordion" aria-label="Pit rules and questions">
+      <details>
+        <summary>Pit rules</summary>
+        <ul>
+          <li>Straight answers only — no fishing, no spam.</li>
+          <li>No phone-number dumps; replies come through us by email.</li>
+          <li>Disagree with the advice, not the person.</li>
+          <li>We moderate and have the final word.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>How do I post?</summary>
+        <p class="pit-count">Use the form above. It opens your email app addressed to srijna2b@gmail.com — send it, and we read it before anything appears on the board. Nothing needs an account.</p>
+      </details>
+      <details>
+        <summary>Why email only?</summary>
+        <p class="pit-count">No phone numbers are published on this site. If you want to talk, email us and the number is shared in the reply. That keeps the board spam-free.</p>
+      </details>
+    </div>
+  </section>
+
+  <section aria-labelledby="pit-ask-h">
+    <div class="shead reveal" data-reveal="fade-up">
+      <span class="tag">Ask the Pit</span>
+      <h2 id="pit-ask-h">Ask a question</h2>
+      <p class="lede">One form for mechanics, spare parts, used bikes, RTO and insurance. Send it by email — we read it first, then it goes on the board.</p>
+    </div>
+    <form id="pit-ask-form" class="pform pit-ask-form reveal" action="mailto:srijna2b@gmail.com" method="post" enctype="text/plain">
+      <div class="row">
+        <div>
+          <label for="pit-category">Category <span class="pit-req" aria-hidden="true">*</span></label>
+          <select id="pit-category" name="category" required>
+            <option value="">Pick a category…</option>
+            <option value="Mechanic">Mechanic</option>
+            <option value="Spare parts">Spare parts</option>
+            <option value="Used bike / sale">Used bike / sale</option>
+            <option value="Carpool">Carpool</option>
+            <option value="RTO / insurance">RTO / insurance</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+        <div>
+          <label for="pit-vehicle">Vehicle type <span class="pit-req" aria-hidden="true">*</span></label>
+          <select id="pit-vehicle" name="vehicle-type" required>
+            <option value="">Pick a vehicle…</option>
+            <option>Bike</option><option>Scooter</option><option>Bicycle</option><option>Car</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="pit-area">Area <span class="pit-req" aria-hidden="true">*</span></label>
+          <select id="pit-area" name="area" required>
+            <option value="">Pick an area…</option>
+            <option>Moshi</option><option>Bhosari</option><option>Chakan</option><option>Pimpri</option>
+          </select>
+        </div>
+        <div>
+          <label for="pit-budget">Budget range</label>
+          <select id="pit-budget" name="budget-range">
+            <option>Not sure / open</option>
+            <option>Under ₹500</option>
+            <option>₹500 – ₹2,000</option>
+            <option>₹2,000 – ₹10,000</option>
+            <option>₹10,000 – ₹50,000</option>
+            <option>Above ₹50,000</option>
+          </select>
+        </div>
+      </div>
+      <label for="pit-description">What do you need? <span class="pit-req" aria-hidden="true">*</span></label>
+      <textarea id="pit-description" name="description" rows="4" required maxlength="1000" minlength="10" placeholder="e.g. Looking for a trusted mechanic near Moshi for a brake service on a commuter bike. Budget ₹500–₹2,000."></textarea>
+      <p class="pit-note">No phone numbers, please — replies come through us by email. Marked <span class="pit-req">*</span> fields are required.</p>
+      <div class="mt-3"><button class="btn" type="submit">Send my question by email</button></div>
+      <div class="pit-result" id="pit-result" role="status" aria-live="polite" hidden></div>
+    </form>
+  </section>
+
+  <section aria-labelledby="pit-templates-h">
+    <div class="shead reveal" data-reveal="fade-up">
+      <span class="tag">Listings, done right</span>
+      <h2 id="pit-templates-h">Listing templates</h2>
+      <p class="lede">Use one of these formats when you post. A post with the required fields gets approved faster — and usually gets better replies.</p>
+    </div>
+    <div class="pit-filters reveal" role="group" aria-label="Filter listing templates">
+      <div><label for="pit-filter-area">Area</label>
+        <select id="pit-filter-area"><option value="all">All areas</option><option value="moshi">Moshi</option><option value="bhosari">Bhosari</option><option value="chakan">Chakan</option><option value="pimpri">Pimpri</option></select></div>
+      <div><label for="pit-filter-category">Category</label>
+        <select id="pit-filter-category"><option value="all">All categories</option><option value="used-bike">Used bike</option><option value="parts">Spare parts</option><option value="mechanic">Mechanic help</option></select></div>
+      <div><label for="pit-filter-vehicle">Vehicle type</label>
+        <select id="pit-filter-vehicle"><option value="all">All vehicles</option><option value="bike">Bike</option><option value="scooter">Scooter</option><option value="bicycle">Bicycle</option><option value="car">Car</option></select></div>
+      <span class="pit-tpl-count" id="pit-tpl-count" role="status" aria-live="polite">3 templates</span>
+    </div>
+    <div class="grid pit-grid" id="pit-tpl-grid">
+      <article class="pit-tpl-card" data-area="moshi bhosari chakan pimpri" data-category="used-bike" data-vehicle="bike scooter">
+        <span class="pit-meta">Used bike</span>
+        <h3>Used bike for sale</h3>
+        <p>Template — copy the fields, fill them in your own words.</p>
+        <ul class="pit-fields">
+          <li>Model and year</li><li>Kilometres run</li><li>Condition (tyres, battery, service history)</li><li>Asking price</li><li>Area (Moshi / Bhosari / Chakan / Pimpri)</li><li>Documents status (RC, insurance)</li>
+        </ul>
+        <button class="btn" type="button" data-pit-use="Used bike / sale" data-pit-vehicle="Bike">Use this template</button>
+      </article>
+      <article class="pit-tpl-card" data-area="moshi bhosari chakan pimpri" data-category="parts" data-vehicle="bike scooter bicycle">
+        <span class="pit-meta">Spare parts</span>
+        <h3>Part wanted or for sale</h3>
+        <p>Template — copy the fields, fill them in your own words.</p>
+        <ul class="pit-fields">
+          <li>Part name</li><li>Fits which models</li><li>New or used, condition</li><li>Price you expect (or “open”)</li><li>Area (Moshi / Bhosari / Chakan / Pimpri)</li>
+        </ul>
+        <button class="btn" type="button" data-pit-use="Spare parts" data-pit-vehicle="Bike">Use this template</button>
+      </article>
+      <article class="pit-tpl-card" data-area="moshi bhosari chakan pimpri" data-category="mechanic" data-vehicle="bike scooter bicycle car">
+        <span class="pit-meta">Mechanic help</span>
+        <h3>Mechanic help needed</h3>
+        <p>Template — copy the fields, fill them in your own words.</p>
+        <ul class="pit-fields">
+          <li>What’s wrong (symptoms, since when)</li><li>Vehicle model and year</li><li>Budget range</li><li>Urgency (today / this week / no rush)</li><li>Area (Moshi / Bhosari / Chakan / Pimpri)</li>
+        </ul>
+        <button class="btn" type="button" data-pit-use="Mechanic" data-pit-vehicle="Bike">Use this template</button>
+      </article>
+    </div>
+    <p class="pit-tpl-empty" id="pit-tpl-empty" hidden>No template matches that combination. Try clearing a filter — or ask anyway, the form above works for anything.</p>
+    <p class="pit-note">Templates only — there are no live listings on this page yet. New posts appear on the board above after we read them.</p>
+  </section>
+
+  <section class="pit-trust" aria-labelledby="pit-trust-h">
     <div class="plaque reveal">
-      <h3>Pit rules</h3>
+      <h3 id="pit-trust-h">How the Pit stays trustworthy</h3>
       <ul>
-        <li>Straight answers only — no fishing, no spam.</li>
-        <li>No phone-number dumps; replies come through us.</li>
-        <li>Disagree with the advice, not the person.</li>
-        <li>We moderate and have the final word.</li>
+        <li><b>Pit rules:</b> straight answers only, one post per item, disagree with the advice — not the person.</li>
+        <li><b>No spam:</b> no repeated posts, no phone-number dumps, no shop promotions in the question form.</li>
+        <li><b>Verify in person:</b> inspect the bike or part yourself, in daylight, before you pay anything.</li>
+        <li><b>No payment via this site:</b> Prajna never collects money for posts, and you should never pay in advance.</li>
+        <li><b>Replies come through us:</b> contact happens by email after we’ve read the post. We have the final word.</li>
       </ul>
     </div>
   </section>
-
-  <section>
-    <div class="shead reveal" data-reveal="fade-up">
-      <span class="tag">The board</span>
-      <h2>Latest posts</h2>
-      <p class="lede">Every post is checked by us before it appears.</p>
-    </div>
-    <div class="board" id="board"></div>
-    <form class="pform reveal" data-formtype="board" action="mailto:srijna2b@gmail.com" method="post" enctype="text/plain">
-      <h3>Write a post</h3>
-      <div class="row">
-        <div><label for="bname">Your name</label><input id="bname" name="name" required maxlength="40" autocomplete="name" placeholder="First name is fine"></div>
-        <div><label for="btopic">Topic</label><select id="btopic" name="topic"><option>Mechanic</option><option>Spare parts</option><option>Used bike / sale</option><option>Carpool</option><option>RTO / insurance</option><option>General</option></select></div>
-      </div>
-      <div class="row">
-        <div><label for="bemail">Email (optional, so we can tell you when it is up)</label><input id="bemail" name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></div>
-      </div>
-      <label for="bmsg">Message</label>
-      <textarea id="bmsg" name="message" rows="4" required maxlength="500" placeholder="Keep it useful and on-topic. No phone-number spam — people can reply through us."></textarea>
-      <div class="hp" aria-hidden="true"><label for="bcompany">Company</label><input id="bcompany" name="company" tabindex="-1" autocomplete="off"></div>
-      <div class="mt-3"><button class="btn" type="submit">Post to Board</button></div>
-      <div class="fresult"></div>
-    </form>
-    <p class="note reveal">Posts appear after we’ve read them. Be civil, no spam, no personal addresses.</p>
-  </section>
-
-  <section>
-    <div class="shead reveal" data-reveal="fade-up">
-      <span class="tag">Faster chat</span>
-      <h2>On the board</h2>
-      <p class="lede">Same topics, live conversation.</p>
-    </div>
-    <a id="communitylink" class="btn reveal" href="#">Ask about joining</a>
-    <p class="note reveal">We read every post before it appears.</p>
-  </section>
-  </main>
+</main>
 </div>
 
 <div class="wrap">
@@ -182,5 +443,129 @@
 <script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script>
 <script src="assets/fluid.js?v=70" defer></script>
 <script src="assets/pond.js?v=70" defer></script><script src="assets/vendor/gsap-3.15.0.min.js?v=70"></script><script src="assets/vendor/ScrollTrigger-3.15.0.min.js?v=70"></script><script src="assets/vendor/SplitText-3.15.0.min.js?v=70"></script><script src="assets/vendor/Flip-3.15.0.min.js?v=70"></script><script src="assets/vendor/MotionPathPlugin-3.15.0.min.js?v=70"></script><script src="assets/vendor/CustomEase-3.15.0.min.js?v=70"></script><script src="assets/vendor/Observer-3.15.0.min.js?v=70"></script><script src="assets/motion.js?v=70" defer></script>
+
+<script>
+/* Pit-local JS: tabs, search/filter, topic pre-select, copy-email. Scoped .pit-* only. */
+(function(){
+  var TOPICS = { all: null, mechanics: ["Mechanic"], parts: ["Spare parts"], used: ["Used bike / sale"], rto: ["RTO / insurance"], questions: ["General", "Carpool", "Welcome"] };
+  var cat = "all", q = "";
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".pit-tab"));
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".pit-panel"));
+  var board = document.getElementById("board"), count = document.getElementById("pit-count"), empty = document.getElementById("pit-empty"), search = document.getElementById("pit-search");
+  function topicOf(post){ var t = post.querySelector(".topic"); return t ? t.textContent.trim() : ""; }
+  function apply(){
+    var allowed = TOPICS[cat], shown = 0;
+    var posts = board ? board.querySelectorAll(".post") : [];
+    for (var i = 0; i < posts.length; i++){
+      var p = posts[i], okCat = !allowed || allowed.indexOf(topicOf(p)) !== -1;
+      var okQ = !q || p.textContent.toLowerCase().indexOf(q) !== -1;
+      var show = okCat && okQ; p.style.display = show ? "" : "none"; if (show) shown++;
+    }
+    if (count) count.textContent = posts.length ? ("Showing " + shown + " of " + posts.length + " posts") : "No posts yet — write the first one below.";
+    if (empty) empty.hidden = !(posts.length && shown === 0);
+  }
+  function select(tab, focus){
+    cat = tab.getAttribute("data-pit-cat");
+    tabs.forEach(function(t){ var on = t === tab; t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1; });
+    panels.forEach(function(pn){ var on = pn.id === "pit-panel-" + cat; pn.classList.toggle("active", on); pn.hidden = !on; });
+    if (focus) tab.focus(); apply();
+  }
+  tabs.forEach(function(tab, idx){
+    tab.addEventListener("click", function(){ select(tab, false); });
+    tab.addEventListener("keydown", function(e){
+      var n = null;
+      if (e.key === "ArrowRight") n = tabs[(idx + 1) % tabs.length];
+      else if (e.key === "ArrowLeft") n = tabs[(idx - 1 + tabs.length) % tabs.length];
+      else if (e.key === "Home") n = tabs[0];
+      else if (e.key === "End") n = tabs[tabs.length - 1];
+      if (n){ e.preventDefault(); select(n, true); }
+    });
+  });
+  if (search) search.addEventListener("input", function(){ q = search.value.trim().toLowerCase(); apply(); });
+  if (board) new MutationObserver(apply).observe(board, { childList: true });
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-pit-topic]");
+    if (t){ var sel = document.getElementById("btopic"); if (sel) sel.value = t.getAttribute("data-pit-topic"); var f = document.getElementById("pit-post"); if (f) f.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); var msg = document.getElementById("bmsg"); if (msg) setTimeout(function(){ msg.focus({ preventScroll: true }); }, 350); return; }
+    var g = e.target.closest("[data-pit-goto]");
+    if (g){ var el = document.querySelector(g.getAttribute("data-pit-goto")); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+  });
+  var copyBtn = document.getElementById("pit-copy-email");
+  if (copyBtn) copyBtn.addEventListener("click", function(){
+    var note = document.getElementById("pit-copy-note"), addr = "srijna2b@gmail.com";
+    function done(ok){ if (note) note.textContent = ok ? "Copied: " + addr : "Copy failed — the address is srijna2b@gmail.com"; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(function(){ done(true); }, function(){ done(false); });
+    else done(false);
+  });
+  apply();
+})();
+</script>
+
+<script>
+/* Pit capability JS (pit-local): ask-a-question mailto, template filters, template-to-form. pit-* only, vanilla. */
+(function(){
+  "use strict";
+  var MAIL = "srijna2b@gmail.com";
+  var form = document.getElementById("pit-ask-form");
+  var result = document.getElementById("pit-result");
+  function val(id){ var el = document.getElementById(id); return el ? (el.value || "").trim() : ""; }
+  function buildMailto(){
+    var body = "Hi Pit team,\n\nI'm asking on The Pit (Prajna Co-hab, Moshi).\n\nCategory: " + val("pit-category") + "\nVehicle type: " + val("pit-vehicle") + "\nArea: " + val("pit-area") + "\nBudget range: " + val("pit-budget") + "\nDescription:\n" + val("pit-description") + "\n\nThanks.";
+    var subject = "The Pit question — " + (val("pit-category") || "General") + (val("pit-area") ? " — " + val("pit-area") : "");
+    return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+  if (form) form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (!form.reportValidity()) return;
+    var link = buildMailto();
+    window.location.href = link;
+    if (result){
+      result.hidden = false;
+      result.textContent = "Your mail app should be open with everything filled in. Nothing is sent until you press send there, and this form keeps what you typed. ";
+      var a = document.createElement("a");
+      a.href = link; a.textContent = "Open the email again.";
+      result.appendChild(a);
+    }
+  });
+  /* local filters over the template cards */
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".pit-tpl-card"));
+  var fArea = document.getElementById("pit-filter-area"),
+      fCat = document.getElementById("pit-filter-category"),
+      fVeh = document.getElementById("pit-filter-vehicle"),
+      tplCount = document.getElementById("pit-tpl-count"),
+      tplEmpty = document.getElementById("pit-tpl-empty");
+  function has(list, v){ return (list || "").split(" ").indexOf(v) !== -1; }
+  function applyTpl(){
+    var a = fArea ? fArea.value : "all", c = fCat ? fCat.value : "all", v = fVeh ? fVeh.value : "all", shown = 0;
+    cards.forEach(function(card){
+      var ok = (a === "all" || has(card.getAttribute("data-area"), a))
+            && (c === "all" || card.getAttribute("data-category") === c)
+            && (v === "all" || has(card.getAttribute("data-vehicle"), v));
+      card.style.display = ok ? "" : "none";
+      if (ok) shown++;
+    });
+    if (tplCount) tplCount.textContent = shown === 1 ? "1 template" : (shown + " templates");
+    if (tplEmpty) tplEmpty.hidden = shown !== 0;
+  }
+  [fArea, fCat, fVeh].forEach(function(el){ if (el) el.addEventListener("change", applyTpl); });
+  applyTpl();
+  /* template buttons: pre-fill the ask form and jump to it */
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-pit-use]");
+    if (!t) return;
+    var catSel = document.getElementById("pit-category"),
+        vehSel = document.getElementById("pit-vehicle"),
+        desc = document.getElementById("pit-description");
+    if (catSel) catSel.value = t.getAttribute("data-pit-use");
+    if (vehSel) vehSel.value = t.getAttribute("data-pit-vehicle") || "Bike";
+    if (desc && !desc.value){
+      var card = t.closest(".pit-tpl-card"), fields = card ? Array.prototype.map.call(card.querySelectorAll(".pit-fields li"), function(li){ return li.textContent; }) : [];
+      desc.value = fields.length ? ("Template fields to fill:\n- " + fields.join("\n- ") + "\n\n") : "";
+    }
+    var target = form || document.getElementById("pit-ask-h");
+    if (target) target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    if (desc) setTimeout(function(){ desc.focus({ preventScroll: true }); }, 350);
+  });
+})();
+</script>
 </body>
 </html>
