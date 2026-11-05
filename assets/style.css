@@ -2,7 +2,7 @@
   /* v42: one side-padding rhythm for every container. */
   --pad-x:clamp(18px,4vw,28px);
 
-  /* v42: solid paper panels. No translucency, no glass. */
+  /* v42: paper panels; header/cards use GlassKit-inspired glass at file end. */
   --panel:#fdfaf4;
   --panel-2:#fbf7ef;
 
@@ -2023,4 +2023,16 @@ html.ix-ready img.img-error{filter:none;opacity:1;background:var(--paper-deep)}
   html.ix-ready .btn.is-pressed,html.ix-ready button.is-pressed,.ripple-ix,.tv-word,.tip-body,.ix-banner,.ix-expanding,.ix-expanding .pit-search,.gallery-item,.ix-popover,.ix-new-pill{transition:none!important;animation:none!important;transform:none}
   .ix-skeleton span{animation:none}
   .tv-word{opacity:1;transform:none;filter:none}
+}
+
+/* GlassKit-inspired glass, header + cards only (CSS only, no new deps).
+   Pattern copied from GlassKit .glass-card: translucent surface + backdrop blur
+   + 1.5px translucent border + card shadow with strong inset highlight. */
+/* header already carries the same glass treatment via its !important rules above */
+.card{
+  background-color:rgba(253,250,244,.72);
+  backdrop-filter:blur(12px) saturate(140%);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);
+  border:1.5px solid rgba(255,255,255,.55);
+  box-shadow:0 14px 34px rgba(43,38,32,.10), inset 0 1px 0 rgba(255,255,255,.65);
 }
