@@ -209,7 +209,7 @@
         <h3>Room overview</h3>
         <ul>
           <li><b>2 private rooms</b>, one bed each</li>
-          <li>Storage bed with mattress and pillow</li>
+          <li data-tip="Storage bed: mattress and pillow included. Laundry is on the common-floor washing machine.">Storage bed with mattress and pillow</li>
           <li>Cupboard, curtains, one set of bedsheets</li>
           <li>Study table and chair</li>
           <li>Attached balcony</li>
@@ -320,7 +320,7 @@
       <div class="card"><h3>Private, in-room</h3><ul><li>Storage bed with mattress and pillow</li><li>Cupboard</li><li>Curtains</li><li>1 set bedsheet</li><li>Attached balcony</li><li>Wi-fi</li><li>Study table and chair</li></ul></div>
       <div class="card"><h3>Common</h3><ul><li>24hr water with geyser</li><li>RO drinking water</li><li>Fully automatic washing machine</li><li>TV in living room</li><li>Sofa set</li><li>Dining table in open kitchen</li><li>Kitchen access: Refrigerator, Microwave oven, Induction, Toaster, Electric kettle, Gas stove</li></ul></div>
     </div>
-    <div class="card mt-3"><h3>Utilities</h3><ul><li>24hr caretaker</li><li>Electricity chargeable</li><li>Water included</li><li>Housekeeping included</li></ul></div>
+    <div class="card mt-3"><h3>Utilities</h3><ul><li>24hr caretaker</li><li data-tip="Electricity is metered and shared across the house, usually Rs 300-700 per month. Water and housekeeping are included.">Electricity chargeable</li><li>Water included</li><li>Housekeeping included</li></ul></div>
   </section>
 
   <section class="flat" id="pricing">
@@ -330,9 +330,9 @@
     </div>
     <div class="costcard reveal">
       <div class="segmented" role="tablist" aria-label="Dinner plan" data-segmented=".pricetable" >
-        <button type="button" role="tab" aria-selected="true" data-plan="plain">Without dinner</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-plan="meal">With dinner</button>
+        <button type="button" role="tab" id="tab-plain" aria-controls="pricetable-panel" aria-selected="true" data-plan="plain">Without dinner</button><button type="button" role="tab" id="tab-meal" aria-controls="pricetable-panel" aria-selected="false" tabindex="-1" data-plan="meal">With dinner</button>
       </div>
-      <div class="pricetable plan-plain" role="tabpanel" aria-label="Monthly rates">
+      <div class="pricetable plan-plain" role="tabpanel" id="pricetable-panel" aria-labelledby="tab-plain">
         <div class="pricerow header">
           <span>Room type</span>
           <span data-label="Without dinner">Without dinner</span>
@@ -352,7 +352,7 @@
           <span data-label="Refundable deposit">₹ 14,000</span>
         </div>
       </div>
-      <p class="meta-text mt-2">Deposit is refundable when you move out after the place is checked over. Electricity is metered and shared, expect ₹300–₹700/month depending on AC use. The lock-in is 3 months, then one month of notice.</p>
+      <p class="meta-text mt-2"><button type="button" class="btn ghost sm" data-popover="Deposit returns when you move out after the place is checked over. No deductions for normal wear. Lock-in is 3 months, then one month of notice.">What counts as damage?</button> Deposit is refundable when you move out after the place is checked over. Electricity is metered and shared, expect ₹300–₹700/month depending on AC use. The lock-in is 3 months, then one month of notice.</p>
     </div>
   </section>
 

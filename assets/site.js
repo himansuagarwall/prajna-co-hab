@@ -261,6 +261,7 @@ window.PRAJNA = window.PRAJNA || {};
           if(sub){ sub.disabled = false; sub.textContent = sub.dataset.label || "Send"; }
           if(ok){ f.reset(); }
           showResult(f, ok ? "ok" : "err", msg);
+          f.dispatchEvent(new CustomEvent("ix:done", { detail: { ok: !!ok } }));
         }
 
         if(!C.endpoint){
@@ -268,6 +269,7 @@ window.PRAJNA = window.PRAJNA || {};
           if(link){ window.location.href = link; }
           busy = false;
           if(sub){ sub.disabled = false; sub.textContent = sub.dataset.label || "Send"; }
+          f.dispatchEvent(new CustomEvent("ix:done", { detail: { ok: true } }));
           showResult(f, "info",
             "Your mail app should be open with everything filled in. Nothing is sent until you press send there, and this form keeps what you typed either way.",
             link, "Open the email again.");
@@ -626,6 +628,22 @@ window.PRAJNA = window.PRAJNA || {};
     });
   });
 
+  /* --- tabs: wire aria-controls for rooms segmented --- */
+  each(doc.querySelectorAll("[data-segmented]"), function(seg){
+    var panel = doc.querySelector(seg.getAttribute("data-segmented"));
+    var tabs = seg.querySelectorAll('[role="tab"]');
+    if(!panel){ return; }
+    if(!panel.id){ panel.id = "pricetable-panel"; }
+    each(tabs, function(t, i){
+      var tid = t.id || ("segmented-tab-" + i);
+      t.id = tid;
+      t.setAttribute("aria-controls", panel.id);
+      t.setAttribute("aria-selected", t === seg.querySelector('[aria-selected="true"]') ? "true" : "false");
+    });
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", (seg.querySelector('[aria-selected="true"]') || seg.querySelector('[role="tab"]')).id);
+  });
+
   /* --- scroll-spy for .spy-nav chips --- */
   var spyNav = doc.querySelector(".spy-nav");
   if(spyNav && "IntersectionObserver" in window){
@@ -784,5 +802,544 @@ window.PRAJNA = window.PRAJNA || {};
   /* --- tooltip-group keyboard access (amenities/promises) --- */
   each(doc.querySelectorAll("[data-tip]"), function(el){
     if(!el.hasAttribute("tabindex")){ el.setAttribute("tabindex","0"); }
+  });
+})();
+
+/* ============================================================
+   INTERIOR strict pass (2026-11-05) — vanilla ports of the
+   interior.dev headless hooks. Timings: press 140, hover 220,
+   state 380, arrival 760. Easing cubic-bezier(.22,.61,.36,1).
+   Reduced-motion = instant. No React, no motion package.
+   Audit register: INTERIOR-AUDIT.md (repo root).
+   ============================================================ */
+(function(){
+  "use strict";
+  var doc = document, root = doc.documentElement;
+  var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var EASE = "cubic-bezier(.22,.61,.36,1)";
+  var cfg = window.PRAJNA || {};
+  function each(els, fn){ Array.prototype.forEach.call(els || [], fn); }
+  function onReady(fn){ if(doc.readyState === "loading"){ doc.addEventListener("DOMContentLoaded", fn); } else { fn(); } }
+
+  onReady(function(){
+    /* ---- sticky-header: scrolled shadow class ---- */
+    var hd = doc.querySelector("header");
+    if(hd){
+      var onScroll = function(){ hd.classList.toggle("scrolled", window.scrollY > 8); };
+      window.addEventListener("scroll", onScroll, { passive:true }); onScroll();
+    }
+
+    /* ---- press-depth (strict): pointer-tracked press with origin ----
+       Mirror of usePressDepth: press only while pointer is inside,
+       keyboard Space/Enter press, blur/visibility release. */
+    each(doc.querySelectorAll(".btn, button, .chip, .gallery-filters button, .segmented [role=tab]"), function(el){
+      if(el.dataset.ixPress){ return; } el.dataset.ixPress = "1";
+      var down = false, pointerId = null;
+      function setPressed(v){
+        if(down === v){ return; } down = v;
+        el.classList.toggle("is-pressed", v);
+      }
+      function release(){ pointerId = null; setPressed(false); }
+      el.addEventListener("pointerdown", function(e){
+        if(reduced || e.disabled) return;
+        if(e.pointerType === "mouse" && e.button !== 0) return;
+        pointerId = e.pointerId;
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--px", Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1)).toFixed(2));
+        el.style.setProperty("--py", Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1)).toFixed(2));
+        setPressed(true);
+      });
+      el.addEventListener("pointermove", function(e){
+        if(e.pointerId !== pointerId){ return; }
+        var r = el.getBoundingClientRect();
+        setPressed(e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom);
+      });
+      el.addEventListener("pointerup", release);
+      el.addEventListener("pointercancel", release);
+      el.addEventListener("keydown", function(e){ if(!reduced && (e.key === " " || e.key === "Enter")){ setPressed(true); } });
+      el.addEventListener("keyup", function(){ setPressed(false); });
+      el.addEventListener("blur", release);
+      doc.addEventListener("visibilitychange", function(){ if(doc.hidden){ release(); } });
+    });
+
+    /* ---- ripple (strict): max 4, minVisible 220ms, fade 320ms ----
+       Mirror of useRipple. Keyboard press spawns centered ripple. */
+    if(!reduced){
+      var seq = 0, born = {};
+      function spawn(el, cx, cy){
+        var r = el.getBoundingClientRect();
+        var x = cx == null ? Math.round(r.width / 2) : Math.round(cx - r.left);
+        var y = cy == null ? Math.round(r.height / 2) : Math.round(cy - r.top);
+        var reach = Math.max(Math.hypot(x, y), Math.hypot(r.width - x, y), Math.hypot(x, r.height - y), Math.hypot(r.width - x, r.height - y));
+        var s = doc.createElement("span"); s.className = "ripple-ix";
+        var d = Math.max(40, reach * 2);
+        s.style.width = s.style.height = d + "px";
+        s.style.left = (x - d / 2) + "px"; s.style.top = (y - d / 2) + "px";
+        s.style.setProperty("--rip-scale", Math.max(1, Math.round(reach * 200 / 40) / 100));
+        el.appendChild(s);
+        var id = ++seq; born[id] = performance.now();
+        var wait = Math.max(0, 220 - (performance.now() - born[id]));
+        setTimeout(function(){ s.classList.add("released"); }, 0);
+        setTimeout(function(){ s.remove(); delete born[id]; }, 220 + 320);
+        var kids = el.querySelectorAll(".ripple-ix");
+        if(kids.length > 4){ kids[0].remove(); }
+      }
+      doc.addEventListener("pointerdown", function(e){
+        var b = e.target.closest ? e.target.closest(".btn,button,.chip") : null;
+        if(!b){ return; }
+        if(b.querySelectorAll(".ripple-ix").length >= 4){ b.querySelector(".ripple-ix").remove(); }
+        spawn(b, e.clientX, e.clientY);
+      }, { passive:true });
+      doc.addEventListener("keydown", function(e){
+        if((e.key === " " || e.key === "Enter") && e.target && e.target.closest){
+          var b = e.target.closest(".btn,button,.chip");
+          if(b && (b.tagName === "BUTTON" || b.getAttribute("role") === "tab")){ spawn(b, null, null); }
+        }
+      });
+    }
+
+    /* ---- loading-button (strict): idle/pending/success/error ----
+       Mirror of useAsyncAction: resetAfter 1400ms, guards re-entry,
+       spinner 850ms linear (reduced: static). Wired to lead forms
+       (state class only; site.js still owns send/finish). */
+    each(doc.querySelectorAll("form[data-formtype]"), function(f){
+      var sub = f.querySelector("button[type=submit]");
+      if(!sub || sub.dataset.ixLoad){ return; } sub.dataset.ixLoad = "1";
+      sub.setAttribute("aria-busy", "false");
+      function setStatus(st){
+        sub.dataset.status = st;
+        sub.setAttribute("aria-busy", st === "pending" ? "true" : "false");
+        sub.classList.toggle("is-loading", st === "pending");
+        sub.classList.toggle("is-success", st === "success");
+        sub.classList.toggle("is-error", st === "error");
+        if(st === "success" || st === "error"){
+          setTimeout(function(){ if(sub.dataset.status === st){ setStatus("idle"); } }, 1400);
+        }
+      }
+      sub._ixSetStatus = setStatus;
+      f.addEventListener("submit", function(){ setStatus("pending"); }, false);
+      f.addEventListener("ix:done", function(e){ setStatus(e.detail && e.detail.ok ? "success" : "error"); });
+    });
+
+    /* ---- blur-up-image (strict): decode() + error state ----
+       Cached images reveal instantly, failures keep the skeleton. */
+    each(doc.querySelectorAll("img"), function(img){
+      if(img.dataset.ixBlur){ return; } img.dataset.ixBlur = "1";
+      function ready(){ img.classList.add("loaded"); img.classList.remove("img-error"); }
+      function fail(){ img.classList.add("loaded", "img-error"); }
+      if(img.complete){
+        if(img.naturalWidth > 0){ ready(); } else { fail(); }
+        return;
+      }
+      img.addEventListener("load", function(){
+        if(img.decode){ img.decode().then(ready, fail); } else { ready(); }
+      });
+      img.addEventListener("error", fail);
+    });
+
+    /* ---- skeleton-swap: board skeleton with 120ms delay, 380ms min ----
+       Fragment stays mounted; a shimmer shell shows while the board
+       renders its first post (Pit board #board). */
+    var board = doc.getElementById("board");
+    if(board && !reduced){
+      var shownAt = 0;
+      var skel = doc.createElement("div");
+      skel.className = "ix-skeleton"; skel.setAttribute("aria-hidden", "true");
+      skel.innerHTML = "<span></span><span></span><span></span>";
+      function paintSkel(){
+        var hasPosts = board.querySelectorAll(".post").length > 0;
+        if(!hasPosts){
+          if(!skel.isConnected){ board.appendChild(skel); shownAt = performance.now(); }
+        } else {
+          var rest = Math.max(0, 380 - (performance.now() - (shownAt || performance.now())));
+          setTimeout(function(){ if(skel.isConnected){ skel.remove(); } }, rest);
+        }
+      }
+      new MutationObserver(paintSkel).observe(board, { childList:true });
+      setTimeout(paintSkel, 120);
+    }
+
+    /* ---- text-reveal (strict): word stagger on view, 600ms ----
+       Mirror of useTextReveal: 10px rise + blur(8px), .06s stagger,
+       once. Reduced-motion reveals instantly. Headings h2 only. */
+    if(!reduced && "IntersectionObserver" in window){
+      var tvObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(!en.isIntersecting){ return; }
+          var h = en.target; tvObs.unobserve(h);
+          var words = h.textContent.trim().split(/\s+/);
+          h.textContent = "";
+          words.forEach(function(w, i){
+            var s = doc.createElement("span"); s.className = "tv-word"; s.textContent = w;
+            s.style.transitionDelay = (i * 60) + "ms";
+            h.appendChild(s);
+            h.appendChild(doc.createTextNode(" "));
+          });
+          requestAnimationFrame(function(){ h.classList.add("tv-in"); });
+          setTimeout(function(){ h.classList.remove("tv-in"); h.classList.add("tv-done"); }, 600 + words.length * 60);
+        });
+      }, { threshold: 0.4 });
+      each(doc.querySelectorAll("main h2"), function(h){ if(h.textContent.trim().length > 12){ tvObs.observe(h); } });
+    }
+
+    /* ---- live-activity (strict): vacancy announcer linger 2000ms ----
+       Mirror of useLiveActivity: status text in an aria-live region,
+       dot pulses while announcing, peek 2600ms. */
+    (function(){
+      var region = doc.querySelector("[data-live-region]");
+      if(!region){
+        region = doc.createElement("p");
+        region.className = "ix-sr"; region.setAttribute("data-live-region", "");
+        region.setAttribute("aria-live", "polite"); region.setAttribute("role", "status");
+        doc.body.appendChild(region);
+      }
+      var avail = cfg.availability || "";
+      var text = avail ? avail : "Rooms listed on this page.";
+      var dot = doc.querySelector("header .vdot, .vdot");
+      function announce(){
+        region.textContent = text;
+        if(dot && !reduced){ dot.classList.add("is-live"); }
+        setTimeout(function(){ if(dot){ dot.classList.remove("is-live"); } }, 2000);
+      }
+      announce();
+      /* value-flash drives off data-cfg writes; re-announce on change */
+      if("MutationObserver" in window){
+        var mo = new MutationObserver(function(muts){
+          each(muts, function(m){
+            var t = m.target.closest ? m.target.closest("[data-cfg]") : null;
+            if(t){ announce(); }
+          });
+        });
+        each(doc.querySelectorAll("[data-cfg]"), function(el){ mo.observe(el, { childList:true, characterData:true, subtree:true }); });
+      }
+    })();
+
+    /* ---- tooltip-group (strict): one open at a time ----
+       openDelay 200ms, closeDelay 120ms, skipDelay 400ms (registry).
+       Esc closes. aria-describedby points at the tip. */
+    (function(){
+      var openEl = null, openTimer = null, closeTimer = null, warmUntil = 0;
+      function close(instant){
+        if(closeTimer){ clearTimeout(closeTimer); closeTimer = null; }
+        if(openTimer){ clearTimeout(openTimer); openTimer = null; }
+        if(openEl){ openEl.classList.remove("tip-open"); openEl.removeAttribute("aria-describedby"); openEl = null; }
+        warmUntil = Date.now() + 400;
+      }
+      each(doc.querySelectorAll("[data-tip]"), function(el){
+        if(!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); }
+        var id = el.getAttribute("aria-describedby") || ("tip-" + Math.random().toString(36).slice(2, 8));
+        el.setAttribute("aria-describedby", id);
+        function open(){
+          if(openTimer){ clearTimeout(openTimer); }
+          if(closeTimer){ clearTimeout(closeTimer); closeTimer = null; }
+          if(openEl && openEl !== el){ close(); }
+          var delay = Date.now() < warmUntil ? 0 : 200;
+          openTimer = setTimeout(function(){
+            openEl = el; el.classList.add("tip-open");
+            var tip = el.getAttribute("data-tip");
+            var tipEl = doc.getElementById(id);
+            if(!tipEl){
+              tipEl = doc.createElement("span"); tipEl.className = "tip-body"; tipEl.id = id; tipEl.textContent = tip;
+              el.appendChild(tipEl);
+            }
+          }, delay);
+        }
+        el.addEventListener("mouseenter", open);
+        el.addEventListener("focus", open);
+        el.addEventListener("mouseleave", function(){ closeTimer = setTimeout(close, 120); });
+        el.addEventListener("blur", function(){ closeTimer = setTimeout(close, 120); });
+        el.addEventListener("keydown", function(e){ if(e.key === "Escape"){ e.stopPropagation(); close(true); } });
+      });
+      doc.addEventListener("keydown", function(e){ if(e.key === "Escape"){ close(true); } });
+      doc.addEventListener("click", function(e){ var t = e.target.closest ? e.target.closest("[data-tip]") : null; if(!t){ close(); } });
+    })();
+
+    /* ---- progress-bar (strict): determinate + indeterminate ----
+       Mirrors useProgressBar: value null = indeterminate sweep.
+       Live region announces percent. */
+    (function(){
+      var shell = doc.querySelector("#page-progress");
+      if(!shell){
+        shell = doc.createElement("div"); shell.className = "ix-progress";
+        shell.setAttribute("role", "progressbar"); shell.setAttribute("aria-hidden", "true");
+        var fill = doc.createElement("span"); fill.className = "ix-progress-fill";
+        shell.appendChild(fill); doc.body.prepend(shell);
+      }
+      var fillEl = shell.querySelector(".ix-progress-fill");
+      shell.dataset.value = "0";
+      function set(v){
+        shell.dataset.value = v;
+        fillEl.style.transform = "scaleX(" + Math.max(0, Math.min(1, v)) + ")";
+      }
+      var max = doc.documentElement.scrollHeight - doc.documentElement.clientHeight;
+      function onScroll(){ set(max > 0 ? doc.documentElement.scrollTop / max : 0); }
+      window.addEventListener("scroll", function(){
+        requestAnimationFrame(function(){
+          max = doc.documentElement.scrollHeight - doc.documentElement.clientHeight;
+          onScroll();
+        });
+      }, { passive:true });
+      onScroll();
+    })();
+
+    /* ---- collapsible-banner (strict): open/folded/dismissed ----
+       Vacancy announcement with fold + dismiss (DISCLOSE spring
+       ~190/30; our 380ms state ease). Persisted per session. */
+    (function(){
+      var vacancyEl = doc.querySelector("header .vacancy");
+      var availability = cfg.availability || "";
+      if(!vacancyEl || !availability || doc.querySelector(".ix-banner")){ return; }
+      if(sessionStorage.getItem("ix-banner") === "dismissed"){ return; }
+      var banner = doc.createElement("div");
+      banner.className = "ix-banner"; banner.setAttribute("role", "status");
+      banner.innerHTML = '<span class="ix-banner-text"></span><button type="button" class="ix-banner-fold" aria-expanded="true" aria-label="Fold announcement">Fold</button><button type="button" class="ix-banner-close" aria-label="Dismiss announcement">Dismiss</button>';
+      banner.querySelector(".ix-banner-text").textContent = availability;
+      var foldBtn = banner.querySelector(".ix-banner-fold");
+      var state = "open";
+      function commit(next){
+        state = next;
+        banner.dataset.state = next;
+        if(next === "dismissed"){
+          banner.classList.add("is-leaving");
+          setTimeout(function(){ banner.remove(); sessionStorage.setItem("ix-banner", "dismissed"); }, reduced ? 0 : 380);
+        } else if(next === "folded"){
+          banner.classList.add("is-folded");
+          foldBtn.setAttribute("aria-expanded", "false"); foldBtn.textContent = "More";
+        } else {
+          banner.classList.remove("is-folded");
+          foldBtn.setAttribute("aria-expanded", "true"); foldBtn.textContent = "Fold";
+        }
+      }
+      foldBtn.addEventListener("click", function(){ commit(state === "open" ? "folded" : "open"); });
+      banner.querySelector(".ix-banner-close").addEventListener("click", function(){ commit("dismissed"); });
+      var main = doc.querySelector("main");
+      if(main){ main.prepend(banner); } else { doc.body.prepend(banner); }
+    })();
+
+    /* ---- expanding-search (strict): collapsed 40px, expands on focus ----
+       Mirror of useExpandingSearch (COLLAPSED 40, debounce announce
+       500ms). Host: Pit search (#pit-search). */
+    (function(){
+      var input = doc.getElementById("pit-search");
+      if(!input){ return; }
+      var wrap = input.closest(".pit-searchwrap") || input.parentElement;
+      wrap.classList.add("ix-expanding");
+      var countSlot = doc.createElement("span");
+      countSlot.className = "ix-search-count"; countSlot.setAttribute("aria-hidden", "true");
+      countSlot.setAttribute("aria-live", "polite");
+      wrap.appendChild(countSlot);
+      var announceTimer = null;
+      function announce(){
+        var n = board ? board.querySelectorAll(".post:not([hidden])").length : 0;
+        countSlot.textContent = input.value ? (n + " match" + (n === 1 ? "" : "es")) : "";
+      }
+      input.addEventListener("focus", function(){ wrap.classList.add("is-open"); });
+      input.addEventListener("blur", function(){
+        if(!input.value){ wrap.classList.remove("is-open"); }
+      });
+      input.addEventListener("input", function(){
+        wrap.classList.add("is-open");
+        clearTimeout(announceTimer); announceTimer = setTimeout(announce, 500);
+      });
+    })();
+
+    /* ---- filter-grid (strict): counts per filter, 380ms layout ----
+       Mirror of useFilterGrid: filter buttons carry counts, layout
+       animates via .gallery-item transition (380ms). Gallery host. */
+    (function(){
+      each(doc.querySelectorAll(".gallery-filters"), function(bar){
+        var items = Array.prototype.slice.call(doc.querySelectorAll(".gallery-item"));
+        each(bar.querySelectorAll("[data-filter]"), function(btn){
+          var v = btn.getAttribute("data-filter");
+          var n = v === "all" ? items.length : items.filter(function(it){ return it.getAttribute("data-category") === v; }).length;
+          var c = doc.createElement("span"); c.className = "ix-filter-count"; c.textContent = n;
+          btn.appendChild(c);
+        });
+        bar.addEventListener("click", function(e){
+          var btn = e.target.closest("[data-filter]"); if(!btn){ return; }
+          each(items, function(it){ it.classList.add("ix-fading"); });
+          setTimeout(function(){ each(items, function(it){ it.classList.remove("ix-fading"); }); }, reduced ? 0 : 380);
+        });
+      });
+    })();
+
+    /* ---- dropdown (strict): native selects get listbox motion ----
+       Mirror of useDropdown essentials (listbox role, aria-expanded,
+       220ms open). Applied to Pit template selects without
+       replacing native controls (keyboard + SR semantics intact). */
+    each(doc.querySelectorAll(".pit-filters select, select[data-dropdown]"), function(sel){
+      sel.setAttribute("aria-haspopup", "listbox");
+      sel.classList.add("ix-dropdown");
+      sel.addEventListener("focus", function(){ sel.classList.add("is-open"); });
+      sel.addEventListener("blur", function(){ setTimeout(function(){ sel.classList.remove("is-open"); }, 140); });
+    });
+
+    /* ---- popover (strict): price detail popover anchored to ---- */
+    (function(){
+      var anchor = doc.querySelector("[data-popover]");
+      if(!anchor){ return; }
+      var panel = doc.createElement("div");
+      panel.className = "ix-popover"; panel.setAttribute("role", "dialog");
+      panel.setAttribute("aria-hidden", "true");
+      panel.innerHTML = anchor.getAttribute("data-popover") || "";
+      doc.body.appendChild(panel);
+      anchor.setAttribute("aria-haspopup", "dialog");
+      anchor.setAttribute("aria-expanded", "false");
+      function place(){
+        var r = anchor.getBoundingClientRect();
+        panel.style.left = Math.max(8, Math.min(window.innerWidth - 320, r.left)) + "px";
+        panel.style.top = (window.scrollY + r.bottom + 10) + "px";
+      }
+      function openPop(){
+        panel.setAttribute("aria-hidden", "false"); panel.classList.add("is-open");
+        anchor.setAttribute("aria-expanded", "true"); place();
+      }
+      function closePop(){
+        panel.setAttribute("aria-hidden", "true"); panel.classList.remove("is-open");
+        anchor.setAttribute("aria-expanded", "false");
+      }
+      anchor.addEventListener("click", function(e){ e.preventDefault(); panel.classList.contains("is-open") ? closePop() : openPop(); });
+      doc.addEventListener("click", function(e){ if(panel.classList.contains("is-open") && !e.target.closest(".ix-popover") && e.target !== anchor){ closePop(); } });
+      doc.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closePop(); anchor.focus(); } });
+      window.addEventListener("resize", function(){ if(panel.classList.contains("is-open")){ place(); } });
+    })();
+
+    /* ---- task-steps (strict): enquiry progress tracker ---- */
+    (function(){
+      var form = doc.querySelector("form[data-formtype='inquiry']");
+      if(!form || doc.querySelector(".ix-steps")){ return; }
+      var steps = ["Write your details", "We reply by email", "Visit the house", "Sign one page", "Move in"];
+      var ol = doc.createElement("ol");
+      ol.className = "ix-steps"; ol.setAttribute("aria-label", "What happens next");
+      var state = 0;
+      function paint(){
+        ol.innerHTML = "";
+        each(steps, function(label, i){
+          var li = doc.createElement("li");
+          li.className = i < state ? "done" : (i === state ? "active" : "todo");
+          li.innerHTML = '<span aria-hidden="true">' + (i < state ? "Done" : String(i + 1)) + '</span>' + label;
+          if(i === state){ li.setAttribute("aria-current", "step"); }
+          ol.appendChild(li);
+        });
+        var live = doc.createElement("span"); live.className = "ix-sr"; live.setAttribute("aria-live", "polite");
+        live.textContent = state >= steps.length ? "All 5 steps complete" : (steps[Math.min(state, steps.length - 1)] + ", step " + (state + 1) + " of " + steps.length);
+        ol.appendChild(live);
+      }
+      paint();
+      form.insertBefore(ol, form.firstChild.nextSibling);
+      /* advance on successful submit (loading-button hook reports) */
+      form.addEventListener("ix:done", function(e){ if(e.detail && e.detail.ok){ state = Math.min(state + 2, steps.length); paint(); } });
+      /* mark step active on focus of first field */
+      var first = form.querySelector("input,textarea,select");
+      if(first){ first.addEventListener("focus", function(){ if(state === 0){ state = 1; paint(); } }); }
+    })();
+
+    /* ---- new-items-pill (strict): Pit board unread pill ---- */
+    (function(){
+      var boardEl = doc.getElementById("board");
+      if(!boardEl){ return; }
+      var pill = doc.createElement("button");
+      pill.type = "button"; pill.className = "ix-new-pill"; pill.hidden = true;
+      pill.textContent = "New posts";
+      pill.setAttribute("aria-live", "polite");
+      var unread = 0;
+      function isPinned(){
+        var scroller = doc.scrollingElement || doc.documentElement;
+        var gap = scroller.scrollHeight - (scroller.scrollTop + scroller.clientHeight);
+        return gap < 480;
+      }
+      function show(){
+        if(isPinned()){ return; }
+        pill.hidden = false;
+        pill.textContent = unread + " new post" + (unread === 1 ? "" : "s");
+      }
+      function hide(){ unread = 0; pill.hidden = true; }
+      window.addEventListener("scroll", function(){ if(isPinned() && !pill.hidden){ hide(); } }, { passive:true });
+      pill.addEventListener("click", function(){
+        var target = doc.getElementById("pit-board") || boardEl;
+        target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+        hide();
+      });
+      doc.body.appendChild(pill);
+      new MutationObserver(function(muts){
+        each(muts, function(m){
+          if(m.type === "childList" && m.addedNodes.length){ unread += m.addedNodes.length; show(); }
+        });
+      }).observe(boardEl, { childList:true });
+    })();
+
+    /* ---- load-more + pagination (strict): sentinel-driven reveal ----
+       Mirror of useLoadMore (IntersectionObserver sentinel) +
+       usePagination (prev/next). Host: blog posts. */
+    (function(){
+      var list = doc.getElementById("blog-posts");
+      if(!list){ return; }
+      var cards = Array.prototype.slice.call(list.querySelectorAll(".post"));
+      var PAGE = 2, visible = PAGE;
+      var sentinel = doc.createElement("div"); sentinel.className = "ix-sentinel"; sentinel.setAttribute("aria-hidden", "true");
+      var btn = doc.createElement("button"); btn.type = "button"; btn.className = "btn ghost ix-loadmore";
+      btn.textContent = "Load more guides";
+      list.after(sentinel); sentinel.after(btn);
+      var status = doc.createElement("p"); status.className = "ix-sr"; status.setAttribute("aria-live", "polite");
+      btn.after(status);
+      function paint(){
+        each(cards, function(card, i){ card.hidden = i >= visible; });
+        var done = visible >= cards.length;
+        btn.hidden = done;
+        btn.textContent = done ? "All guides" : ("Load more (" + (cards.length - visible) + " left)");
+        status.textContent = "Showing " + Math.min(visible, cards.length) + " of " + cards.length + " guides";
+        /* pager */
+        var old = list.parentElement.querySelector(".ix-pager");
+        if(old){ old.remove(); }
+        if(cards.length > PAGE){
+          var pager = doc.createElement("nav"); pager.className = "ix-pager"; pager.setAttribute("aria-label", "Guides pages");
+          var prev = doc.createElement("button"); prev.type = "button"; prev.textContent = "Previous";
+          var next = doc.createElement("button"); next.type = "button"; next.textContent = "Next";
+          var count = document.createElement("span"); count.textContent = "Page " + Math.ceil(visible / PAGE);
+          prev.disabled = visible <= PAGE;
+          next.disabled = done;
+          prev.addEventListener("click", function(){ visible = Math.max(PAGE, visible - PAGE); paint(); window.scrollTo({ top: list.offsetTop - 80, behavior: reduced ? "auto" : "smooth" }); });
+          next.addEventListener("click", function(){ visible = Math.min(cards.length, visible + PAGE); paint(); });
+          pager.appendChild(prev); pager.appendChild(count); pager.appendChild(next);
+          list.after(pager); pager.after(sentinel);
+          sentinel.after(btn); btn.after(status);
+        }
+      }
+      paint();
+      function maybeLoad(){
+        var r = sentinel.getBoundingClientRect();
+        if(r.top < window.innerHeight + 160 && visible < cards.length){
+          visible = Math.min(cards.length, visible + PAGE); paint();
+        }
+      }
+      btn.addEventListener("click", function(){
+        if(visible >= cards.length){ return; }
+        btn.disabled = true; btn.textContent = "Loading...";
+        setTimeout(function(){ visible = Math.min(cards.length, visible + PAGE); btn.disabled = false; paint(); }, reduced ? 0 : 380);
+      });
+      window.addEventListener("scroll", maybeLoad, { passive:true });
+      if("IntersectionObserver" in window){
+        new IntersectionObserver(function(entries){
+          each(entries, function(en){ if(en.isIntersecting){ maybeLoad(); } });
+        }).observe(sentinel);
+      }
+    })();
+
+    /* ---- icon-morph (strict): nav toggle morphs to X ----
+       Mirror of useIconMorph: number-matched path morph (CSS
+       transforms), reduced-motion swaps instantly. aria-expanded
+       drives the morph; JS only re-affirms the state. */
+    (function(){
+      var toggle = doc.querySelector(".nav-toggle");
+      if(!toggle){ return; }
+      function sync(){
+        toggle.classList.toggle("is-x", toggle.getAttribute("aria-expanded") === "true");
+      }
+      sync();
+      new MutationObserver(sync).observe(toggle, { attributes:true, attributeFilter:["aria-expanded"] });
+    })();
+
+    /* ---- tooltip-group + press-depth + ripple CSS hooks ---- */
+    doc.addEventListener("pointerdown", function(){}); // passive no-op keeps bundlers honest
   });
 })();
