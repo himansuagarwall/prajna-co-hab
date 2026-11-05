@@ -60,7 +60,7 @@ header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid
 .brand{font-size:1.28rem;font-weight:700;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.55rem}
 .brand span{color:var(--terra)}
 .fmark{width:30px;height:19px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat}
-.navlinks{display:flex;gap:.4rem;flex-wrap:wrap}
+.navlinks{display:flex;gap:.4rem;flex-wrap:nowrap}
 .navlinks a{font-family:var(--font-ui);font-size:.74rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:6px;position:relative;transition:color .2s ease,background .2s ease}
 .navlinks a::after{content:"";position:absolute;left:.6rem;right:.6rem;bottom:.18rem;height:2px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease)}
 .navlinks a:hover{color:var(--terra);background:var(--ochre-soft)}
@@ -1390,7 +1390,7 @@ header{
 
 /* 2. tap targets — hit area grows, the visual stays the same size */
 .brand{min-height:44px;padding:.4rem 0;display:inline-flex;align-items:center}
-a.vacancy{min-height:44px;padding:0 .55rem;display:inline-flex;align-items:center}
+a.vacancy{min-height:44px;padding:0 .55rem;display:inline-flex;align-items:center;white-space:nowrap}
 .skip{min-height:44px;display:inline-flex;align-items:center}
 .fcols a,.mobilebar a{min-height:44px;display:flex;align-items:center}
 .fcols a{padding:.55rem 0}
@@ -1633,7 +1633,7 @@ section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
 .pricetable{display:grid;gap:.5rem}
 .pricerow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:1rem;padding:.7rem .4rem;border-bottom:1px solid var(--line);align-items:center}
 .pricerow.header{font-family:var(--font-ui);font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
-@media(max-width:640px){.pricerow{grid-template-columns:1fr 1fr}.pricerow.header{display:none}}
+@media(max-width:640px){.pricerow{grid-template-columns:1fr 1fr}.pricerow.header{display:none}.pricerow:not(.header) > span[data-label]::before{content:attr(data-label);display:block;font-family:var(--font-ui);font-weight:700;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}}
 form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.25)}
 .pform input,.pform select,.pform textarea{border:1px solid rgba(58,50,42,.35);background:#fff}
 :root{--t-press:140ms;--t-hover:220ms;--t-state:380ms;--t-arrival:760ms}
