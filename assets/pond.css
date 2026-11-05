@@ -4,8 +4,9 @@
    to the per-frame canvas cost measured at ~0.7ms.
 
    LAYER ORDER (back to front)
-     canvas.bgfx   the water                 z 0
+     canvas.bgfx   the deep water (fluid.js) z 0
      .collage      torn paper pieces         z 1
+     .pondwater    caustics, sheen, ripples  z 1 (appended last, paints above collage)
      .pondfloat    drifting folk motifs      z 2
      page content                           z 3
      .pondreveal   surface settling on load  z 90
@@ -33,12 +34,14 @@
 }
 /* a slow rise, a lazy side-to-side, and a barely-there roll - three motions
    on one transform so they compose instead of fighting */
+/* the loop closes: 100% is exactly 0%, so the wrap is invisible. The fall
+   is the rise played backwards, which reads as settling, not snapping */
 @keyframes pfdrift{
   0%   { transform:translate3d(0,0,0) rotate(0deg); }
   25%  { transform:translate3d(10px,calc(var(--pf-rise) * -26px),0) rotate(var(--pf-tilt)); }
   50%  { transform:translate3d(-8px,calc(var(--pf-rise) * -54px),0) rotate(calc(var(--pf-tilt) * -.6)); }
-  75%  { transform:translate3d(6px,calc(var(--pf-rise) * -80px),0) rotate(calc(var(--pf-tilt) * .4)); }
-  100% { transform:translate3d(0,calc(var(--pf-rise) * -104px),0) rotate(0deg); }
+  75%  { transform:translate3d(4px,calc(var(--pf-rise) * -26px),0) rotate(calc(var(--pf-tilt) * .3)); }
+  100% { transform:translate3d(0,0,0) rotate(0deg); }
 }
 
 /* ── 2. TORN-PAPER ASSEMBLAGE ───────────────────────────────────────────
@@ -129,15 +132,70 @@
 @media (prefers-reduced-motion: reduce){
   .pondfloat{display:none}
   .pondreveal{display:none}
+  .pondwater .pw-caustic,.pondwater .pw-sheen{animation:none}
+  .pondripple{display:none}
   .collage .cp{animation:none !important; transform:none !important}
 }
 
-/* ── 6. FOLK ART CANVAS ────────────────────────────────────────────────── */
-#pond-canvas{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
+/* ── 6. WATER SURFACE ───────────────────────────────────────────────────
+   Caustic light over the bed. Two tileable bands drift at different speeds
+   and a broad sheen creeps across: each tile repeats on an exact pixel
+   period, and each animation translates by exactly one period, so the
+   loop is seamless by construction. The bands overshoot the viewport by
+   more than their full travel, so no edge ever shows mid-loop. Blur is
+   painted once (static filter on a layer that only ever translates),
+   which keeps this on the compositor. Alphas stay under .16: light
+   first, so the bed shows through and the water reads clear. */
+.pondwater{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  contain:strict; overflow:hidden;
 }
-@media (prefers-reduced-motion: reduce){
-  #pond-canvas{display:none}
+.pondwater .pw-caustic{
+  position:absolute; inset:-340px;
+  background-repeat:repeat;
+  filter:blur(14px);
+  will-change:transform;
+}
+.pondwater .c1{
+  background-image:
+    repeating-radial-gradient(ellipse 90px 34px at 30% 40%, rgba(255,251,240,.14) 0 38%, transparent 62%),
+    repeating-radial-gradient(ellipse 64px 26px at 72% 62%, rgba(255,251,240,.10) 0 40%, transparent 64%);
+  background-size:240px 180px;
+  animation:pwdrift1 56s linear infinite;
+}
+.pondwater .c2{
+  background-image:
+    repeating-radial-gradient(ellipse 120px 40px at 55% 30%, rgba(217,164,65,.07) 0 42%, transparent 66%),
+    repeating-radial-gradient(ellipse 70px 30px at 18% 78%, rgba(255,251,240,.08) 0 40%, transparent 64%);
+  background-size:320px 240px;
+  opacity:.8;
+  animation:pwdrift2 84s linear infinite;
+}
+.pondwater .pw-sheen{
+  position:absolute; inset:0;
+  background:linear-gradient(178deg, rgba(255,253,246,.20) 0%, rgba(255,253,246,.05) 26%, transparent 52%);
+  animation:pwsheen 32s cubic-bezier(.22,.61,.36,1) infinite alternate;
+}
+@keyframes pwdrift1{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(240px,180px,0);} }
+@keyframes pwdrift2{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(-320px,-240px,0);} }
+@keyframes pwsheen{ from{ opacity:.55;} to{ opacity:1;} }
+
+/* ── 7. TOUCH RIPPLES ───────────────────────────────────────────────────
+   A ring opens where the water is touched and thins as it spreads, gone
+   inside the 760ms arrival. Two strokes: a pale highlight and a faint
+   terra edge, so it reads as a surface dent rather than a drawn circle.
+   Nodes are capped and removed by pond.js; pointer-events:none, so a
+   ripple can never steal a click. */
+.pondripple{
+  position:fixed; z-index:1; width:14px; height:14px;
+  margin:-7px 0 0 -7px; border-radius:50%; pointer-events:none;
+  border:1px solid rgba(255,251,240,.85);
+  box-shadow:0 0 0 1px rgba(192,86,33,.14);
+  animation:pondripple .76s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes pondripple{
+  0%   { transform:scale(.35); opacity:.9; }
+  100% { transform:scale(11); opacity:0; }
 }
 
 /* ── 7. SMALL SCREENS ───────────────────────────────────────────────────
@@ -152,5 +210,5 @@
 /* ── 7. PRINT ───────────────────────────────────────────────────────────
    Paper collage on a printed page is just grey mud. */
 @media print{
-  .pondfloat,.collage,.pondreveal{display:none !important}
+  .pondfloat,.collage,.pondreveal,.pondwater,.pondripple{display:none !important}
 }
