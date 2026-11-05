@@ -2024,3 +2024,27 @@ html.ix-ready img.img-error{filter:none;opacity:1;background:var(--paper-deep)}
   .ix-skeleton span{animation:none}
   .tv-word{opacity:1;transform:none;filter:none}
 }
+
+/* micro wiring v73: vanilla ports from design-repo-kit micro repos (see MICRO-WIRING.md).
+   interior timings: press 140ms, hover 220ms, state 380ms, arrival 760ms. */
+.micro-tabs{position:relative}
+.micro-tabs>button,.micro-tabs>[role="tab"]{position:relative;z-index:1}
+.micro-pill{position:absolute;background:var(--ink-deep);border-radius:999px;transition:left .38s cubic-bezier(.22,.61,.36,1),width .38s cubic-bezier(.22,.61,.36,1),top .38s cubic-bezier(.22,.61,.36,1),height .38s cubic-bezier(.22,.61,.36,1);z-index:0;pointer-events:none}
+.gallery-filters.micro-tabs button[aria-pressed="true"]{background:transparent;border-color:transparent;color:var(--paper)}
+.segmented.micro-tabs [role="tab"]{background:transparent}
+.segmented.micro-tabs .micro-pill{background:var(--terra)}
+.segmented.micro-tabs [role="tab"][aria-selected="true"]{background:transparent;color:#fff}
+.micro-aurora{position:relative;z-index:0}
+.micro-aurora::before{content:"";position:absolute;inset:-2px;border-radius:inherit;padding:2px;background:conic-gradient(from var(--micro-a,0deg),var(--terra),var(--ochre),var(--terra-dark),var(--terra));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:microAurora 5s linear infinite;pointer-events:none}
+@property --micro-a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes microAurora{to{--micro-a:360deg}}
+.micro-beam{position:relative;overflow:hidden}
+.micro-beam::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--micro-b,0deg),transparent 0 68%,var(--ochre) 82%,transparent 96%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:microAurora 6s linear infinite;pointer-events:none}
+@property --micro-b{syntax:"<angle>";initial-value:0deg;inherits:false}
+.card{background-image:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(217,164,65,.12),transparent 65%)}
+.card.micro-focus{box-shadow:var(--sh);border-color:var(--ochre)}
+@media(prefers-reduced-motion:reduce){
+  .micro-pill,.micro-aurora::before,.micro-beam::after{animation:none!important}
+  .micro-pill{transition:none!important}
+  .card{background-image:none!important}
+}

@@ -13,7 +13,7 @@
    - blog.html and testimonials.html are in the shell.
    - a navigation miss retries by pathname, so ?utm_source=... still works. */
 
-var V = 'prajna-v71';
+var V = 'prajna-v73';
 
 var SHELL = [
   './',
@@ -33,9 +33,10 @@ var SHELL = [
   './offline.html',
   './manifest.webmanifest',
   './config.js?v=70',
-  './assets/style.css?v=71',
+  './assets/style.css?v=73',
   './assets/pond.css?v=71',
   './assets/site.js?v=70',
+  './assets/micro.js?v=73',
   './assets/fluid.js?v=70',
   './assets/motion.js?v=70',
   './assets/gallery.js?v=70',
