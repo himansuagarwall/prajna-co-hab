@@ -5,11 +5,11 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Pit — Auto & Bike Board | Prajna Co-hab, Moshi</title>
-<meta name="description" content="The Pit: the Moshi–Chakan belt’s automotive community board — trusted mechanics, spare parts, used bikes, RTO and insurance answers. No membership, no fee.">
+<meta name="description" content="The Pit: the Moshi–Chakan belt’s automotive community board — trusted mechanics, spare parts, used bikes, RTO and insurance answers. Open to all, no fee.">
 <meta property="og:site_name" content="Prajna Co-hab">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Pit — Auto & Bike Board | Prajna Co-hab, Moshi">
-<meta property="og:description" content="The Pit: the Moshi–Chakan belt’s automotive community board — trusted mechanics, spare parts, used bikes, RTO and insurance answers. No membership, no fee.">
+<meta property="og:description" content="The Pit: the Moshi–Chakan belt’s automotive community board — trusted mechanics, spare parts, used bikes, RTO and insurance answers. Open to all, no fee.">
 <meta property="og:url" content="https://himansuagarwall.github.io/prajna-co-hab/autohub.html">
 <meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -158,8 +158,28 @@
 .pit-trust li:first-child{border-top:none}
 .pit-trust li::before{content:"—";position:absolute;left:.4rem;color:var(--terra-dark);font-weight:700}
 .pit-note{font-size:.8rem;color:var(--muted);margin-top:.9rem}
-@media(max-width:720px){.pit-filters{grid-template-columns:1fr}.pit-ask-form .row{grid-template-columns:1fr}.pit-tpl-count{white-space:normal}}
-@media(prefers-reduced-motion:reduce){.pit-tpl-card,.pit-filters select,.pit-ask-form select,.pit-ask-form textarea{transition:none!important}.pit-tpl-card:active{transform:none}}
+.pit-loginbox{margin-top:1.8rem;border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,var(--panel),var(--ochre-soft));box-shadow:var(--sh);padding:clamp(1.2rem,3vw,2rem)}
+.pit-loginbox h2{margin:.4rem 0 .5rem}
+.pit-loginbox .pit-lede{color:var(--muted);max-width:62ch}
+.pit-loginbox-sub{margin-top:1.2rem}
+.pit-loginbox-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.pit-loginbox-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:1rem 1.1rem}
+.pit-loginbox-card h3{margin:0 0 .4rem;font-size:1rem}
+.pit-loginbox-card ul{list-style:none;margin:0;padding:0}
+.pit-loginbox-card li{padding:.3rem 0 .3rem 1.4rem;position:relative;font-size:.9rem;color:var(--ink)}
+.pit-loginbox-card li::before{content:"✓";position:absolute;left:.2rem;color:var(--ochre-ink);font-weight:700}
+.pit-loginbox-steps{list-style:none;counter-reset:pitstep;margin:1rem 0 0;padding:0;display:grid;gap:.6rem}
+.pit-loginbox-steps li{counter-increment:pitstep;position:relative;padding:.4rem 0 .4rem 2.6rem;font-size:.92rem;color:var(--ink)}
+.pit-loginbox-steps li::before{content:counter(pitstep);position:absolute;left:0;top:.25rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:700;font-size:.85rem}
+.pit-loginbox details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:.8rem;padding:.9rem 1.1rem}
+.pit-loginbox summary{font-family:var(--font-ui);font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.pit-loginbox details[open]{border-color:var(--ochre)}
+.pit-loginbox details li{color:var(--muted);font-size:.93rem;margin:.3rem 0}
+.pit-join-form{margin-top:1.2rem}
+.pit-join-form .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pit-join-result{margin-top:1rem}
+@media(max-width:720px){.pit-filters{grid-template-columns:1fr}.pit-ask-form .row{grid-template-columns:1fr}.pit-tpl-count{white-space:normal}.pit-loginbox-cols,.pit-join-form .row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.pit-tpl-card,.pit-filters select,.pit-ask-form select,.pit-ask-form textarea{transition:none!important}.pit-tpl-card:active{transform:none}.pit-loginbox{animation:none}}
 </style>
 </head>
 <body data-pond="pit">
@@ -180,7 +200,7 @@
 <main id="main" tabindex="-1">
 
   <section class="pit-hero" aria-labelledby="pit-title">
-    <div class="pit-kickers"><span class="pit-chip">The community pit</span><span class="pit-chip">Moshi–Chakan belt, Pune</span><span class="pit-chip">No fee · no membership</span></div>
+    <div class="pit-kickers"><span class="pit-chip">The community pit</span><span class="pit-chip">Moshi–Chakan belt, Pune</span><span class="pit-chip">Open to all · No fee</span></div>
     <h1 id="pit-title">The Pit</h1>
     <p class="pit-lede">Pune's Moshi–Chakan auto &amp; bike board: trusted mechanics, where the right part lives, used bikes, and RTO / insurance answers — straight from people who just did it. Tell us what you need; we read every post before it goes up.</p>
     <div class="pit-ctas">
@@ -284,7 +304,7 @@
       </details>
       <details>
         <summary>How do I post?</summary>
-        <p class="pit-count">Use the form above. It opens your email app addressed to srijna2b@gmail.com — send it, and we read it before anything appears on the board. Nothing needs an account.</p>
+        <p class="pit-count">Open to everyone, no login needed. Use the form above. It opens your email app addressed to srijna2b@gmail.com, send it, and we read it before anything appears on the board. If you want an account, the optional login section on this page explains how.</p>
       </details>
       <details>
         <summary>Why email only?</summary>
@@ -292,6 +312,62 @@
       </details>
     </div>
   </section>
+
+    <section class="pit-loginbox" id="pit-login" aria-labelledby="pit-login-h">
+      <span class="pit-chip">Optional · No fee</span>
+      <h2 id="pit-login-h">Want an account? Pit login is optional</h2>
+      <p class="pit-lede">The Pit is open to everyone. Anyone can read the board, ask a question, post and reply without logging in. An account is only for people who want one: it gives you a name people recognise, a place to find your posts again, and a way to hear when someone replies.</p>
+      <div class="pit-loginbox-cols">
+        <div class="pit-loginbox-card">
+          <h3>With an account you can</h3>
+          <ul>
+            <li>Be recognised by name on your posts and replies</li>
+            <li>Save posts you want to come back to</li>
+            <li>See your own posting history in one place</li>
+            <li>Get a notification when someone replies to you (concept, by email)</li>
+          </ul>
+        </div>
+        <div class="pit-loginbox-card">
+          <h3>Without an account you can (always)</h3>
+          <ul>
+            <li>Read every post, and search and filter the board</li>
+            <li>Ask a question and use the listing templates</li>
+            <li>Write a post and reply, just by email</li>
+          </ul>
+        </div>
+      </div>
+      <h3 class="pit-loginbox-sub">How an account works: email only</h3>
+      <ol class="pit-loginbox-steps">
+        <li><b>Request an account by email.</b> Fill in the form below. It opens your email app addressed to <b>srijna2b@gmail.com</b> with your name, area, vehicle and why you want an account already filled in. Nothing is sent until you press send there.</li>
+        <li><b>The owner verifies and invites you.</b> We check the request, then reply by email with your invite. There is no password page, no app and no login system on this site. This is a request flow, not fake authentication.</li>
+        <li><b>Post from your invited email address.</b> That is how the owner recognises account holders. Every post is still read before it appears.</li>
+      </ol>
+      <p class="pit-note">No WhatsApp, no phone numbers published, no fake accounts, and no payment through this site. If anyone asks you to pay to post, it is not us. Skipping this section costs you nothing: the board, the ask form and replies stay open on this page.</p>
+      <details>
+        <summary>Community code (applies to everyone)</summary>
+        <ul>
+          <li>Straight answers only. One post per item. No repeated posts and no shop promotions dressed up as questions.</li>
+          <li>No phone-number dumps and no links to agents. Replies come through us by email.</li>
+          <li>Share what you actually did: what was fixed, what it cost you, which office or shop in Moshi, Bhosari, Chakan or Pimpri, and roughly when.</li>
+          <li>Disagree with the advice, not the person. Keep it useful for the next rider.</li>
+          <li>Verify in person, in daylight, before you pay anything. The owner moderates and has the final word.</li>
+        </ul>
+      </details>
+      <form id="pit-join-form" class="pit-join-form" action="mailto:srijna2b@gmail.com" method="post" enctype="text/plain" aria-labelledby="pit-join-h">
+        <h3 id="pit-join-h">Request an optional account</h3>
+        <div class="row">
+          <div class="pit-field"><input id="pit-join-name" name="name" required maxlength="40" autocomplete="name" placeholder=" "><label for="pit-join-name">Your name <span class="pit-req" aria-hidden="true">*</span></label></div>
+          <div class="pit-field"><input id="pit-join-email" name="email" type="email" required maxlength="120" autocomplete="email" placeholder=" "><label for="pit-join-email">Email you will post from <span class="pit-req" aria-hidden="true">*</span></label></div>
+        </div>
+        <div class="row">
+          <div class="pit-field static"><label for="pit-join-area">Area <span class="pit-req" aria-hidden="true">*</span></label><select id="pit-join-area" name="area" required><option value="">Pick an area…</option><option>Moshi</option><option>Bhosari</option><option>Chakan</option><option>Pimpri</option><option>Other (tell us where)</option></select></div>
+          <div class="pit-field static"><label for="pit-join-vehicle">Vehicle <span class="pit-req" aria-hidden="true">*</span></label><select id="pit-join-vehicle" name="vehicle" required><option value="">Pick a vehicle…</option><option>Bike</option><option>Scooter</option><option>Bicycle</option><option>Car</option><option>Other</option></select></div>
+        </div>
+        <div class="pit-field"><textarea id="pit-join-intent" name="intent" rows="3" required minlength="10" maxlength="500" placeholder=" "></textarea><label for="pit-join-intent">Why do you want an account? <span class="pit-req" aria-hidden="true">*</span></label></div>
+        <div class="pit-copyrow"><button class="pit-btn" type="submit">Request account by email</button><span class="pit-count">Optional. No account is created on this site. Your invite comes by email reply after the owner verifies you. You can post without it.</span></div>
+        <div class="pit-result pit-join-result" id="pit-join-result" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
 
   <section aria-labelledby="pit-ask-h">
     <div class="shead reveal" data-reveal="fade-up">
@@ -527,6 +603,27 @@
       var a = document.createElement("a");
       a.href = link; a.textContent = "Open the email again.";
       result.appendChild(a);
+    }
+  });
+  /* request-access form: prefilled mailto to the owner, no backend, no account */
+  var join = document.getElementById("pit-join-form");
+  var joinResult = document.getElementById("pit-join-result");
+  function joinMailto(){
+    var body = "Hi Pit team,\n\nI am requesting an optional account for The Pit (Prajna Co-hab, Moshi). I know I can post without an account.\n\nName: " + val("pit-join-name") + "\nEmail I will post from: " + val("pit-join-email") + "\nArea: " + val("pit-join-area") + "\nVehicle: " + val("pit-join-vehicle") + "\nWhy I want an account:\n" + val("pit-join-intent") + "\n\nI understand posts are read before they appear, that there is no payment via this site, and that posting stays open without an account.\n\nThanks.";
+    var subject = "The Pit: optional account request: " + (val("pit-join-name") || "New member") + (val("pit-join-area") ? ", " + val("pit-join-area") : "");
+    return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+  if (join) join.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (!join.reportValidity()) return;
+    var link = joinMailto();
+    window.location.href = link;
+    if (joinResult){
+      joinResult.hidden = false;
+      joinResult.textContent = "Your mail app should be open with your request filled in. Nothing is sent until you press send there, and this form keeps what you typed. The owner verifies your request and replies with your invite. You do not need an account to post. ";
+      var a = document.createElement("a");
+      a.href = link; a.textContent = "Open the email again.";
+      joinResult.appendChild(a);
     }
   });
   /* local filters over the template cards */
