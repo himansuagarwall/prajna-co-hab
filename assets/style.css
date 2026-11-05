@@ -2,7 +2,7 @@
   /* v42: one side-padding rhythm for every container. */
   --pad-x:clamp(18px,4vw,28px);
 
-  /* v42: solid paper panels. No translucency, no glass. */
+  /* v42: paper panels; header/cards use GlassKit-inspired glass at file end. */
   --panel:#fdfaf4;
   --panel-2:#fbf7ef;
 

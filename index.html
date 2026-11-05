@@ -2,7 +2,7 @@
 <html lang="en-IN">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Prajna Co-hab — Co-living in Balaji Nagar, Bhosari, Pune</title>
 <meta name="description" content="Owner-run co-living at Balaji Nagar, Bhosari. Twin-sharing from ₹7,200 a month, private rooms from ₹9,200. Dinner optional. Email to enquire.">
@@ -24,6 +24,9 @@
 <meta name="theme-color" content="#faf5ec">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/">
 <link rel="stylesheet" href="assets/style.css?v=73">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<style>.roughdiv{height:14px;margin:1.2rem auto 0;max-width:280px}.roughdiv canvas{width:100%;height:14px;display:block}
+#map{height:260px;border-radius:14px;z-index:0}.mapbox iframe[hidden]{display:none}</style>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <script type="application/ld+json">
@@ -56,6 +59,7 @@
       <p class="hero-note">Twin-sharing ₹7,200 / month · Private ₹9,200 / month · No broker</p>
     </div>
     <a href="gallery.html" class="heroshot img-link"><img src="assets/g/entrance.jpg?v=70" width="1200" height="800" alt="The entrance of Prajna Co-hab" loading="eager" decoding="async"></a>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section id="rooms">
@@ -124,6 +128,7 @@
         <li id="depositline" class="hidden"></li>
       </ul>
     </div>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section class="pitband">
@@ -133,6 +138,7 @@
       <p class="lede">Mechanics, spare parts, used bikes, RTO and insurance, and questions from people on the Moshi–Chakan corridor. The Pit is open to all: anyone can read, ask, post and reply, with no login.</p>
     </div>
     <a class="btn ghost" href="autohub.html">Enter the Pit</a>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section id="location">
@@ -148,10 +154,12 @@
         </div>
       </div>
       <div class="mapbox">
-        <iframe title="Prajna Co-hab location" width="600" height="260" loading="lazy" src="https://www.google.com/maps?q=Anandrao+Lande+Road,+Balaji+Nagar,+Bhosari+Industrial+Estate,+Pimpri-Chinchwad,+Maharashtra&output=embed"></iframe>
+        <div id="map" role="img" aria-label="Map showing Prajna Co-hab in Balaji Nagar, Bhosari"></div>
+        <iframe hidden title="Prajna Co-hab location" width="600" height="260" loading="lazy" src="https://www.google.com/maps?q=Anandrao+Lande+Road,+Balaji+Nagar,+Bhosari+Industrial+Estate,+Pimpri-Chinchwad,+Maharashtra&output=embed"></iframe>
         <div class="addr"><b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar,<br>Bhosari Industrial Estate,<br>Pimpri-Chinchwad, Maharashtra 411026</div>
       </div>
     </div>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section class="faq" id="faq">
@@ -179,6 +187,7 @@
       <summary>Can I see the room before booking?</summary>
       <p>Yes. Email us and we will set a same-day or next-day visit, whichever suits your shift.</p>
     </details>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <div class="cta-strip">
@@ -202,6 +211,53 @@
 </footer>
 </div>
 <div class="mobilebar"><a href="mailto:srijna2b@gmail.com?subject=Email" data-mailsubject="Email" class="mail-link">Email</a></div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('map'), fb=document.querySelector('.mapbox iframe');
+  function fallback(){ if(el) el.remove(); if(fb) fb.hidden=false; }
+  if(typeof L==='undefined'){ fallback(); return; }
+  try{
+    var m=L.map('map',{scrollWheelZoom:false}).setView([18.6305,73.8826],15);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors', maxZoom:19}).addTo(m);
+    L.marker([18.6305,73.8826]).addTo(m).bindPopup('<b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate, 411026').openPopup();
+    m.on('focus',function(){m.scrollWheelZoom.enable();}); m.on('blur',function(){m.scrollWheelZoom.disable();});
+  }catch(e){ fallback(); }
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
+<script>
+/* Lenis smooth scroll, skipped for reduced motion or if CDN fails. */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(typeof Lenis==='undefined') return;
+  var lenis=new Lenis({duration:1.1, easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));}});
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href'); if(id.length<2) return;
+      var t=document.querySelector(id); if(!t) return;
+      e.preventDefault(); lenis.scrollTo(t,{offset:-70});
+    });
+  });
+})();
+</script>
+<script type="module">
+/* Rough folk accents: hand-drawn divider strokes between sections only. */
+try{
+  const rough=(await import('https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.esm.js')).default;
+  function draw(){
+    document.querySelectorAll('.roughdiv canvas').forEach(function(cv){
+      var w=cv.clientWidth||280; cv.width=w; cv.height=14;
+      var rc=rough.canvas(cv);
+      rc.line(2,7,w-2,7,{stroke:'#c05621',strokeWidth:2,roughness:1.6,bowing:2});
+    });
+  }
+  draw(); window.addEventListener('resize',function(){clearTimeout(window.__rd);window.__rd=setTimeout(draw,200);});
+}catch(e){/* CDN unavailable: dividers stay blank, page unaffected. */}
+</script>
 <script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script><script src="assets/micro.js?v=73" defer></script>
 </body>
 </html>
