@@ -7,6 +7,7 @@
     "serve": "python3 -m http.server 8888",
     "test": "playwright test",
     "test:prices": "playwright test prices",
+    "check:prices": "playwright test prices",
     "test:leads": "playwright test leads",
     "test:ui": "playwright test --ui",
     "test:backend": "node tests/backend/code-gs.test.js"

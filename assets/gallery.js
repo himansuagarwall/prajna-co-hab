@@ -74,12 +74,26 @@
     preloadAdjacent();
   }
 
+  function setBackgroundInert(on) {
+    var siblings = document.body.children;
+    for (var i = 0; i < siblings.length; i++) {
+      if (siblings[i] === lightbox) continue;
+      try { siblings[i].inert = !!on; } catch (e) {
+        if (on) siblings[i].setAttribute("aria-hidden", "true");
+        else siblings[i].removeAttribute("aria-hidden");
+      }
+    }
+  }
+
   function openLightbox() {
     active = items.filter(function (item) { return !item.hidden; });
     if (!active.length) return;
     lightbox.setAttribute("aria-hidden", "false");
     lightbox.classList.add("is-open");
     document.body.style.overflow = "hidden";
+    setBackgroundInert(true);
+    var closeBtn = lightbox.querySelector(".lightbox-close");
+    if (closeBtn) closeBtn.focus();
     preloadAdjacent();
   }
 
@@ -87,6 +101,7 @@
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    setBackgroundInert(false);
     if (returnFocus && document.contains(returnFocus)) returnFocus.focus({ preventScroll: true });
     returnFocus = null;
   }
@@ -116,6 +131,18 @@
     if (event.key === "Escape") { event.preventDefault(); closeLightbox(); }
     if (event.key === "ArrowLeft") { event.preventDefault(); paint(current - 1); }
     if (event.key === "ArrowRight") { event.preventDefault(); paint(current + 1); }
+    if (event.key === "Tab") {
+      var focusable = Array.prototype.slice.call(
+        lightbox.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])")
+      ).filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first.focus();
+      }
+    }
   });
 
   var touchX = null;

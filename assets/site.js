@@ -436,8 +436,6 @@ window.PRAJNA = window.PRAJNA || {};
   b.hidden=false;
 })();
 
-/* vacancy-mini: footer mini badge mirrors vacancy-badge */
-(function(){var m=document.getElementById('vacancy-mini');if(!m)return;var cfg=window.PRAJNA||{};var n=cfg.bedsOpen;m.hidden=false;m.textContent=(typeof n==='number'&&n>0)?(n+' bed'+(n===1?'':'s')+' open'):'No beds free right now';})();
 /* v24: visit + intent analytics - own backend, no cookies, no third party */
 (function(){
   var cfg=window.PRAJNA||{}, EP=cfg.endpoint;
@@ -458,7 +456,6 @@ window.PRAJNA = window.PRAJNA || {};
     var a=e.target.closest ? e.target.closest('a') : null; if(!a) return;
     if(a.classList.contains('mail-link')) log('mail_click', (a.getAttribute('data-mailsubject')||'enquiry').slice(0,60));
     else if(a.classList.contains('share-btn')){ log('share_tap',''); }
-    else if(a.getAttribute('href') && a.getAttribute('href').indexOf('tel:')===0) log('call_tap','');
     else if(a.closest('.gal')) log('gallery_open', (a.getAttribute('href')||'').split('/').pop().slice(0,40));
     else if(a.classList.contains('btn')) log('cta_click', (a.textContent||'').trim().slice(0,40));
   }, {passive:true});

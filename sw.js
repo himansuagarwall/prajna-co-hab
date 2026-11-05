@@ -1,7 +1,7 @@
-/* Prajna Co-hab — service worker (v70)
+/* Prajna Co-hab — service worker (v71)
    Caches the app shell for offline reading.
 
-   What changed in v70:
+   What changed in v71:
    - the 7.4MB tour video, the social covers and the poster images are no
      longer precached. A first visit used to download 7.77MB before the
      worker finished installing, on a phone, on mobile data. Shell is now
@@ -13,7 +13,7 @@
    - blog.html and testimonials.html are in the shell.
    - a navigation miss retries by pathname, so ?utm_source=... still works. */
 
-var V = 'prajna-v70';
+var V = 'prajna-v71';
 
 var SHELL = [
   './',
@@ -33,8 +33,8 @@ var SHELL = [
   './offline.html',
   './manifest.webmanifest',
   './config.js?v=70',
-  './assets/style.css?v=70',
-  './assets/pond.css?v=70',
+  './assets/style.css?v=71',
+  './assets/pond.css?v=71',
   './assets/site.js?v=70',
   './assets/fluid.js?v=70',
   './assets/motion.js?v=70',

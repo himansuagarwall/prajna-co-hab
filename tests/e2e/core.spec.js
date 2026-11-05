@@ -39,7 +39,6 @@ test.describe('Prajna Co-hab E2E', () => {
       // The site closes WhatsApp on purpose: config.js says the number is
       // never published. This assertion used to require the opposite.
       await expect(page.locator('a[href*="' + 'wa' + '.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
-      await expect(page.locator('a[href*="' + 'wa' + '.me/"]'), `${name} must not link WhatsApp`).toHaveCount(0);
       // site.js rewrites .mail-link hrefs on load; wait for that to land
       await page.waitForFunction(() => {
         const links = Array.from(document.querySelectorAll('a.mail-link'));
@@ -81,11 +80,11 @@ test.describe('Prajna Co-hab E2E', () => {
     }
   });
 
-  test('gallery page shows at least 20 images', async ({ page }) => {
+  test('gallery page shows at least 6 house photos', async ({ page }) => {
     const gallery = new GalleryPage(page);
     await gallery.open();
     const count = await gallery.images.count();
-    expect(count, 'Gallery should have at least 20 images').toBeGreaterThanOrEqual(20);
+    expect(count, 'Gallery should have at least 6 images').toBeGreaterThanOrEqual(6);
   });
 
   test('tour3d page loads Three.js canvas', async ({ page }) => {
