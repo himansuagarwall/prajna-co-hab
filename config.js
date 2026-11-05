@@ -52,7 +52,7 @@ window.PRAJNA = {
      Empty = the forms hand the visitor a pre-filled email instead,
      so the site still works with no backend at all. Set it once the
      script is deployed; every form then posts to the sheet. */
-  endpoint: "",
+  endpoint: "", // EMPTY = mailto-only. Lead capture is NOT live until Code.gs is deployed and this is set. See LEAD-CAPTURE-SETUP.md.
 
   community: "",
   ownerNote: "Owner-run. Owner-managed. No broker."

@@ -191,7 +191,7 @@ window.PRAJNA = window.PRAJNA || {};
   function doneText(type){
     return type === "board"
       ? "Got it. We read every post before it goes up."
-      : "Got it. We reply by email, and we call if you left a number.";
+      : "Got it. We reply by email to the address you gave.";
   }
   function post(endpoint, payload){
     var ctl = window.AbortController ? new AbortController() : null;
