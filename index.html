@@ -25,7 +25,8 @@
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/">
 <link rel="stylesheet" href="assets/style.css?v=72">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
-<style>#map{height:260px;border-radius:14px;z-index:0}.mapbox iframe[hidden]{display:none}</style>
+<style>.roughdiv{height:14px;margin:1.2rem auto 0;max-width:280px}.roughdiv canvas{width:100%;height:14px;display:block}
+#map{height:260px;border-radius:14px;z-index:0}.mapbox iframe[hidden]{display:none}</style>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <script type="application/ld+json">
@@ -58,6 +59,7 @@
       <p class="hero-note">Twin-sharing ₹7,200 / month · Private ₹9,200 / month · No broker</p>
     </div>
     <a href="gallery.html" class="heroshot img-link"><img src="assets/g/entrance.jpg?v=70" width="1200" height="800" alt="The entrance of Prajna Co-hab" loading="eager" decoding="async"></a>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section id="rooms">
@@ -126,6 +128,7 @@
         <li id="depositline" class="hidden"></li>
       </ul>
     </div>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section class="pitband">
@@ -135,6 +138,7 @@
       <p class="lede">Mechanics, spare parts, used bikes, RTO and insurance, and questions from people on the Moshi–Chakan corridor. The Pit is open to all: anyone can read, ask, post and reply, with no login.</p>
     </div>
     <a class="btn ghost" href="autohub.html">Enter the Pit</a>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section id="location">
@@ -155,6 +159,7 @@
         <div class="addr"><b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar,<br>Bhosari Industrial Estate,<br>Pimpri-Chinchwad, Maharashtra 411026</div>
       </div>
     </div>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section class="faq" id="faq">
@@ -182,6 +187,7 @@
       <summary>Can I see the room before booking?</summary>
       <p>Yes. Email us and we will set a same-day or next-day visit, whichever suits your shift.</p>
     </details>
+  <div class="roughdiv" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <div class="cta-strip">
@@ -236,6 +242,20 @@
     });
   });
 })();
+</script>
+<script type="module">
+/* Rough folk accents: hand-drawn divider strokes between sections only. */
+try{
+  const rough=(await import('https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.esm.js')).default;
+  function draw(){
+    document.querySelectorAll('.roughdiv canvas').forEach(function(cv){
+      var w=cv.clientWidth||280; cv.width=w; cv.height=14;
+      var rc=rough.canvas(cv);
+      rc.line(2,7,w-2,7,{stroke:'#c05621',strokeWidth:2,roughness:1.6,bowing:2});
+    });
+  }
+  draw(); window.addEventListener('resize',function(){clearTimeout(window.__rd);window.__rd=setTimeout(draw,200);});
+}catch(e){/* CDN unavailable: dividers stay blank, page unaffected. */}
 </script>
 <script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script>
 </body>
