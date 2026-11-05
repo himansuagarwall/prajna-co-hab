@@ -26,19 +26,21 @@
   background-image:var(--pf-m);
   background-repeat:no-repeat; background-position:center; background-size:contain;
   opacity:var(--pf-op);
-  filter:blur(.25px);
-  will-change:transform,opacity;
-  animation:pfdrift var(--pf-dur) linear infinite;
+  filter:blur(var(--pf-blur,.25px));
+  will-change:transform;
+  /* Closed-loop drift (starts/ends at origin, so it wraps seamlessly) on
+     the outer element + an alternate bob on the same element would fight
+     over transform, so bob lives on a second property via translate in
+     the same keyframes: midpoints sway then return to origin. */
+  animation:pfdrift var(--pf-dur) ease-in-out infinite;
   animation-delay:var(--pf-delay);
+  transform:translateZ(0);
 }
-/* a slow rise, a lazy side-to-side, and a barely-there roll - three motions
-   on one transform so they compose instead of fighting */
 @keyframes pfdrift{
-  0%   { transform:translate3d(0,0,0) rotate(0deg); }
+  0%,100% { transform:translate3d(0,0,0) rotate(0deg); }
   25%  { transform:translate3d(10px,calc(var(--pf-rise) * -26px),0) rotate(var(--pf-tilt)); }
   50%  { transform:translate3d(-8px,calc(var(--pf-rise) * -54px),0) rotate(calc(var(--pf-tilt) * -.6)); }
   75%  { transform:translate3d(6px,calc(var(--pf-rise) * -80px),0) rotate(calc(var(--pf-tilt) * .4)); }
-  100% { transform:translate3d(0,calc(var(--pf-rise) * -104px),0) rotate(0deg); }
 }
 
 /* ── 2. TORN-PAPER ASSEMBLAGE ───────────────────────────────────────────
@@ -127,17 +129,18 @@
    Nothing drifts, nothing wipes in, the paper stays put. The house is still
    a house, it just holds still. */
 @media (prefers-reduced-motion: reduce){
-  .pondfloat{display:none}
+  .pondfloat .pf{animation:none; transform:none; opacity:.55}
   .pondreveal{display:none}
   .collage .cp{animation:none !important; transform:none !important}
 }
 
 /* ── 6. FOLK ART CANVAS ────────────────────────────────────────────────── */
 #pond-canvas{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  width:100vw; height:100vh; max-width:100%; overflow:hidden;
 }
 @media (prefers-reduced-motion: reduce){
-  #pond-canvas{display:none}
+  #pond-canvas{display:block}
 }
 
 /* ── 7. SMALL SCREENS ───────────────────────────────────────────────────
