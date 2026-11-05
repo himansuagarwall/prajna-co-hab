@@ -18,13 +18,13 @@ it. Always sync with `--exclude '.git' --exclude 'config.js'`, or re-add the tag
 3. Run `setup()` once → allow the permissions
 4. Optional: put your email in `DIGEST_TO` at the top, then add a daily trigger on `digest()`
 5. Deploy → New deployment → Web app → Execute as **Me**, access **Anyone** → copy the `/exec` URL
-6. Paste that URL into `config.js` as `endpoint: "..."` and into `assets/site.js` → `PRAJNA.endpoint`
+6. Paste that URL into `config.js` as `endpoint: "..."` (that is the only place it lives). Full checklist: `LEAD-CAPTURE-SETUP.md`
 
 Tabs it creates and what they are for:
 
 | Tab | Rows land here | You do |
 |---|---|---|
-| Inquiries | contact form | call/WhatsApp back, set `Status` |
+| Inquiries | contact form | reply by email (Reply-To is set), set `Status` |
 | Feedback | feedback form | read, then set `Published` if you want it public |
 | Board | The Pit posts | set `Approved` = TRUE to show it on the site |
 | Digest | daily roll-up | nothing |
@@ -47,5 +47,5 @@ and the canonicals in each page to the new domain when you do.
 - Installable app (manifest + service worker): loads instantly on repeat visits, works offline
 - 404 page, skip link, focus rings, print stylesheet, reduced-motion support
 - Auto-generated icons, OG/Twitter cards, schema.org data, sitemap, robots
-- One config block drives prices, phone, WhatsApp links, availability and food wording
+- One config block drives prices, deposits, availability, terms and the email CTA. No number and no WhatsApp anywhere: the only published channel is email
 - Retry-on-failure forms, duplicate-submit lock, IST timestamps everywhere

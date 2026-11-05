@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://localhost:*;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Feedback — Prajna Co-hab, Moshi, Pune</title>
 <meta name="description" content="Stayed at or visited Prajna Co-hab in Moshi? Rate your experience and send it straight to us. Every note is read and answered.">
@@ -21,12 +21,9 @@
   <meta name="theme-color" content="#faf5ec">
 <meta name="geo.region" content="IN-MH">
 <meta name="geo.placename" content="Moshi, Pune">
-<link rel="alternate" hreflang="en-IN" href="https://himansuagarwall.github.io/prajna-co-hab/feedback.html">
-<link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/feedback.html">
-<link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/feedback.html">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/feedback.html">
-<link rel="stylesheet" href="assets/style.css?v=69">
-  <link rel="stylesheet" href="assets/pond.css?v=69">
+<link rel="stylesheet" href="assets/style.css?v=70">
+  <link rel="stylesheet" href="assets/pond.css?v=70">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c05a2e'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Georgia' fill='%23faf6f0' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 <noscript><style>.flow,.reveal{opacity:1!important;transform:none!important}</style></noscript>
 
@@ -35,6 +32,9 @@
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   "name": "Prajna Co-hab",
+  "url": "https://himansuagarwall.github.io/prajna-co-hab/",
+  "email": "srijna2b@gmail.com",
+  "image": "https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg",
   "description": "Co-living PG with twin-sharing and single rooms near Bhosari Industrial Estate, Pune. Full common floor with kitchen, dining, living and TV.",
   "address": {
     "@type": "PostalAddress",
@@ -43,9 +43,7 @@
     "addressRegion": "Maharashtra",
     "postalCode": "411026",
     "addressCountry": "IN"
-  },
-  "telephone": "+91-0000000000",
-  "priceRange": "₹₹"
+  }
 }
 </script>
 
@@ -83,7 +81,7 @@
       <div class="navlinks" id="primary-nav">
         <a href="index.html">Home</a><a href="rooms.html">Rooms</a><a href="autohub.html">The Pit</a><a href="gallery.html">Gallery</a><a href="pune.html">About Pune</a><a href="discover.html">Around the House</a><a href="about.html">About Us</a><a href="feedback.html">Contact</a>
       </div>
-    <a class="vacancy mail-link" id="vacancy-badge" href="#" data-mailsubject="Is a bed open at Prajna Co-hab?" hidden><span class="vdot"></span><span class="vtxt"></span></a></nav>
+    <a class="vacancy mail-link" id="vacancy-badge" href="mailto:srijna2b@gmail.com?subject=Is%20a%20bed%20open%20at%20Prajna%20Co-hab%3F" data-mailsubject="Is a bed open at Prajna Co-hab?" hidden><span class="vdot"></span><span class="vtxt"></span></a></nav>
   </header>
 <main id="main" tabindex="-1">
 
@@ -95,14 +93,18 @@
   </div>
 
   <section class="flat">
-    <form class="pform reveal" data-formtype="feedback">
+    <form class="pform reveal" data-formtype="feedback" action="mailto:srijna2b@gmail.com" method="post" enctype="text/plain">
       <div class="row">
-        <div><label for="fname">Your name (optional)</label><input id="fname" name="name" maxlength="60" placeholder="Anonymous is fine"></div>
-        <div><label for="frole">You are a</label><select id="frole" name="role"><option>Resident</option><option>Former resident</option><option>Parent / family</option><option>Visitor</option></select></div>
+        <div><label for="fname">Your name (optional)</label><input id="fname" name="name" maxlength="60" autocomplete="name" placeholder="Anonymous is fine"></div>
+        <div><label for="femail">Email (optional, only if you want a reply)</label><input id="femail" name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></div>
       </div>
-      <label id="ratinglabel">How was it?</label>
+      <div class="row">
+        <div><label for="frole">You are a</label><select id="frole" name="role"><option>Resident</option><option>Former resident</option><option>Parent / family</option><option>Visitor</option></select></div>
+        <div><label for="fstay">How long did you stay? (optional)</label><input id="fstay" name="stay" maxlength="40" placeholder="e.g. 6 months"></div>
+      </div>
+      <label id="ratinglabel">How was it? <span class="req">*</span></label>
       <div class="stars" role="radiogroup" aria-labelledby="ratinglabel">
-        <input type="radio" id="s5" name="rating" value="5"><label for="s5" title="5 of 5"><span class="sr">5 out of 5</span><span aria-hidden="true">★</span></label>
+        <input type="radio" id="s5" name="rating" value="5" required><label for="s5" title="5 of 5"><span class="sr">5 out of 5</span><span aria-hidden="true">★</span></label>
         <input type="radio" id="s4" name="rating" value="4"><label for="s4" title="4 of 5"><span class="sr">4 out of 5</span><span aria-hidden="true">★</span></label>
         <input type="radio" id="s3" name="rating" value="3"><label for="s3" title="3 of 5"><span class="sr">3 out of 5</span><span aria-hidden="true">★</span></label>
         <input type="radio" id="s2" name="rating" value="2"><label for="s2" title="2 of 5"><span class="sr">2 out of 5</span><span aria-hidden="true">★</span></label>
@@ -110,7 +112,8 @@
       </div>
       <label for="fmsg">Your note</label>
       <textarea id="fmsg" name="message" rows="4" required maxlength="600" placeholder="Cleanliness, food, water, WiFi, management, anything."></textarea>
-      <div class="mt-3"><button class="btn" type="submit" aria-label="Submit form">Send Feedback</button></div>
+      <div class="hp" aria-hidden="true"><label for="fcompany">Company</label><input id="fcompany" name="company" tabindex="-1" autocomplete="off"></div>
+      <div class="mt-3"><button class="btn" type="submit">Send Feedback</button></div>
       <div class="fresult"></div>
     </form>
     <p class="note reveal">Goes to our private sheet. Nothing is published without asking you first.</p>
@@ -122,7 +125,7 @@
 <footer>
     <div class="fcols">
       <div class="fbrand">
-        <div class="fbrandname"><svg class="lotusmark" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient id="lgA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a441"/><stop offset="1" stop-color="#c05621"/></linearGradient><linearGradient id="lgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c05621"/><stop offset="1" stop-color="#9a4522"/></linearGradient></defs><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg> Prajna <span>Co-hab</span></div>
+        <div class="fbrandname"><svg class="lotusmark" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a441"/><stop offset="1" stop-color="#c05621"/></linearGradient><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c05621"/><stop offset="1" stop-color="#9a4522"/></linearGradient></defs><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg> Prajna <span>Co-hab</span></div>
         <p>Owner-run co-hab at Moshi, Pune.</p>
       </div>
       <div>
@@ -139,7 +142,7 @@
       </div>
       <div>
         <h3>Reach us</h3>
-        <a class="mail-link" href="#" data-mailsubject="Email us">Email us</a><a href="contact.html">Contact &amp; visits</a><a href="feedback.html">Feedback</a>
+        <a class="mail-link" href="mailto:srijna2b@gmail.com?subject=Email%20us" data-mailsubject="Email us">Email us</a><a href="contact.html">Contact &amp; visits</a><a href="feedback.html">Feedback</a>
       </div>
     </div>
     <div class="fbottom"><span>Prajna Co-hab · Moshi, Pune</span><span>© <span id="yr"></span></span></div>
@@ -147,11 +150,10 @@
 </div>
 
   <div class="mobilebar">
-    <span class="miniopen" id="vacancy-mini" hidden></span><a href="#" data-mailsubject="Email" class="wa mail-link">Email</a>
+    <span class="miniopen" id="vacancy-mini" hidden></span><a href="mailto:srijna2b@gmail.com?subject=Email" data-mailsubject="Email" class="mail-link">Email</a>
   </div>
-<script src="config.js?v=69"></script><script src="assets/site.js?v=69"></script>
-<script src="assets/fluid.js?v=69" defer></script>
-<script src="assets/pond.js?v=68" defer></script><script src="assets/vendor/gsap-3.15.0.min.js?v=68"></script><script src="assets/vendor/ScrollTrigger-3.15.0.min.js?v=68"></script><script src="assets/vendor/SplitText-3.15.0.min.js?v=68"></script><script src="assets/vendor/Flip-3.15.0.min.js?v=68"></script><script src="assets/vendor/MotionPathPlugin-3.15.0.min.js?v=68"></script><script src="assets/vendor/CustomEase-3.15.0.min.js?v=68"></script><script src="assets/vendor/Observer-3.15.0.min.js?v=68"></script><script src="assets/motion.js?v=68" defer></script>
-  <a href="https://wa.me/919876543210?text=Hi%20Prajna%20Co-hab,%20I%20want%20to%20book%20a%20visit." class="btn btn-primary wa" target="_blank" rel="noopener">WhatsApp Us</a>
+<script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script>
+<script src="assets/fluid.js?v=70" defer></script>
+<script src="assets/pond.js?v=70" defer></script><script src="assets/vendor/gsap-3.15.0.min.js?v=70"></script><script src="assets/vendor/ScrollTrigger-3.15.0.min.js?v=70"></script><script src="assets/vendor/SplitText-3.15.0.min.js?v=70"></script><script src="assets/vendor/Flip-3.15.0.min.js?v=70"></script><script src="assets/vendor/MotionPathPlugin-3.15.0.min.js?v=70"></script><script src="assets/vendor/CustomEase-3.15.0.min.js?v=70"></script><script src="assets/vendor/Observer-3.15.0.min.js?v=70"></script><script src="assets/motion.js?v=70" defer></script>
 </body>
 </html>

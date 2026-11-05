@@ -242,5 +242,5 @@ All SVG motifs are inlined. No external image dependencies for icons.
 - Warm, plain-spoken, never salesy
 - "Owner-run" not "managed by"
 - Real Pune locations, not Bangalore
-- WhatsApp-first CTA, email as fallback
+- Email-first CTA, and only email: the owner’s number is never published
 - No jargon, no buzzwords

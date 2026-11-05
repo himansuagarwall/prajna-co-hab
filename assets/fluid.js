@@ -8,6 +8,8 @@
   "use strict";
   if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){
     document.documentElement.className += " reduce";
+    var bg=document.createElement("div"); bg.className="bgfx"; bg.setAttribute("aria-hidden","true"); document.body.insertBefore(bg, document.body.firstChild);
+    var vg=document.createElement("div"); vg.className="vignette"; vg.setAttribute("aria-hidden","true"); document.body.appendChild(vg);
     return;
   }
   var NS = "http://www.w3.org/2000/svg";

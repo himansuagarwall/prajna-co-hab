@@ -1,3 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /RUNBOOK.md
+Disallow: /DEPLOY.md
+Disallow: /LEAD-CAPTURE-SETUP.md
+Disallow: /apps-script/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /playwright.config.ts
+Disallow: /tests/
 Sitemap: https://himansuagarwall.github.io/prajna-co-hab/sitemap.xml

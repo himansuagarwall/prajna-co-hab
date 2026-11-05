@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://localhost:*;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="3D virtual tour of Prajna Co-hab co-living PG near Bhosari Industrial Estate, Pune. Explore twin-sharing rooms, single rooms, and common floor in interactive Three.js viewer.">
 <meta name="keywords" content="Prajna Co-hab, 3D tour, virtual tour, co-living Pune, Bhosari PG, shared rooms">
@@ -11,15 +11,14 @@
 <meta property="og:title" content="3D Virtual Tour — Prajna Co-hab">
 <meta property="og:description" content="Explore Prajna Co-hab in 3D. Twin-sharing and single rooms near Bhosari Industrial Estate, Pune.">
 <meta property="og:url" content="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/tour-poster.webp">
+<meta property="og:image" content="https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="675">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <title>3D Virtual Tour — Prajna Co-hab</title>
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-48x48.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-<link rel="stylesheet" href="assets/style.css?v=69">
+<link rel="stylesheet" href="assets/style.css?v=70">
 <style>
   #tour-canvas { width: 100vw; height: 100vh; display: block; }
   #fade-overlay {
@@ -71,6 +70,33 @@
     color: var(--muted); font: 500 .78rem var(--font-ui); z-index: 90;
     opacity: .8; pointer-events: none;
   }
+  #tour-canvas { touch-action: none; }
+  #hotspot-card {
+    position: fixed; left: 1.4rem; bottom: 6.5rem; z-index: 110; max-width: 300px;
+    background: rgba(43,38,32,.94); color: #fff; border-radius: 14px; padding: 1rem 1.15rem;
+    box-shadow: 0 8px 24px rgba(43,38,32,.25);
+  }
+  #hotspot-card h3 { font-size: .95rem; margin: 0 0 .35rem; }
+  #hotspot-card p { font-size: .82rem; line-height: 1.5; opacity: .9; margin: 0; }
+  #hotspot-card button {
+    margin-top: .6rem; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.4);
+    border-radius: 50px; padding: .35rem .85rem; font: 600 .72rem var(--font-ui); cursor: pointer;
+  }
+  .hotspot-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+  .hotspot-chip {
+    border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 50px;
+    padding: .3rem .7rem; font: 600 .7rem var(--font-ui); cursor: pointer; min-height: 32px;
+    transition: background var(--t1, .22s) cubic-bezier(.22,.61,.36,1), color var(--t1, .22s) cubic-bezier(.22,.61,.36,1);
+  }
+  .hotspot-chip:hover, .hotspot-chip.on { background: var(--terra); color: #fff; border-color: transparent; }
+  #tour-fallback { position: fixed; inset: 0; z-index: 95; overflow: auto; background: #faf6f0; padding: 6rem 1.4rem 8rem; }
+  #tour-fallback figure { margin: 0 auto 1.4rem; max-width: 720px; }
+  #tour-fallback img { width: 100%; border-radius: 14px; display: block; }
+  #tour-fallback figcaption { font: 600 .8rem var(--font-ui); color: var(--muted); margin-top: .5rem; }
+  @media (prefers-reduced-motion: reduce) {
+    #fade-overlay { transition: none; }
+    .tour-btn, .hotspot-chip { transition: none; }
+  }
 </style>
 
 <script type="application/ld+json">
@@ -78,6 +104,9 @@
   "@context": "https://schema.org/",
   "@type": "LodgingBusiness",
   "name": "Prajna Co-hab",
+  "url": "https://himansuagarwall.github.io/prajna-co-hab/",
+  "email": "srijna2b@gmail.com",
+  "image": "https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg",
   "description": "Co-living PG with twin-sharing and single rooms near Bhosari Industrial Estate, Pune. Full common floor with kitchen, dining, living and TV.",
   "address": {
     "@type": "PostalAddress",
@@ -86,14 +115,9 @@
     "addressRegion": "Maharashtra",
     "postalCode": "411026",
     "addressCountry": "IN"
-  },
-  "telephone": "+91-0000000000",
-  "priceRange": "₹₹"
+  }
 }
 </script>
-<link rel="alternate" hreflang="en-IN" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<link rel="alternate" hreflang="en" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
-<link rel="alternate" hreflang="x-default" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/tour3d.html">
 
 <script type="application/ld+json">
@@ -109,17 +133,28 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<header><nav class="nav" aria-label="Primary navigation"><a class="brand" href="index.html">Prajna <span>Co-hab</span></a><button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button><div class="navlinks" id="primary-nav"><a href="index.html">Home</a><a href="rooms.html">Rooms</a><a href="gallery.html">Gallery</a><a href="tour3d.html">3D Tour</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div></nav></header>
 <main id="main" tabindex="-1">
-  <canvas id="tour-canvas"></canvas>
+  <canvas id="tour-canvas" aria-label="Interactive 3D tour of Prajna Co-hab. Use the room buttons below to change rooms, or drag to look around."></canvas>
+  <div id="tour-fallback" hidden>
+    <p>3D needs WebGL, so here are photos of the space instead. See the <a href="gallery.html">full gallery</a> or <a href="rooms.html">room details</a>.</p>
+    <figure><img src="assets/g/twin.jpg" alt="Twin-sharing room" loading="lazy"><figcaption>Twin-Sharing Room</figcaption></figure>
+    <figure><img src="assets/g/single.jpg" alt="Single room" loading="lazy"><figcaption>Single Room</figcaption></figure>
+    <figure><img src="assets/g/kitchen-dining.jpg" alt="Common floor kitchen and dining" loading="lazy"><figcaption>Common Floor</figcaption></figure>
+    <figure><img src="assets/g/living.jpg" alt="Living area" loading="lazy"><figcaption>Living Area</figcaption></figure>
+  </div>
+  <div id="hotspot-card" hidden role="status"><h3></h3><p></p><button type="button" id="hotspot-close">Close</button></div>
   <div id="fade-overlay"></div>
 
   <div class="tour-info" id="room-info">
     <h1>3D Virtual Tour</h1>
     <h2>Twin-Sharing Room</h2>
     <p>Comfortable 10x12 ft space with wardrobe, study desk, and home-style meals. Built for professionals who value simplicity and function.</p>
+    <div class="hotspot-chips" id="hotspot-chips" aria-label="Room inclusions"></div>
   </div>
 
   <a href="index.html" class="tour-back">← Back</a>
+  <a class="tour-mail mail-link" href="mailto:srijna2b@gmail.com?subject=Book%20a%20visit%20at%20Prajna%20Co-hab" data-mailsubject="Book a visit at Prajna Co-hab">Email us</a>
   <div class="tour-hint">Drag to orbit · Scroll to zoom · Pinch on mobile</div>
   <div class="tour-controls" id="controls">
     <button class="tour-btn on" data-room="twin" data-beds="2" aria-label="View twin-sharing room">
@@ -142,8 +177,17 @@
       ⟳ Auto
       <span class="tooltip" aria-hidden="true">Auto-rotate: off</span>
     </button>
+    <button class="tour-btn" id="walkthrough-btn" aria-label="Start auto walkthrough of all rooms" aria-pressed="false">
+      ▶ Walkthrough
+      <span class="tooltip" aria-hidden="true">Auto walkthrough: off</span>
+    </button>
   </div>
 
+  <style>
+    .tour-mail{position:fixed;top:1.1rem;right:1.1rem;z-index:20;font-family:var(--font-ui,system-ui);font-size:.78rem;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;background:#c05621;color:#faf6f0;text-decoration:none;box-shadow:0 6px 18px -8px rgba(58,50,42,.5)}
+    .tour-mail:focus-visible{outline:2px solid #3a322a;outline-offset:3px}.tour-controls{max-width:calc(100vw - 2rem);flex-wrap:wrap;justify-content:center;left:50%;transform:translateX(-50%)}header{position:sticky;top:0;z-index:30;background:#faf6f0;padding:.5rem 1rem}
+    @media(max-width:600px){.tour-mail{top:auto;bottom:5.4rem;right:.8rem;font-size:.74rem;padding:.5rem .85rem}}
+  </style>
   <script type="importmap">
   {
     "imports": {
@@ -159,6 +203,19 @@
 
     const canvas = document.getElementById('tour-canvas');
     const fade = document.getElementById('fade-overlay');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Real WebGL probe: presence of the constructor alone is not enough.
+    function webglOK() {
+      try {
+        const t = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (t.getContext('webgl2') || t.getContext('webgl')));
+      } catch { return false; }
+    }
+    if (!webglOK()) {
+      document.getElementById('tour-fallback').hidden = false;
+      canvas.style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+    } else (async () => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xfaf6f0);
     scene.fog = new THREE.Fog(0xfaf6f0, 6, 28);
@@ -181,273 +238,258 @@
     controls.maxDistance = 9;
     controls.maxPolarAngle = Math.PI / 2.05;
     controls.target.set(0, 1.05, 0);
-    controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY };
+    controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+    controls.autoRotateSpeed = 1.5;
 
-    // Warm daylight with soft AO-like shading via hemisphere
-    const hemi = new THREE.HemisphereLight(0xfff4e0, 0x3a2f28, 0.55);
-    scene.add(hemi);
-
+    scene.add(new THREE.HemisphereLight(0xfff4e0, 0x3a2f28, 0.55));
     const sun = new THREE.DirectionalLight(0xfff3e0, 1.15);
-    sun.position.set(4, 8, 4);
-    sun.castShadow = true;
-    sun.shadow.mapSize.width = 2048;
-    sun.shadow.mapSize.height = 2048;
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 25;
-    sun.shadow.camera.left = -8;
-    sun.shadow.camera.right = 8;
-    sun.shadow.camera.top = 8;
-    sun.shadow.camera.bottom = -8;
+    sun.position.set(4, 8, 4); sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    Object.assign(sun.shadow.camera, { near: 0.5, far: 25, left: -8, right: 8, top: 8, bottom: -8 });
     sun.shadow.bias = -0.0005;
     scene.add(sun);
+    const warm = new THREE.PointLight(0xffaa5e, 12, 6); warm.position.set(-3, 2, 3); scene.add(warm);
+    const fill = new THREE.PointLight(0x7ab8d0, 8, 6); fill.position.set(3, 2.2, -3); scene.add(fill);
 
-    const warm = new THREE.PointLight(0xffaa5e, 12, 6);
-    warm.position.set(-3, 2, 3);
-    scene.add(warm);
-
-    const fill = new THREE.PointLight(0x7ab8d0, 8, 6);
-    fill.position.set(3, 2.2, -3);
-    scene.add(fill);
-
-    // Materials
-    const wallMat = new THREE.MeshStandardMaterial({ color: 0xf5efe6, roughness: 0.92, metalness: 0 });
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0xf5efe6, roughness: 0.92 });
     const floorMat = new THREE.MeshStandardMaterial({ color: 0xd4c4b0, roughness: 0.75, metalness: 0.05 });
     const woodMat = new THREE.MeshStandardMaterial({ color: 0x8b6f47, roughness: 0.65, metalness: 0.05 });
-    const fabricMat = new THREE.MeshStandardMaterial({ color: 0xfaf6f0, roughness: 0.95, metalness: 0 });
+    const fabricMat = new THREE.MeshStandardMaterial({ color: 0xfaf6f0, roughness: 0.95 });
     const metalMat = new THREE.MeshStandardMaterial({ color: 0xcdc4b6, roughness: 0.4, metalness: 0.6 });
-
     const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
     const img = (p) => 'assets/g/' + p;
-
+    // Decorative photos are texture dressing only; geometry below is the room.
     const rooms = {
-      twin: {
-        name: 'Twin-Sharing Room',
-        desc: 'Comfortable 10x12 ft space with wardrobe, study desk, and home-style meals. Built for professionals who value simplicity and function.',
-        photo: img('twin.jpg'),
-        accent: 0xc05621,
-        cam: { pos: [0, 1.6, 4.5], target: [0, 1.05, 0] }
-      },
-      single: {
-        name: 'Single Room',
-        desc: 'Private 12x15 ft room with full lockable space, ensuite access, and premium furnishing. Your own sanctuary after a long shift.',
-        photo: img('single.jpg'),
-        accent: 0xd9a441,
-        cam: { pos: [0, 1.6, 4.2], target: [0, 1.05, -0.3] }
-      },
-      common: {
-        name: 'Common Floor',
-        desc: 'Full ground floor with kitchen, dining hall, living room with TV, and reception. This is where the community lives.',
-        photo: img('kitchen-dining.jpg'),
-        accent: 0x6b8e4e,
-        cam: { pos: [0, 2.0, 6], target: [0, 0.9, -1] }
-      },
-      living: {
-        name: 'Living Area',
-        desc: 'Open common space with sofas, TV, and a home-style dining setup. The heart of Prajna Co-hab.',
-        photo: img('living.jpg'),
-        accent: 0x5b8c9e,
-        cam: { pos: [0, 1.7, 5], target: [0, 1.0, -0.5] }
-      }
+      twin:   { name: 'Twin-Sharing Room', desc: 'Comfortable 10x12 ft space with wardrobe, study desk, and home-style meals. Built for professionals who value simplicity and function.', photo: img('twin.jpg'), accent: 0xc05621, cam: { pos: [0, 1.6, 4.5], target: [0, 1.05, 0] } },
+      single: { name: 'Single Room', desc: 'Private 12x15 ft room with full lockable space, ensuite access, and premium furnishing. Your own sanctuary after a long shift.', photo: img('single.jpg'), accent: 0xd9a441, cam: { pos: [0, 1.6, 4.2], target: [0, 1.05, -0.3] } },
+      common: { name: 'Common Floor', desc: 'Full ground floor with kitchen, dining hall, living room with TV, and reception. This is where the community lives.', photo: img('kitchen-dining.jpg'), accent: 0x6b8e4e, cam: { pos: [0, 2.0, 6], target: [0, 0.9, -1] } },
+      living: { name: 'Living Area', desc: 'Open common space with sofas, TV, and a home-style dining setup. The heart of Prajna Co-hab.', photo: img('living.jpg'), accent: 0x5b8c9e, cam: { pos: [0, 1.7, 5], target: [0, 1.0, -0.5] } }
+    };
+    const ROOM_ORDER = ['twin', 'single', 'common', 'living'];
+    // Hotspots mark real inclusions; positions sit on the matching furniture.
+    const HOTSPOTS = {
+      twin: [
+        { id: 'storage-bed', label: 'Storage bed', pos: [-1.4, 0.85, -1.9], text: 'Hydraulic storage bed — extra bedding and luggage space under the mattress.' },
+        { id: 'cupboard', label: 'Cupboard', pos: [3.6, 1.7, -3.2], text: 'Full-height cupboard with hanging rail and lockable drawer.' },
+        { id: 'study', label: 'Study table', pos: [-3.1, 1.05, -2.6], text: 'Study table with chair, lamp and power point for work-from-home days.' },
+        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'High-speed WiFi throughout the floor — work and streaming ready.' }
+      ],
+      single: [
+        { id: 'storage-bed', label: 'Storage bed', pos: [0, 0.85, -1.9], text: 'Premium storage bed with hydraulic lift and quality linen.' },
+        { id: 'cupboard', label: 'Cupboard', pos: [3.6, 1.7, -3.2], text: 'Private cupboard — lockable storage for your belongings.' },
+        { id: 'study', label: 'Study table', pos: [-3.1, 1.05, -2.6], text: 'Dedicated study table and chair in a quiet corner.' },
+        { id: 'balcony', label: 'Balcony', pos: [2.7, 1.8, 3.9], text: 'Balcony access with natural light and ventilation.' },
+        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'High-speed WiFi throughout the floor.' }
+      ],
+      common: [
+        { id: 'cupboard', label: 'Kitchen storage', pos: [-3.6, 1.7, -2.5], text: 'Kitchen storage and crockery cupboards on the common floor.' },
+        { id: 'study', label: 'Dining table', pos: [0, 1.05, -1.5], text: 'Home-style meals served at the common dining table.' },
+        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'Common-area WiFi for the whole floor.' }
+      ],
+      living: [
+        { id: 'balcony', label: 'Balcony', pos: [2.7, 1.8, 3.9], text: 'Balcony off the living area — evening chai spot.' },
+        { id: 'wifi', label: 'WiFi', pos: [0, 2.2, -3.8], text: 'WiFi reaches the living area and TV wall.' },
+        { id: 'cupboard', label: 'Storage', pos: [-3.6, 1.7, -3.2], text: 'Shared storage cupboard in the common space.' }
+      ]
     };
 
-    const roomGroup = new THREE.Group();
-    scene.add(roomGroup);
-    const reflectionGroup = new THREE.Group();
-    scene.add(reflectionGroup);
+    const roomGroup = new THREE.Group(); scene.add(roomGroup);
+    const reflectionGroup = new THREE.Group(); scene.add(reflectionGroup);
+    const hotspotGroup = new THREE.Group(); scene.add(hotspotGroup);
+    let hotspotMeshes = [];
 
     function setTexture(mat, path) {
       const tex = loader.load(path);
       tex.colorSpace = THREE.SRGBColorSpace;
-      mat.map = tex;
-      mat.needsUpdate = true;
+      mat.map = tex; mat.needsUpdate = true;
     }
-
     function clearGroup(g) {
       while (g.children.length) {
         const c = g.children[0];
-        if (c.geometry) c.geometry.dispose();
-        if (c.material) {
-          if (c.material.map) c.material.map.dispose();
-          c.material.dispose();
-        }
+        c.traverse?.((o) => { o.geometry?.dispose(); const m = o.material; if (m) { m.map?.dispose(); m.dispose(); } });
         g.remove(c);
       }
     }
+    const box = (w, h, d, mat, x, y, z, parent = roomGroup) => {
+      const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+      m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m;
+    };
+    const bed = (x, z, accent) => {
+      box(2.2, 0.45, 2.9, woodMat, x, 0.22, z);
+      box(2.1, 0.22, 2.8, fabricMat, x, 0.55, z);
+      box(0.7, 0.12, 0.4, new THREE.MeshStandardMaterial({ color: accent, roughness: 0.6 }), x - 0.5, 0.72, z - 1.1);
+    };
+    const studySet = (accent) => {
+      box(1.7, 0.06, 0.85, woodMat, -3.1, 0.82, -2.6);
+      box(0.55, 0.85, 0.55, new THREE.MeshStandardMaterial({ color: accent, roughness: 0.6 }), -3.1, 0.42, -1.85);
+      const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 0.06, 20), metalMat);
+      lamp.position.set(-3.1, 1.0, -2.6); roomGroup.add(lamp);
+      const l = new THREE.PointLight(0xffaa5e, 7, 3.5); l.position.set(-3.1, 1.45, -2.6); roomGroup.add(l);
+    };
+    const cupboard = (x, z) => box(1.4, 2.2, 0.6, woodMat, x, 1.1, z);
+    // Per-room procedural layouts: furniture differs so each room reads differently.
+    const LAYOUTS = {
+      twin: (a) => { bed(-1.4, -1.9, a); bed(1.4, -1.9, a); studySet(a); cupboard(3.6, -3.2); box(2.4, 0.08, 0.08, metalMat, 0, 1.1, -3.92); },
+      single: (a) => { bed(0, -1.9, a); studySet(a); cupboard(3.6, -3.2); box(1.2, 0.9, 0.5, woodMat, -3.5, 0.45, 0.5); },
+      common: (a) => {
+        box(3.6, 0.95, 0.9, woodMat, -2.0, 0.48, -3.4);            // kitchen counter
+        box(3.6, 0.08, 0.9, new THREE.MeshStandardMaterial({ color: 0x9e8f7d, roughness: 0.35 }), -2.0, 1.0, -3.4);
+        box(2.4, 0.08, 1.2, woodMat, 0, 0.8, -1.2);                 // dining table
+        for (const [x, z] of [[-0.9, -1.9], [0.9, -1.9], [-0.9, -0.5], [0.9, -0.5]])
+          box(0.5, 0.45, 0.5, new THREE.MeshStandardMaterial({ color: a, roughness: 0.6 }), x, 0.22, z);
+        cupboard(-3.6, -2.5);
+      },
+      living: (a) => {
+        const sofaMat = new THREE.MeshStandardMaterial({ color: a, roughness: 0.9 });
+        box(2.6, 0.55, 0.95, sofaMat, 0, 0.4, -1.4); box(2.6, 0.8, 0.25, sofaMat, 0, 0.85, -1.85);
+        box(1.6, 0.06, 0.9, woodMat, 0, 0.45, -0.2);                // coffee table
+        box(1.7, 0.95, 0.08, new THREE.MeshStandardMaterial({ color: 0x1c1c1e, roughness: 0.3 }), 0, 1.4, -3.85); // TV
+        box(2.4, 0.08, 1.2, woodMat, 0.8, 0.8, 1.8);                // dining table
+        cupboard(-3.6, -3.2);
+      }
+    };
 
     function buildReflection(key) {
       clearGroup(reflectionGroup);
-      const r = rooms[key];
-      const photoMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.55, metalness: 0, transparent: true, opacity: 0.18 });
-      setTexture(photoMat, r.photo);
-
+      const photoMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.55, transparent: true, opacity: 0.18 });
+      setTexture(photoMat, rooms[key].photo);
       const floor = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), new THREE.MeshStandardMaterial({ color: 0xd4c4b0, roughness: 0.75, metalness: 0.85, transparent: true, opacity: 0.35 }));
-      floor.rotation.x = -Math.PI / 2;
-      floor.position.y = -0.02;
-      reflectionGroup.add(floor);
-
+      floor.rotation.x = -Math.PI / 2; floor.position.y = -0.02; reflectionGroup.add(floor);
       const back = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), photoMat);
-      back.position.set(0, 1.425, -4);
-      reflectionGroup.add(back);
-
-      const left = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), new THREE.MeshStandardMaterial({ color: 0xf5efe6, roughness: 0.92, metalness: 0, transparent: true, opacity: 0.15 }));
-      left.rotation.y = Math.PI / 2;
-      left.position.set(-4, 1.425, 0);
-      reflectionGroup.add(left);
-
-      const right = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), new THREE.MeshStandardMaterial({ color: 0xf5efe6, roughness: 0.92, metalness: 0, transparent: true, opacity: 0.15 }));
-      right.rotation.y = -Math.PI / 2;
-      right.position.set(4, 1.425, 0);
-      reflectionGroup.add(right);
-
+      back.position.set(0, 1.425, -4); reflectionGroup.add(back);
+      for (const side of [-4, 4]) {
+        const p = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), new THREE.MeshStandardMaterial({ color: 0xf5efe6, roughness: 0.92, transparent: true, opacity: 0.15 }));
+        p.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2; p.position.set(side, 1.425, 0); reflectionGroup.add(p);
+      }
       reflectionGroup.scale.y = -1;
     }
 
     function buildRoom(key) {
-      clearGroup(roomGroup);
-
+      clearGroup(roomGroup); clearGroup(hotspotGroup); hotspotMeshes = [];
       const r = rooms[key];
-      const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.55, metalness: 0 });
-      setTexture(photoMat, r.photo);
-
+      const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
+      setTexture(photoMat, r.photo); // lazy: only the active room's photo loads
       const floor = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), floorMat);
-      floor.rotation.x = -Math.PI / 2;
-      floor.receiveShadow = true;
-      roomGroup.add(floor);
-
+      floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; roomGroup.add(floor);
       const ceil = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), wallMat);
-      ceil.rotation.x = Math.PI / 2;
-      ceil.position.y = 2.85;
-      roomGroup.add(ceil);
-
+      ceil.rotation.x = Math.PI / 2; ceil.position.y = 2.85; roomGroup.add(ceil);
       const back = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), photoMat);
-      back.position.set(0, 1.425, -4);
-      roomGroup.add(back);
-
-      const left = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), wallMat);
-      left.rotation.y = Math.PI / 2;
-      left.position.set(-4, 1.425, 0);
-      roomGroup.add(left);
-
-      const right = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), wallMat);
-      right.rotation.y = -Math.PI / 2;
-      right.position.set(4, 1.425, 0);
-      roomGroup.add(right);
-
-      const fLeft = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.85), wallMat);
-      fLeft.rotation.y = Math.PI;
-      fLeft.position.set(-2.7, 1.425, 4);
-      roomGroup.add(fLeft);
-
-      const fRight = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.85), wallMat);
-      fRight.rotation.y = Math.PI;
-      fRight.position.set(2.7, 1.425, 4);
-      roomGroup.add(fRight);
-
-      const fTop = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.55), wallMat);
-      fTop.rotation.y = Math.PI;
-      fTop.position.set(0, 2.58, 4);
-      roomGroup.add(fTop);
-
-      const bed = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.45, 2.9), woodMat);
-      bed.position.set(0, 0.22, -1.9);
-      bed.castShadow = true;
-      roomGroup.add(bed);
-
-      const mattress = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.22, 2.8), fabricMat);
-      mattress.position.set(0, 0.55, -1.9);
-      mattress.castShadow = true;
-      roomGroup.add(mattress);
-
-      const desk = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.06, 0.85), woodMat);
-      desk.position.set(-3.1, 0.82, -2.6);
-      desk.castShadow = true;
-      roomGroup.add(desk);
-
-      const chair = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.85, 0.55), new THREE.MeshStandardMaterial({ color: r.accent, roughness: 0.6 }));
-      chair.position.set(-3.1, 0.42, -1.85);
-      chair.castShadow = true;
-      roomGroup.add(chair);
-
-      const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 0.06, 20), metalMat);
-      lamp.position.set(-3.1, 1.0, -2.6);
-      roomGroup.add(lamp);
-
-      const lampLight = new THREE.PointLight(0xffaa5e, 7, 3.5);
-      lampLight.position.set(-3.1, 1.45, -2.6);
-      roomGroup.add(lampLight);
-
-      const wardrobe = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.6), woodMat);
-      wardrobe.position.set(3.6, 1.1, -3.2);
-      wardrobe.castShadow = true;
-      roomGroup.add(wardrobe);
-
-      const rail = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.08), metalMat);
-      rail.position.set(0, 1.1, -3.92);
-      roomGroup.add(rail);
-
-      const info = document.getElementById('room-info');
-      if (info) {
-        info.querySelector('h2').textContent = r.name;
-        info.querySelector('p').textContent = r.desc;
+      back.position.set(0, 1.425, -4); roomGroup.add(back);
+      for (const side of [-4, 4]) {
+        const p = new THREE.Mesh(new THREE.PlaneGeometry(8, 2.85), wallMat);
+        p.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2; p.position.set(side, 1.425, 0); roomGroup.add(p);
       }
+      for (const side of [-2.7, 2.7]) {
+        const p = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.85), wallMat);
+        p.rotation.y = Math.PI; p.position.set(side, 1.425, 4); roomGroup.add(p);
+      }
+      const fTop = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.55), wallMat);
+      fTop.rotation.y = Math.PI; fTop.position.set(0, 2.58, 4); roomGroup.add(fTop);
+      // Balcony door glow on the front wall for rooms that have one.
+      if (HOTSPOTS[key].some(h => h.id === 'balcony')) {
+        const glow = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 2.1), new THREE.MeshStandardMaterial({ color: 0xbfe3f0, emissive: 0x5b8c9e, emissiveIntensity: 0.4 }));
+        glow.rotation.y = Math.PI; glow.position.set(2.7, 1.05, 3.99); roomGroup.add(glow);
+      }
+      LAYOUTS[key](r.accent);
+      // Hotspot markers in 3D + accessible chips in the info panel.
+      for (const h of HOTSPOTS[key]) {
+        const dot = new THREE.Mesh(new THREE.SphereGeometry(0.09, 20, 20), new THREE.MeshStandardMaterial({ color: r.accent, emissive: r.accent, emissiveIntensity: 0.55 }));
+        dot.position.set(...h.pos); dot.userData.hotspot = h; hotspotGroup.add(dot); hotspotMeshes.push(dot);
+      }
+      renderChips(key);
+      const info = document.getElementById('room-info');
+      info.querySelector('h2').textContent = r.name;
+      info.querySelector('p').textContent = r.desc;
+      hideHotspot();
     }
 
-    // Transition system
-    let transitioning = false;
-    let currentRoom = 'twin';
-
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
-    function flyTo(key) {
-      if (transitioning || key === currentRoom) return;
-      transitioning = true;
-      fade.style.opacity = '1';
-
-      setTimeout(() => {
-        buildRoom(key);
-        buildReflection(key);
-        currentRoom = key;
-
-        const start = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
-        const startTarget = { x: controls.target.x, y: controls.target.y, z: controls.target.z };
-        const end = rooms[key].cam.pos;
-        const endTarget = rooms[key].cam.target;
-        const dur = 900;
-        const t0 = performance.now();
-
-        function step(now) {
-          const t = Math.min((now - t0) / dur, 1);
-          const ease = t < 0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
-          camera.position.set(lerp(start.x, end[0], ease), lerp(start.y, end[1], ease), lerp(start.z, end[2], ease));
-          controls.target.set(lerp(startTarget.x, endTarget[0], ease), lerp(startTarget.y, endTarget[1], ease), lerp(startTarget.z, endTarget[2], ease));
-          if (t < 1) {
-            requestAnimationFrame(step);
-          } else {
-            fade.style.opacity = '0';
-            transitioning = false;
-          }
-        }
-        requestAnimationFrame(step);
-      }, 320);
+    // Hotspot card + chips (keyboard/touch path mirrors the 3D tap path).
+    const card = document.getElementById('hotspot-card');
+    const chips = document.getElementById('hotspot-chips');
+    function showHotspot(h) {
+      card.querySelector('h3').textContent = h.label;
+      card.querySelector('p').textContent = h.text;
+      card.hidden = false;
+      chips.querySelectorAll('.hotspot-chip').forEach(c => c.classList.toggle('on', c.dataset.id === h.id));
     }
-
-    document.querySelectorAll('.tour-btn[data-room]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tour-btn[data-room]').forEach(b => b.classList.remove('on'));
-        btn.classList.add('on');
-        flyTo(btn.dataset.room);
-      });
+    function hideHotspot() { card.hidden = true; chips.querySelectorAll('.hotspot-chip').forEach(c => c.classList.remove('on')); }
+    document.getElementById('hotspot-close').addEventListener('click', hideHotspot);
+    function renderChips(key) {
+      chips.replaceChildren(...HOTSPOTS[key].map(h => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'hotspot-chip'; b.dataset.id = h.id; b.textContent = h.label;
+        b.addEventListener('click', () => showHotspot(h));
+        return b;
+      }));
+    }
+    // Tap (not drag) on a marker selects it; drag threshold keeps orbit usable on touch.
+    const ray = new THREE.Raycaster(); const ptr = new THREE.Vector2(); let downAt = null;
+    canvas.addEventListener('pointerdown', (e) => { downAt = [e.clientX, e.clientY]; });
+    canvas.addEventListener('pointerup', (e) => {
+      if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
+      ptr.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+      ray.setFromCamera(ptr, camera);
+      const hit = ray.intersectObjects(hotspotMeshes, false)[0];
+      if (hit) showHotspot(hit.object.userData.hotspot); else hideHotspot();
     });
 
-    // Auto-rotate toggle
+    // Transitions: interior timing (fade 320ms, fly 760ms); instant when reduced.
+    let transitioning = false, currentRoom = 'twin';
+    const lerp = (a, b, t) => a + (b - a) * t;
+    function flyTo(key) {
+      if (transitioning || key === currentRoom) return;
+      const apply = () => {
+        buildRoom(key); buildReflection(key); currentRoom = key;
+        if (reduced) {
+          camera.position.set(...rooms[key].cam.pos); controls.target.set(...rooms[key].cam.target);
+          fade.style.opacity = '0'; transitioning = false; return;
+        }
+        const s = camera.position.clone(), st = controls.target.clone();
+        const t0 = performance.now(), dur = 760;
+        (function step(now) {
+          const t = Math.min((now - t0) / dur, 1);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          camera.position.set(lerp(s.x, rooms[key].cam.pos[0], ease), lerp(s.y, rooms[key].cam.pos[1], ease), lerp(s.z, rooms[key].cam.pos[2], ease));
+          controls.target.set(lerp(st.x, rooms[key].cam.target[0], ease), lerp(st.y, rooms[key].cam.target[1], ease), lerp(st.z, rooms[key].cam.target[2], ease));
+          if (t < 1) requestAnimationFrame(step); else { fade.style.opacity = '0'; transitioning = false; }
+        })(t0);
+      };
+      if (reduced) { apply(); return; }
+      transitioning = true; fade.style.opacity = '1';
+      setTimeout(apply, 320);
+    }
+    function setActiveBtn(key) {
+      document.querySelectorAll('.tour-btn[data-room]').forEach(b => b.classList.toggle('on', b.dataset.room === key));
+    }
+    document.querySelectorAll('.tour-btn[data-room]').forEach(btn => {
+      btn.addEventListener('click', () => { stopWalk(); setActiveBtn(btn.dataset.room); flyTo(btn.dataset.room); });
+    });
+
+    // Auto-rotate (off by default under reduced motion) + auto walkthrough.
     const autoBtn = document.getElementById('auto-rotate-btn');
     autoBtn.addEventListener('click', () => {
       controls.autoRotate = !controls.autoRotate;
-      controls.autoRotateSpeed = 1.5;
       autoBtn.classList.toggle('on', controls.autoRotate);
       autoBtn.setAttribute('aria-pressed', String(controls.autoRotate));
       autoBtn.querySelector('.tooltip').textContent = 'Auto-rotate: ' + (controls.autoRotate ? 'on' : 'off');
     });
+    const walkBtn = document.getElementById('walkthrough-btn');
+    let walkTimer = null;
+    function stopWalk() { if (walkTimer) { clearInterval(walkTimer); walkTimer = null; } walkBtn.classList.remove('on'); walkBtn.setAttribute('aria-pressed', 'false'); walkBtn.querySelector('.tooltip').textContent = 'Auto walkthrough: off'; }
+    walkBtn.addEventListener('click', () => {
+      if (walkTimer) { stopWalk(); return; }
+      if (reduced) return; // no auto motion under reduced-motion
+      walkBtn.classList.add('on'); walkBtn.setAttribute('aria-pressed', 'true');
+      walkBtn.querySelector('.tooltip').textContent = 'Auto walkthrough: on';
+      const next = () => { const k = ROOM_ORDER[(ROOM_ORDER.indexOf(currentRoom) + 1) % ROOM_ORDER.length]; setActiveBtn(k); flyTo(k); };
+      next(); walkTimer = setInterval(next, 6000);
+    });
+    canvas.addEventListener('pointerdown', stopWalk, { passive: true });
+
+    // Preload the next room's photo on idle so transitions feel instant.
+    const preload = () => { const k = ROOM_ORDER[(ROOM_ORDER.indexOf(currentRoom) + 1) % ROOM_ORDER.length]; new Image().src = rooms[k].photo; };
+    ('requestIdleCallback' in window ? requestIdleCallback : (f) => setTimeout(f, 1500))(preload);
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -455,16 +497,17 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    buildRoom('twin');
-    buildReflection('twin');
-
-    function animate() {
+    buildRoom('twin'); buildReflection('twin');
+    const clock = new THREE.Clock();
+    (function animate() {
       requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      if (!reduced) for (const d of hotspotMeshes) { const s = 1 + Math.sin(t * 3 + d.position.x) * 0.18; d.scale.setScalar(s); }
       controls.update();
       renderer.render(scene, camera);
-    }
-    animate();
+    })();
+    })();
   </script>
-  <a href="https://wa.me/919876543210?text=Hi%20Prajna%20Co-hab,%20I%20want%20to%20book%20a%20visit." class="btn btn-primary wa" target="_blank" rel="noopener">WhatsApp Us</a>
-</body>
+</main>
+<script src="config.js?v=70"></script><script src="assets/site.js?v=70"></script></body>
 </html>

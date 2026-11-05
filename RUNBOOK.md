@@ -58,7 +58,7 @@ visitors keep the old copy for up to ten minutes. The safest habit:
 ## 4. The only thing left: enquiries into a spreadsheet
 
 Ten minutes, free, no server. This turns the three forms on the site into rows
-in a sheet you check like WhatsApp.
+in a sheet you can check from your phone.
 
 1. Go to **sheets.new** and name it **Prajna Data**.
 2. **Extensions → Apps Script**. Delete the sample code.
