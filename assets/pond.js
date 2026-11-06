@@ -1,9 +1,9 @@
 /* ══════════════════════════════════════════════════════════════════════════
    POND master - underwater Warli folk, caustic flow, seamless, 60fps
    ---------------------------------------------------------------------------
-   fluid.js owns the deep water (one shared canvas, one rAF loop, ~0.7ms a
-   frame). This file never draws to that canvas. It adds three things on top,
-   all free per frame because they are DOM + CSS, not pixels:
+   One canvas (underwater, below), one rAF loop, ~0.7ms a frame. On top of
+   the canvas this file adds three things, free per frame because they are
+   DOM + CSS, not pixels:
 
      1. SCENES  - every page currently gets the same five folk motifs. These
                   are chosen per page instead, so the gallery is quiet and the
@@ -52,7 +52,7 @@
   }
 
   /* ── 2. WATER SURFACE ───────────────────────────────────────────────────
-     A clear sheet of water over fluid.js's bed: caustic light drifting in
+     A clear sheet of water over the canvas bed: caustic light drifting in
      two tileable bands at different speeds, a slower flow sheen, and rings
      where the water is touched. Every motion is a CSS transform on a fixed
      layer, so nothing here runs per-frame JavaScript. The patterns repeat
@@ -133,7 +133,7 @@
       var t = tier();
       return { x: atX != null ? atX : Math.random() * (w || 800),
         y: (h || 600) * (0.38 + Math.random() * 0.5),
-        vx: (7 + Math.random() * 11) * t, s: (24 + Math.random() * 16) * t,
+        vx: (5 + Math.random() * 7) * t, s: (24 + Math.random() * 16) * t,
         d: t, ph: Math.random() * 6.283, dir: Math.random() < 0.5 ? 1 : -1 };
     }
     function spawnBloom(atX) {
@@ -148,7 +148,7 @@
     }
     function seed() {
       swimmers = []; blooms = []; bubbles = [];
-      var ns = w < 700 ? 4 : 7, nb = w < 700 ? 2 : 3;
+      var ns = w < 700 ? 3 : 7, nb = w < 700 ? 1 : 3;
       for (var i = 0; i < ns; i++) swimmers.push(spawnSwimmer());
       for (var j = 0; j < nb; j++) blooms.push(spawnBloom());
       for (var b = 0; b < (w < 700 ? 6 : 12); b++) bubbles.push(spawnBubble());
@@ -205,7 +205,7 @@
       ctx.translate(f.x, f.y + und);
       ctx.scale(f.dir, 1);
       ctx.rotate(Math.sin(t * 0.0009 + f.ph) * 0.08);
-      ctx.globalAlpha = 0.24 + f.d * 0.24;
+      ctx.globalAlpha = 0.10 + f.d * 0.13;
       ctx.strokeStyle = "#7a5a1c"; ctx.lineWidth = 1.9; ctx.lineCap = "round"; ctx.lineJoin = "round";
       var sweep = Math.sin(t * 0.003 + f.ph) * s * 0.35;
       var kick = Math.sin(t * 0.003 + f.ph + 1.2) * s * 0.22;
@@ -223,10 +223,10 @@
     function drawBloom(b, t) {
       var s = b.s;
       ctx.save(); ctx.translate(b.x, b.y + Math.sin(t * 0.0012 + b.ph) * 3 * b.d);
-      ctx.globalAlpha = 0.22 + b.d * 0.20;
-      ctx.strokeStyle = "#2d5f3f"; ctx.lineWidth = 1.2; ctx.lineCap = "round";
-      for (var i = 0; i < 8; i++) {
-        ctx.beginPath(); ctx.ellipse(0, 0, s * 0.5, s * 0.16, (i / 8) * 6.283, 0, 6.283); ctx.stroke();
+      ctx.globalAlpha = 0.12 + b.d * 0.12;
+      ctx.strokeStyle = "#2d5f3f"; ctx.lineWidth = 1; ctx.lineCap = "round";
+      for (var i = 0; i < 6; i++) {
+        ctx.beginPath(); ctx.ellipse(0, 0, s * 0.5, s * 0.16, (i / 6) * 6.283, 0, 6.283); ctx.stroke();
       }
       ctx.fillStyle = "#c05621";
       ctx.beginPath(); ctx.arc(0, 0, s * 0.09, 0, 6.283); ctx.fill();
@@ -239,15 +239,25 @@
         var b = bubbles[i];
         if (!still) { b.y -= b.vy * dt; b.x += Math.sin(performance.now() * 0.001 + b.ph) * 0.3;
           if (b.y < -6) { b.y = h + 6; b.x = Math.random() * w; } }
-        ctx.globalAlpha = 0.32;
+        ctx.globalAlpha = 0.20;
         ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283); ctx.stroke();
       }
       ctx.restore();
     }
     function render(t, dt, still) {
       ctx.clearRect(0, 0, w, h);
-      drawCaustics(still ? 0 : t);
-      drawRays(still ? 0 : t);
+      /* depth grade: sky-light at the surface, warm depth below. One static
+         gradient fill per frame - this is what gives the column volume
+         instead of one flat cream value. Capped low so ink stays readable. */
+      var dg = ctx.createLinearGradient(0, 0, 0, h);
+      dg.addColorStop(0, "rgba(255,251,240,0.10)");
+      dg.addColorStop(0.5, "rgba(255,251,240,0)");
+      dg.addColorStop(1, "rgba(217,164,65,0.12)");
+      ctx.fillStyle = dg;
+      ctx.fillRect(0, 0, w, h);
+      /* folk FIRST, light over them: caustics and rays travel across the
+         Warli figures, so they read as submerged in water rather than
+         scratched on top of the page. */
       for (var i = ripples.length - 1; i >= 0; i--) {
         var rp = ripples[i]; rp.r += 60 * dt; rp.a -= 0.55 * dt;
         if (rp.a <= 0) { ripples.splice(i, 1); continue; }
@@ -267,6 +277,8 @@
         drawBloom(b, still ? 0 : t);
       }
       drawBubbles(dt, still);
+      drawCaustics(still ? 0 : t);
+      drawRays(still ? 0 : t);
     }
     function frame(t) {
       raf = 0;

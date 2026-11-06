@@ -1,10 +1,12 @@
-/* Prajna Co-hab - service worker (v77)
+/* Prajna Co-hab - service worker (v78)
    Caches the app shell for offline reading.
 
    What changed in v77:
    - sample-patterns: CARTO label-pane map, double-line guides, promise block.
-   - system-wide pond: pond.css/js/fluid.js wired on all 14 pages, incl.
-     index, tour3d and offline. Cache renamed prajna-v77.
+   - system-wide pond: pond.css/js wired on all 14 pages, incl.
+     index, tour3d and offline. Cache renamed prajna-v78.
+   - pond-perfect: Warli folk under caustic light, depth grade, dead
+     fluid.js removed from shell and tree.
    - the 7.4MB tour video, the social covers and the poster images are no
      longer precached. A first visit used to download 7.77MB before the
      worker finished installing, on a phone, on mobile data. Shell is now
@@ -16,7 +18,7 @@
    - blog.html and testimonials.html are in the shell.
    - a navigation miss retries by pathname, so ?utm_source=... still works. */
 
-var V = 'prajna-v77';
+var V = 'prajna-v78';
 
 var SHELL = [
   './',
@@ -37,13 +39,12 @@ var SHELL = [
   './manifest.webmanifest',
   './config.js?v=75',
   './assets/style.css?v=75',
-  './assets/pond.css?v=75',
+  './assets/pond.css?v=77',
   './assets/site.js?v=75',
   './assets/micro.js?v=75',
-  './assets/fluid.js?v=75',
   './assets/motion.js?v=75',
   './assets/gallery.js?v=75',
-  './assets/pond.js?v=75',
+  './assets/pond.js?v=77',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/favicon-16x16.png',
