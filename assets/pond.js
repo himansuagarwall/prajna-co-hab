@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   POND - page scenes, the water surface, and a seamless load transition
+   POND master - underwater Warli folk, caustic flow, seamless, 60fps
    ---------------------------------------------------------------------------
    fluid.js owns the deep water (one shared canvas, one rAF loop, ~0.7ms a
    frame). This file never draws to that canvas. It adds three things on top,
@@ -28,66 +28,7 @@
 
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── 1. SCENES ────────────────────────────────────────────────────────
-     Motif ids index into fluid.js's MOTIFS array:
-       0 lotus · 1 fish · 2 peacock eye · 3 mandana diamond · 4 sprig
-     count is how many float; spread is the horizontal area they roam. */
-  var SCENES = {
-    home:     { motifs: [0, 4, 3],       count: 7,  spread: 1.00, size: [78, 150], rise: [0.10, 0.20] },
-    gallery:  { motifs: [3, 2],          count: 4,  spread: 1.00, size: [52,  92], rise: [0.06, 0.11] },
-    about:    { motifs: [0, 4],          count: 5,  spread: 0.95, size: [60, 116], rise: [0.08, 0.15] },
-    contact:  { motifs: [0, 3],          count: 5,  spread: 0.95, size: [60, 112], rise: [0.08, 0.15] },
-    pit:      { motifs: [1, 3],          count: 5,  spread: 0.95, size: [58, 108], rise: [0.09, 0.17] },
-    discover: { motifs: [4, 1],          count: 6,  spread: 1.00, size: [62, 124], rise: [0.09, 0.18] },
-    pune:     { motifs: [4, 2],          count: 6,  spread: 1.00, size: [62, 124], rise: [0.09, 0.18] },
-    feedback: { motifs: [0, 3],          count: 4,  spread: 0.90, size: [56, 104], rise: [0.07, 0.14] },
-    notfound: { motifs: [3],             count: 3,  spread: 0.90, size: [54,  98], rise: [0.06, 0.12] },
-    blog: { motifs: [4, 0], count: 5, spread: 0.95, size: [58, 108], rise: [0.08, 0.15] },
-    testimonials: { motifs: [0, 3], count: 4, spread: 0.90, size: [56, 104], rise: [0.07, 0.14] },
-    rooms: { motifs: [0, 4, 3], count: 6, spread: 1.00, size: [60, 116], rise: [0.08, 0.16] },
-    tour:     { motifs: [0, 4],          count: 4,  spread: 0.90, size: [54, 100], rise: [0.06, 0.12] },
-    offline:  { motifs: [3],             count: 3,  spread: 0.85, size: [52,  96], rise: [0.06, 0.12] }
-  };
-
-  function scene() {
-    var key = document.body.getAttribute("data-pond");
-    return SCENES[key] || SCENES.home;
-  }
-
-  function buildFloaters(sc) {
-    if (document.querySelector(".pondfloat")) return;
-    var layer = document.createElement("div");
-    layer.className = "pondfloat";
-    layer.setAttribute("aria-hidden", "true");
-    document.body.appendChild(layer);
-
-    for (var i = 0; i < sc.count; i++) {
-      var el = document.createElement("span");
-      el.className = "pf";
-      var m = sc.motifs[i % sc.motifs.length];
-      var size = sc.size[0] + Math.random() * (sc.size[1] - sc.size[0]);
-      var span = (10 + Math.random() * 12).toFixed(1);          /* drift period, s */
-      var x = ((i + 0.5) / sc.count) * sc.spread;
-      /* jitter each one off its even slot so the row never looks like a grid */
-      x = Math.max(0.03, Math.min(0.97, x + (Math.random() - 0.5) * 0.09));
-      var y = 0.16 + Math.random() * 0.74;
-      var rise = sc.rise[0] + Math.random() * (sc.rise[1] - sc.rise[0]);
-
-      el.style.setProperty("--pf-m", "var(--motif-" + m + ")");
-      /* parallax depth: far = small/faint/blurred/slow, near = large/clear */
-      var depth = 0.6 + Math.random() * 0.9;               /* 0.6 far .. 1.5 near */
-      el.style.setProperty("--pf-size", (size * depth).toFixed(0) + "px");
-      el.style.setProperty("--pf-blur", ((1.5 - depth) * 0.6).toFixed(2) + "px");
-      el.style.setProperty("--pf-x", (x * 100).toFixed(1) + "%");
-      el.style.setProperty("--pf-y", (y * 100).toFixed(1) + "%");
-      el.style.setProperty("--pf-dur", (span * (1.6 - depth * 0.4)).toFixed(1) + "s");
-      el.style.setProperty("--pf-delay", (-Math.random() * span).toFixed(1) + "s");
-      el.style.setProperty("--pf-rise", (rise * depth).toFixed(3));
-      el.style.setProperty("--pf-tilt", (Math.random() * 26 - 13).toFixed(1) + "deg");
-      el.style.setProperty("--pf-op", ((0.30 + Math.random() * 0.30) * (0.5 + depth * 0.4)).toFixed(2));
-      layer.appendChild(el);
-    }
-  }
+  /* Floater DOM layer removed: fluid.js motifs were never loaded (--motif-* undefined). Canvas carries all folk. */
 
   /* ── 3. REVEAL ───────────────────────────────────────────────────────
      Runs once per page load. The surface sits over the already-painted page,
@@ -151,13 +92,12 @@
     }, { passive: true });
   }
 
-  /* ── 5. FOLK ART CANVAS ── Warli figures, diya lamps, lotus blooms, click ripples
-     One rAF loop, dt-based (frame-rate independent), paused when hidden
-     off-screen. Depth tiers (far/mid/near) give parallax: far is small,
-     faint and slow; near is large and clear. All wraps happen fully
-     off-canvas so nothing pops, gradients are pre-rendered sprites, and
-     reduced-motion draws a single static frame. */
-  function folkArt() {
+  /* ── 5. UNDERWATER WARLI MASTER ── caustic flow, light rays, swimmers, blooms, bubbles
+     One fixed canvas, DPR capped 1.5, frame-time EMA drops DPR if slow, pauses
+     when hidden. Seamless wrap (off-canvas resets, tile periods divide drift).
+     Reduced motion: one static frame. Floater DOM layer removed: fluid.js
+     motifs were never loaded (--motif-* undefined), canvas carries all folk. */
+  function underwater() {
     var canvas = document.getElementById("pond-canvas");
     if (!canvas) {
       canvas = document.createElement("canvas");
@@ -166,134 +106,176 @@
       document.body.appendChild(canvas);
     }
     var ctx = canvas.getContext("2d");
-    var w = 0, h = 0, dpr = 1;
-    var warli = [], diyas = [], lotuses = [], ripples = [];
-    var lotusAcc = 0, raf = 0, last = 0, visible = true;
-
-    function tier() { var r = Math.random(); return r < 0.4 ? 0.6 : (r < 0.75 ? 1 : 1.45); }
-    function spawn(atX) {
+    var w = 0, h = 0, dpr = 1, raf = 0, last = 0, visible = true;
+    var swimmers = [], blooms = [], bubbles = [], ripples = [];
+    var ema = 16, degraded = false;
+    function causticTile(size, seed) {
+      var c = document.createElement("canvas"); c.width = c.height = size;
+      var g = c.getContext("2d"), img = g.createImageData(size, size), d = img.data;
+      var k = 2 * Math.PI / size;
+      for (var y = 0; y < size; y++) {
+        for (var x = 0; x < size; x++) {
+          var v = Math.sin(x * k * 3 + seed) * Math.cos(y * k * 2 - seed * 0.7)
+                + Math.sin((x + y) * k * 2 + seed * 1.3) * 0.6
+                + Math.cos((x - y) * k * 1 + seed * 2.1) * 0.4;
+          v = Math.pow(Math.max(0, v) / 2, 2.2);
+          var idx = (y * size + x) * 4;
+          d[idx] = 255; d[idx + 1] = 251; d[idx + 2] = 238;
+          d[idx + 3] = Math.min(255, v * 150);
+        }
+      }
+      g.putImageData(img, 0, 0);
+      return c;
+    }
+    var tileA = causticTile(256, 1.7), tileB = causticTile(256, 4.2);
+    function tier() { var r = Math.random(); return r < 0.45 ? 0.55 : (r < 0.8 ? 0.85 : 1.3); }
+    function spawnSwimmer(atX) {
       var t = tier();
       return { x: atX != null ? atX : Math.random() * (w || 800),
-        y: (h || 600) * 0.55 + Math.random() * (h || 600) * 0.38,
-        vx: (6 + Math.random() * 14) * t, s: (13 + Math.random() * 9) * t,
-        d: t, ph: Math.random() * 6.283 };
+        y: (h || 600) * (0.38 + Math.random() * 0.5),
+        vx: (7 + Math.random() * 11) * t, s: (24 + Math.random() * 16) * t,
+        d: t, ph: Math.random() * 6.283, dir: Math.random() < 0.5 ? 1 : -1 };
     }
-    function spawnDiya(atX) {
+    function spawnBloom(atX) {
       var t = tier();
       return { x: atX != null ? atX : Math.random() * (w || 800),
-        y: (h || 600) * 0.58 + Math.random() * (h || 600) * 0.34,
-        vx: (3 + Math.random() * 6) * t, s: (8 + Math.random() * 6) * t,
-        d: t, bob: Math.random() * 6.283 };
+        y: (h || 600) * (0.12 + Math.random() * 0.22),
+        vx: (4 + Math.random() * 5) * t, s: (10 + Math.random() * 8) * t, d: t, ph: Math.random() * 6.283 };
     }
-    function flame(s) { /* pre-rendered glow sprite: no per-frame gradient alloc */
-      var c = document.createElement("canvas"), r = Math.max(2, Math.round(s * 1.4));
-      c.width = c.height = r * 2; var g = c.getContext("2d");
-      var gr = g.createRadialGradient(r, r, r * 0.06, r, r, r);
-      gr.addColorStop(0, "rgba(255,200,100,.42)"); gr.addColorStop(1, "rgba(199,91,58,0)");
-      g.fillStyle = gr; g.fillRect(0, 0, r * 2, r * 2); return c;
+    function spawnBubble() {
+      return { x: Math.random() * (w || 800), y: (h || 600) * (0.5 + Math.random() * 0.5),
+        vy: 12 + Math.random() * 18, r: 1.2 + Math.random() * 2.4, ph: Math.random() * 6.283 };
+    }
+    function seed() {
+      swimmers = []; blooms = []; bubbles = [];
+      var ns = w < 700 ? 4 : 7, nb = w < 700 ? 2 : 3;
+      for (var i = 0; i < ns; i++) swimmers.push(spawnSwimmer());
+      for (var j = 0; j < nb; j++) blooms.push(spawnBloom());
+      for (var b = 0; b < (w < 700 ? 6 : 12); b++) bubbles.push(spawnBubble());
     }
     function resize() {
       w = window.innerWidth; h = window.innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      dpr = Math.min(window.devicePixelRatio || 1, degraded ? 1 : 1.5);
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (!warli.length) { for (var i = 0; i < 5; i++) warli.push(spawn());
-        for (var j = 0; j < 6; j++) { var d = spawnDiya(); d.sprite = flame(d.s); diyas.push(d); } }
+      if (!swimmers.length) seed();
     }
     resize();
     window.addEventListener("resize", resize);
     document.body.addEventListener("click", function (e) {
       if (e.target.closest && e.target.closest("a,button,input,textarea,select,label")) return;
-      ripples.push({ x: e.clientX, y: e.clientY, r: 0, a: 0.5 });
+      ripples.push({ x: e.clientX, y: e.clientY, r: 0, a: 0.4 });
     });
-    /* pause when tab hidden or canvas scrolled off-screen: no jank, no wasted frames */
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
       else if (!raf && !reduce) { last = performance.now(); raf = requestAnimationFrame(frame); }
     });
     if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (en) { visible = en[0] && en[0].isIntersecting; },
-        { threshold: 0 }).observe(canvas);
+      new IntersectionObserver(function (en) { visible = en[0] && en[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
     }
-
-    function drawWarli(f, t) {
-      var s = f.s, walk = Math.sin(t * 0.0018 + f.ph) * 5 * f.d;
-      ctx.save(); ctx.translate(f.x, f.y + walk);
-      ctx.globalAlpha = 0.35 + f.d * 0.32;
-      ctx.strokeStyle = "#C75B3A"; ctx.lineWidth = 1.6; ctx.lineCap = "round"; ctx.lineJoin = "round";
-      ctx.beginPath(); ctx.arc(0, -s * 0.75, s * 0.2, 0, 6.283); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, -s * 0.52); ctx.lineTo(-s * 0.28, s * 0.12); ctx.lineTo(s * 0.28, s * 0.12); ctx.closePath(); ctx.stroke();
-      var arm = Math.sin(t * 0.0025 + f.ph) * 0.35;
-      ctx.beginPath();
-      ctx.moveTo(0, s * 0.12); ctx.lineTo(-s * 0.22, s * 0.72);
-      ctx.moveTo(0, s * 0.12); ctx.lineTo(s * 0.22, s * 0.72);
-      ctx.moveTo(0, -s * 0.32); ctx.lineTo(-s * 0.38 + Math.sin(arm) * s * 0.12, s * 0.04);
-      ctx.moveTo(0, -s * 0.32); ctx.lineTo(s * 0.38 - Math.sin(arm) * s * 0.12, s * 0.04);
-      ctx.stroke(); ctx.restore();
+    function drawCaustics(t) {
+      var ax = (t * 0.006) % 256, ay = (t * 0.0035) % 256;
+      var bx = (t * 0.0038) % 256, by = (t * 0.0022) % 256;
+      ctx.globalCompositeOperation = "screen";
+      ctx.globalAlpha = 0.24;
+      for (var x = -256 + ax; x < w; x += 256) for (var y = -256 + ay; y < h; y += 256) ctx.drawImage(tileA, x, y);
+      ctx.globalAlpha = 0.16;
+      for (var x2 = -256 + bx; x2 < w; x2 += 256) for (var y2 = -256 + by; y2 < h; y2 += 256) ctx.drawImage(tileB, x2, y2);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = 1;
     }
-    function drawDiya(d, t, still) {
-      var s = d.s, bob = still ? 0 : Math.sin(t * 0.0035 + d.bob) * 3 * d.d;
-      ctx.save(); ctx.translate(d.x, d.y + bob);
-      ctx.globalAlpha = 0.4 + d.d * 0.35;
-      var fl = still ? 1 : 0.82 + Math.sin(t * 0.012 + d.bob) * 0.18;
-      ctx.globalAlpha *= fl;
-      if (d.sprite) ctx.drawImage(d.sprite, -s * 0.7, -s * 0.7, s * 1.4, s * 1.4);
-      ctx.strokeStyle = "#D4A94C"; ctx.lineWidth = 1.4;
-      ctx.beginPath(); ctx.arc(0, 0, s * 0.32, Math.PI, 0); ctx.stroke();
-      ctx.strokeStyle = "#C75B3A"; ctx.lineWidth = 1.1;
-      ctx.beginPath(); ctx.moveTo(-s * 0.07, -s * 0.02);
-      ctx.quadraticCurveTo(0, -s * 0.42, s * 0.07, -s * 0.02); ctx.stroke();
+    function drawRays(t) {
+      ctx.save();
+      for (var i = 0; i < 3; i++) {
+        var rx = w * (0.22 + i * 0.28) + Math.sin(t * 0.00012 + i * 2.1) * 28;
+        var grad = ctx.createLinearGradient(rx, 0, rx + 60, h * 0.55);
+        grad.addColorStop(0, "rgba(255,251,240,0.10)");
+        grad.addColorStop(1, "rgba(255,251,240,0)");
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(rx - 18, 0); ctx.lineTo(rx + 18, 0);
+        ctx.lineTo(rx + 90, h * 0.55); ctx.lineTo(rx + 20, h * 0.55);
+        ctx.closePath(); ctx.fill();
+      }
       ctx.restore();
     }
-    function drawLotus(l, t) {
-      var s = l.size * l.d * l.scale; if (s < 0.4) return;
-      ctx.save(); ctx.translate(l.x, l.y);
-      ctx.globalAlpha = l.fade * (0.3 + l.d * 0.35);
-      ctx.strokeStyle = "#2D5F3F"; ctx.lineWidth = 1.1; ctx.lineCap = "round";
+    function drawSwimmer(f, t) {
+      var s = f.s, und = Math.sin(t * 0.0016 + f.ph) * 4 * f.d;
+      ctx.save();
+      ctx.translate(f.x, f.y + und);
+      ctx.scale(f.dir, 1);
+      ctx.rotate(Math.sin(t * 0.0009 + f.ph) * 0.08);
+      ctx.globalAlpha = 0.24 + f.d * 0.24;
+      ctx.strokeStyle = "#7a5a1c"; ctx.lineWidth = 1.9; ctx.lineCap = "round"; ctx.lineJoin = "round";
+      var sweep = Math.sin(t * 0.003 + f.ph) * s * 0.35;
+      var kick = Math.sin(t * 0.003 + f.ph + 1.2) * s * 0.22;
+      ctx.beginPath(); ctx.arc(s * 0.55, -s * 0.1, s * 0.16, 0, 6.283); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s * 0.42, -s * 0.05);
+      ctx.quadraticCurveTo(0, und * 0.4, -s * 0.5, kick * 0.4); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(s * 0.3, -s * 0.02); ctx.lineTo(s * 0.05 + sweep, s * 0.3);
+      ctx.moveTo(s * 0.3, -s * 0.02); ctx.lineTo(s * 0.05 - sweep, -s * 0.34);
+      ctx.moveTo(-s * 0.5, kick * 0.4); ctx.lineTo(-s * 0.85, s * 0.28 + kick);
+      ctx.moveTo(-s * 0.5, kick * 0.4); ctx.lineTo(-s * 0.85, -s * 0.2 + kick);
+      ctx.stroke();
+      ctx.restore();
+    }
+    function drawBloom(b, t) {
+      var s = b.s;
+      ctx.save(); ctx.translate(b.x, b.y + Math.sin(t * 0.0012 + b.ph) * 3 * b.d);
+      ctx.globalAlpha = 0.22 + b.d * 0.20;
+      ctx.strokeStyle = "#2d5f3f"; ctx.lineWidth = 1.2; ctx.lineCap = "round";
       for (var i = 0; i < 8; i++) {
-        ctx.beginPath(); ctx.ellipse(0, 0, s * 0.45, s * 0.14, (i / 8) * 6.283, 0, 6.283); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(0, 0, s * 0.5, s * 0.16, (i / 8) * 6.283, 0, 6.283); ctx.stroke();
       }
-      ctx.fillStyle = "#D4A94C"; ctx.beginPath(); ctx.arc(0, 0, s * 0.07, 0, 6.283); ctx.fill();
+      ctx.fillStyle = "#c05621";
+      ctx.beginPath(); ctx.arc(0, 0, s * 0.09, 0, 6.283); ctx.fill();
+      ctx.restore();
+    }
+    function drawBubbles(dt, still) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(122,111,96,0.5)"; ctx.lineWidth = 1;
+      for (var i = 0; i < bubbles.length; i++) {
+        var b = bubbles[i];
+        if (!still) { b.y -= b.vy * dt; b.x += Math.sin(performance.now() * 0.001 + b.ph) * 0.3;
+          if (b.y < -6) { b.y = h + 6; b.x = Math.random() * w; } }
+        ctx.globalAlpha = 0.32;
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283); ctx.stroke();
+      }
       ctx.restore();
     }
     function render(t, dt, still) {
       ctx.clearRect(0, 0, w, h);
+      drawCaustics(still ? 0 : t);
+      drawRays(still ? 0 : t);
       for (var i = ripples.length - 1; i >= 0; i--) {
-        var rp = ripples[i]; rp.r += 66 * dt; rp.a -= 0.6 * dt;
+        var rp = ripples[i]; rp.r += 60 * dt; rp.a -= 0.55 * dt;
         if (rp.a <= 0) { ripples.splice(i, 1); continue; }
-        ctx.strokeStyle = "rgba(192,86,33," + rp.a.toFixed(2) + ")"; ctx.lineWidth = 1.2;
+        ctx.strokeStyle = "rgba(192,86,33," + rp.a.toFixed(2) + ")"; ctx.lineWidth = 1.1;
         ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, 6.283); ctx.stroke();
       }
-      for (var i = 0; i < warli.length; i++) {
-        var f = warli[i]; if (!still) { f.x += f.vx * dt; if (f.x > w + 30) { f.x = -30; f.y = (h || 600) * 0.55 + Math.random() * (h || 600) * 0.38; } }
-        drawWarli(f, t);
+      for (var j = 0; j < swimmers.length; j++) {
+        var f = swimmers[j];
+        if (!still) { f.x += f.vx * f.dir * dt;
+          if (f.dir > 0 && f.x > w + 60) { f.x = -60; f.y = h * (0.38 + Math.random() * 0.5); }
+          if (f.dir < 0 && f.x < -60) { f.x = w + 60; f.y = h * (0.38 + Math.random() * 0.5); } }
+        drawSwimmer(f, still ? 0 : t);
       }
-      for (var i = 0; i < diyas.length; i++) {
-        var d = diyas[i]; if (!still) { d.x += d.vx * dt; if (d.x > w + 20) { d.x = -20; d.y = (h || 600) * 0.58 + Math.random() * (h || 600) * 0.34; } }
-        drawDiya(d, t, still);
+      for (var k = 0; k < blooms.length; k++) {
+        var b = blooms[k];
+        if (!still) { b.x += b.vx * dt; if (b.x > w + 40) b.x = -40; }
+        drawBloom(b, still ? 0 : t);
       }
-      if (!still) {
-        lotusAcc += dt;
-        if (lotusAcc > 2.2 + Math.random() * 2.5) { lotusAcc = 0;
-          var lt = tier(); lotuses.push({ x: 50 + Math.random() * Math.max(1, w - 100),
-            y: (h || 600) * 0.5 + Math.random() * (h || 600) * 0.35,
-            size: 10 + Math.random() * 10, d: lt, scale: 0, fade: 0, vx: 4 * lt }); }
-        for (var i = lotuses.length - 1; i >= 0; i--) {
-          var l = lotuses[i]; l.x += l.vx * dt; l.scale = Math.min(1, l.scale + dt * 0.5);
-          l.fade = Math.min(1, l.fade + dt * 0.8);
-          if (l.x > w + 30) { lotuses.splice(i, 1); continue; }
-          drawLotus(l, t);
-        }
-      } else { /* reduced-motion: one static frame, no loop */
-        var st = { x: w * 0.2, y: h * 0.68, size: 16, d: 0.8, scale: 1, fade: 1 };
-        drawLotus(st, t);
-      }
+      drawBubbles(dt, still);
     }
     function frame(t) {
       raf = 0;
       if (!visible || document.hidden) { last = t; raf = requestAnimationFrame(frame); return; }
+      var t0 = performance.now();
       var dt = Math.min(0.05, (t - (last || t)) / 1000 || 0.016); last = t;
       render(t, dt, false);
+      ema = ema * 0.95 + (performance.now() - t0) * 0.05;
+      if (!degraded && ema > 19) { degraded = true; resize(); }
       raf = requestAnimationFrame(frame);
     }
     if (reduce) { render(0, 0, true); return; }
@@ -323,7 +305,7 @@
     return "polygon(" + pts.join(",") + ")";
   }
 
-  function collage(sc) {
+  function collage() {
     if (document.querySelector(".collage")) return;
     var key = document.body.getAttribute("data-pond") || "home";
     var seed = 0;
@@ -334,10 +316,10 @@
     layer.setAttribute("aria-hidden", "true");
 
     var pieces = [
-      { c: "cp1", x: 4,  y: 8,  w: 30, h: 22, rot: -7, o: 0.30 },
-      { c: "cp2", x: 62, y: 4,  w: 34, h: 20, rot: 5,  o: 0.24 },
-      { c: "cp3", x: 16, y: 68, w: 38, h: 26, rot: -4, o: 0.22 },
-      { c: "cp4", x: 71, y: 74, w: 26, h: 21, rot: 8,  o: 0.26 }
+      { c: "cp1", x: 4,  y: 8,  w: 30, h: 22, rot: -7, o: 0.18 },
+      { c: "cp2", x: 62, y: 4,  w: 34, h: 20, rot: 5,  o: 0.15 },
+      { c: "cp3", x: 16, y: 68, w: 38, h: 26, rot: -4, o: 0.14 },
+      { c: "cp4", x: 71, y: 74, w: 26, h: 21, rot: 8,  o: 0.16 }
     ];
     for (var i = 0; i < pieces.length; i++) {
       var p = pieces[i], el = document.createElement("span");
@@ -367,12 +349,10 @@
   }
 
   function boot() {
-    var sc = scene();
-    buildFloaters(sc);
-    collage(sc);
+    collage();
     transitions();
     reveal();
-    folkArt();
+    underwater();
     water();
   }
 

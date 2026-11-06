@@ -1,0 +1,18 @@
+/* Guides horizontal master: snap carousel mobile, 3-up grid desktop.
+   Cards: title + 1 line + Read to blog post. */
+.guides-rail{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.guide-card{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.2rem;display:flex;flex-direction:column;gap:.5rem;scroll-snap-align:start}
+.guide-card h3{font-size:1.05rem;line-height:1.3}
+.guide-card h3 a{color:var(--ink);text-decoration:none}
+.guide-card h3 a:hover{color:var(--terra-dark)}
+.guide-card p{color:var(--muted);font-size:.92rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.guide-read{margin-top:auto;color:var(--terra-dark);font-weight:700;font-size:.85rem;text-decoration:none}
+.guide-read::after{content:" \2192"}
+.guide-read:hover{text-decoration:underline}
+.guides-note{color:var(--muted);font-size:.88rem;margin-top:.8rem}
+@media (max-width:700px){
+  .guides-rail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    gap:.8rem;padding:.2rem .2rem 1rem;scrollbar-width:thin}
+  .guide-card{flex:0 0 82%;min-width:0}
+}
+@media (prefers-reduced-motion:reduce){ .guides-rail{scroll-behavior:auto} }
