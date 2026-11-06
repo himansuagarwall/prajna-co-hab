@@ -78,7 +78,7 @@ window.PRAJNA = window.PRAJNA || {};
   if(C.lockInMonths && C.noticeMonths){
     var terms = document.getElementById("termsline");
     if(terms){
-      terms.textContent = C.lockInMonths + "-month lock-in, " + C.noticeMonths + "-month notice to leave.";
+      terms.textContent = C.lockInMonths + "-month lock-in (minimum stay), " + C.noticeMonths + "-month notice (advance warning) to leave.";
       /* .hidden is display:none!important, so removing the class is the only
          way this line ever becomes visible */
       terms.classList.remove("hidden");
