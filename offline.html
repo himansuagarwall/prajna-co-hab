@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Offline - Prajna Co-hab</title>
+<meta name="color-scheme" content="light">
 <meta name="theme-color" content="#faf5ec">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/offline.html">
 <meta name="description" content="Prajna Co-hab offline page. Pages you already visited stay available.">
 <meta property="og:site_name" content="Prajna Co-hab">
 <meta property="og:type" content="website">
@@ -16,7 +19,8 @@
 <meta property="og:image:height" content="630">
 <link rel="manifest" href="manifest.webmanifest">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'self'">
-<link rel="stylesheet" href="assets/style.css?v=74">
+<link rel="stylesheet" href="assets/style.css?v=75">
+<link rel="stylesheet" href="assets/pond.css?v=75">
 <style>
   .offline-wrap {
     min-height: 100vh;
@@ -38,13 +42,13 @@
     line-height: 1.6;
   }
   .offline-card a {
-    color: #c05a2e;
+    color: var(--terra);
     text-decoration: underline;
     text-underline-offset: .15em;
   }
 </style>
 </head>
-<body>
+<body data-pond="offline">
 <div class="offline-wrap">
   <div class="offline-card">
     <h1>You're offline</h1>
@@ -52,5 +56,7 @@
     <p class="mt-2"><a href=".">Reload when you're back online</a></p>
   </div>
 </div>
+<script src="assets/fluid.js?v=75" defer></script>
+<script src="assets/pond.js?v=75" defer></script>
 </body>
 </html>

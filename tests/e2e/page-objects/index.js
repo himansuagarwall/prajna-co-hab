@@ -38,7 +38,7 @@ class Tour3DPage extends BasePage {
   }
 
   get canvas() {
-    return this.page.locator('canvas');
+    return this.page.locator('#tour-canvas');
   }
 }
 
