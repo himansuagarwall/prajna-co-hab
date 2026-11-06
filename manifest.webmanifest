@@ -43,5 +43,21 @@
       "url": "./autohub.html"
     }
   ],
-  "id": "./index.html"
+  "id": "./index.html",
+  "screenshots": [
+    {
+      "src": "assets/og-cover.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Prajna Co-hab home"
+    },
+    {
+      "src": "assets/g/hero-local.jpg",
+      "sizes": "1200x800",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Hero photo"
+    }
+  ]
 }
