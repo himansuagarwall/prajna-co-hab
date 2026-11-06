@@ -4,54 +4,14 @@
    to the per-frame canvas cost measured at ~0.7ms.
 
    LAYER ORDER (back to front)
-     canvas.bgfx   the deep water (fluid.js) z 0
      .collage      torn paper pieces         z 1
-     .pondwater    caustics, sheen, ripples  z 1 (appended last, paints above collage)
-     .pondfloat    drifting folk motifs      z 2
+     #pond-canvas  underwater Warli folk     z 1
+     .pondwater    caustics, sheen, ripples  z 1 (appended last, paints above canvas)
      page content                           z 3
      .pondreveal   surface settling on load  z 90
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── 1. DRIFTING FOLK MOTIFS ────────────────────────────────────────────
-   Position is set as a percentage of the layer and nudged with a transform.
-   Animating only transform/opacity keeps every floater on its own compositor
-   layer, so the whole set costs the GPU almost nothing. */
-.pondfloat{display:none!important}
-/* legacy floater layer removed in pond master; canvas carries folk */
-.pondfloat-legacy{
-  position:fixed; inset:0; z-index:2; pointer-events:none;
-  contain:strict; overflow:hidden;
-}
-.pondfloat .pf{
-  position:absolute;
-  left:var(--pf-x); top:var(--pf-y);
-  width:var(--pf-size); height:calc(var(--pf-size) * .58);
-  background-image:var(--pf-m);
-  background-repeat:no-repeat; background-position:center; background-size:contain;
-  opacity:var(--pf-op);
-  filter:blur(var(--pf-blur,.25px));
-  will-change:transform;
-  /* Closed-loop drift (starts/ends at origin, so it wraps seamlessly) on
-     the outer element + an alternate bob on the same element would fight
-     over transform, so bob lives on a second property via translate in
-     the same keyframes: midpoints sway then return to origin. */
-  animation:pfdrift var(--pf-dur) ease-in-out infinite;
-  animation-delay:var(--pf-delay);
-  transform:translateZ(0);
-}
-/* a slow rise, a lazy side-to-side, and a barely-there roll - three motions
-   on one transform so they compose instead of fighting */
-/* the loop closes: 100% is exactly 0%, so the wrap is invisible. The fall
-   is the rise played backwards, which reads as settling, not snapping */
-@keyframes pfdrift{
-  0%,100% { transform:translate3d(0,0,0) rotate(0deg); }
-  25%  { transform:translate3d(10px,calc(var(--pf-rise) * -26px),0) rotate(var(--pf-tilt)); }
-  50%  { transform:translate3d(-8px,calc(var(--pf-rise) * -54px),0) rotate(calc(var(--pf-tilt) * -.6)); }
-  75%  { transform:translate3d(4px,calc(var(--pf-rise) * -26px),0) rotate(calc(var(--pf-tilt) * .3)); }
-  100% { transform:translate3d(0,0,0) rotate(0deg); }
-}
-
-/* ── 2. TORN-PAPER ASSEMBLAGE ───────────────────────────────────────────
+/* ── 1. TORN-PAPER ASSEMBLAGE ───────────────────────────────────────────
    Four fixed pieces sitting BEHIND the content, so they read as paper the
    house is laid out on rather than decoration competing with the words.
 
@@ -91,7 +51,7 @@
 .collage .cp3{--wash:linear-gradient(120deg, rgba(122,111,96,.26), rgba(240,230,208,.12));}
 .collage .cp4{--wash:linear-gradient(240deg, rgba(192,86,33,.24), rgba(217,164,65,.20));}
 
-/* ── 3. THE REVEAL - the pond settling on load ──────────────────────────
+/* ── 2. THE REVEAL - the pond settling on load ──────────────────────────
    The page is already painted underneath, so this thins away rather than
    wiping in. Rings spread once, the surface fades, and pond.js removes the
    node entirely so nothing is left to intercept clicks. */
@@ -120,7 +80,7 @@
   100% { transform:scale(5.2); opacity:0; }
 }
 
-/* ── 4. CROSS-PAGE TRANSITION ───────────────────────────────────────────
+/* ── 3. CROSS-PAGE TRANSITION ───────────────────────────────────────────
    Only takes effect where the browser supports cross-document view
    transitions. The title carries the name so it slides rather than cuts;
    everything else cross-fades. Elsewhere this block is inert. */
@@ -133,18 +93,17 @@
   @keyframes pnewin { from{ opacity:0; transform:translateY(18px); } }
 }
 
-/* ── 5. REDUCED MOTION ──────────────────────────────────────────────────
+/* ── 4. REDUCED MOTION ──────────────────────────────────────────────────
    Nothing drifts, nothing wipes in, the paper stays put. The house is still
    a house, it just holds still. */
 @media (prefers-reduced-motion: reduce){
-  .pondfloat .pf{animation:none; transform:none; opacity:.55}
   .pondreveal{display:none}
   .pondwater .pw-caustic,.pondwater .pw-sheen{animation:none}
   .pondripple{display:none}
   .collage .cp{animation:none !important; transform:none !important}
 }
 
-/* ── 6. WATER SURFACE ───────────────────────────────────────────────────
+/* ── 5. WATER SURFACE ───────────────────────────────────────────────────
    Caustic light over the bed. Two tileable bands drift at different speeds
    and a broad sheen creeps across: each tile repeats on an exact pixel
    period, and each animation translates by exactly one period, so the
@@ -156,6 +115,15 @@
 .pondwater{
   position:fixed; inset:0; z-index:1; pointer-events:none;
   contain:strict; overflow:hidden;
+}
+
+/* static depth: sky-light at the top, warm quiet at the bottom. Painted
+   once by the compositor (no animation), so it costs nothing per frame and
+   holds still under reduced-motion. This is the volume the canvas grade
+   echoes - together they stop the water reading as one flat cream value. */
+.pondwater::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(255,251,240,.16) 0%, rgba(255,251,240,0) 30%, rgba(217,164,65,.10) 100%);
 }
 .pondwater .pw-caustic{
   position:absolute; inset:-340px;
@@ -187,7 +155,7 @@
 @keyframes pwdrift2{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(-320px,-240px,0);} }
 @keyframes pwsheen{ from{ opacity:.55;} to{ opacity:1;} }
 
-/* ── 7. TOUCH RIPPLES ───────────────────────────────────────────────────
+/* ── 6. TOUCH RIPPLES ───────────────────────────────────────────────────
    A ring opens where the water is touched and thins as it spreads, gone
    inside the 760ms arrival. Two strokes: a pale highlight and a faint
    terra edge, so it reads as a surface dent rather than a drawn circle.
@@ -204,7 +172,7 @@
   0%   { transform:scale(.35); opacity:.9; }
   100% { transform:scale(11); opacity:0; }
 }
-/* ── 8. FOLK ART CANVAS ──────────────────────────────────────────────────
+/* ── 7. FOLK ART CANVAS ──────────────────────────────────────────────────
    Warli figures, diya lamps and lotus blooms drawn by pond.js on one canvas,
    fixed behind the water surface, pointer-events:none, so it never takes a
    click. Under reduced-motion it draws one static frame (see pond.js). */
@@ -216,17 +184,16 @@
   #pond-canvas{display:block}
 }
 
-/* ── 9. SMALL SCREENS ───────────────────────────────────────────────────
+/* ── 8. SMALL SCREENS ───────────────────────────────────────────────────
    Fewer, smaller pieces: on a phone the same count reads as clutter and
    costs more compositing than it is worth. */
 @media (max-width:700px){
-  .pondfloat .pf{width:calc(var(--pf-size) * .72); height:calc(var(--pf-size) * .42)}
   .collage .cp{opacity:calc(var(--o,1) * .8)}
   .collage .cp3,.collage .cp4{display:none}
 }
 
-/* ── 10. PRINT ───────────────────────────────────────────────────────────
+/* ── 9. PRINT ───────────────────────────────────────────────────────────
    Paper collage on a printed page is just grey mud. */
 @media print{
-  .pondfloat,.collage,.pondreveal,.pondwater,.pondripple,#pond-canvas{display:none !important}
+  .collage,.pondreveal,.pondwater,.pondripple,#pond-canvas{display:none !important}
 }
