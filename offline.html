@@ -19,7 +19,8 @@
 <meta property="og:image:height" content="630">
 <link rel="manifest" href="manifest.webmanifest">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'self'">
-<link rel="stylesheet" href="assets/style.css?v=74">
+<link rel="stylesheet" href="assets/style.css?v=75">
+<link rel="stylesheet" href="assets/pond.css?v=75">
 <style>
   .offline-wrap {
     min-height: 100vh;
@@ -47,7 +48,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pond="offline">
 <div class="offline-wrap">
   <div class="offline-card">
     <h1>You're offline</h1>
@@ -55,5 +56,7 @@
     <p class="mt-2"><a href=".">Reload when you're back online</a></p>
   </div>
 </div>
+<script src="assets/fluid.js?v=75" defer></script>
+<script src="assets/pond.js?v=75" defer></script>
 </body>
 </html>

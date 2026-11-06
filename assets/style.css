@@ -346,7 +346,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;ba
   background:radial-gradient(120% 90% at 50% 45%,transparent 52%,rgba(43,38,32,.07) 100%)}
 /* v10: content sits on top via normal flow, NOT via a positive z-index that
    would bury the ambient canvas. .bgfx/.vignette stay at negative depth. */
-body>*:not(.bgfx):not(.vignette):not(.mobilebar):not(.mail-float):not(.pondfloat):not(.collage):not(.pondreveal){position:relative;z-index:auto}
+body>*:not(.bgfx):not(.vignette):not(.mobilebar):not(.mail-float):not(.pondfloat):not(.collage):not(.pondreveal):not(.pondwater):not(#pond-canvas){position:relative;z-index:auto}
 /* v8: motion lives BEHIND everything, never beside it */
 /* v40: this bare duplicate used to re-flatten the ground. Removed - the
    single water wash further down is the only thing allowed to set it. */
