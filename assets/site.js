@@ -862,7 +862,7 @@ window.PRAJNA = window.PRAJNA || {};
       doc.addEventListener("visibilitychange", function(){ if(doc.hidden){ release(); } });
     });
 
-    /* ---- ripple (strict): max 4, minVisible 220ms, fade 320ms ----
+    /* ---- ripple (strict): max 4, minVisible 220ms, fade 380ms ----
        Mirror of useRipple. Keyboard press spawns centered ripple. */
     if(!reduced){
       var seq = 0, born = {};
@@ -899,8 +899,8 @@ window.PRAJNA = window.PRAJNA || {};
     }
 
     /* ---- loading-button (strict): idle/pending/success/error ----
-       Mirror of useAsyncAction: resetAfter 1400ms, guards re-entry,
-       spinner 850ms linear (reduced: static). Wired to lead forms
+       Mirror of useAsyncAction: resetAfter 1380ms, guards re-entry,
+       spinner 760ms linear (reduced: static). Wired to lead forms
        (state class only; site.js still owns send/finish). */
     each(doc.querySelectorAll("form[data-formtype]"), function(f){
       var sub = f.querySelector("button[type=submit]");
@@ -937,7 +937,7 @@ window.PRAJNA = window.PRAJNA || {};
       img.addEventListener("error", fail);
     });
 
-    /* ---- skeleton-swap: board skeleton with 120ms delay, 380ms min ----
+    /* ---- skeleton-swap: board skeleton with 140ms delay, 380ms min ----
        Fragment stays mounted; a shimmer shell shows while the board
        renders its first post (Pit board #board). */
     var board = doc.getElementById("board");
@@ -959,7 +959,7 @@ window.PRAJNA = window.PRAJNA || {};
       setTimeout(paintSkel, 120);
     }
 
-    /* ---- text-reveal (strict): word stagger on view, 600ms ----
+    /* ---- text-reveal (strict): word stagger on view, 760ms ----
        Mirror of useTextReveal: 10px rise + blur(8px), .06s stagger,
        once. Reduced-motion reveals instantly. Headings h2 only. */
     if(!reduced && "IntersectionObserver" in window){
@@ -982,9 +982,9 @@ window.PRAJNA = window.PRAJNA || {};
       each(doc.querySelectorAll("main h2"), function(h){ if(h.textContent.trim().length > 12){ tvObs.observe(h); } });
     }
 
-    /* ---- live-activity (strict): vacancy announcer linger 2000ms ----
+    /* ---- live-activity (strict): vacancy announcer linger 760ms ----
        Mirror of useLiveActivity: status text in an aria-live region,
-       dot pulses while announcing, peek 2600ms. */
+       dot pulses while announcing, peek 2760ms. */
     (function(){
       var region = doc.querySelector("[data-live-region]");
       if(!region){
@@ -1015,7 +1015,7 @@ window.PRAJNA = window.PRAJNA || {};
     })();
 
     /* ---- tooltip-group (strict): one open at a time ----
-       openDelay 200ms, closeDelay 120ms, skipDelay 400ms (registry).
+       openDelay 220ms, closeDelay 140ms, skipDelay 380ms (registry).
        Esc closes. aria-describedby points at the tip. */
     (function(){
       var openEl = null, openTimer = null, closeTimer = null, warmUntil = 0;
@@ -1092,7 +1092,7 @@ window.PRAJNA = window.PRAJNA || {};
       if(sessionStorage.getItem("ix-banner") === "dismissed"){ return; }
       var banner = doc.createElement("div");
       banner.className = "ix-banner"; banner.setAttribute("role", "status");
-      banner.innerHTML = '<span class="ix-banner-text"></span><button type="button" class="ix-banner-fold" aria-expanded="true" aria-label="Fold announcement">Fold</button><button type="button" class="ix-banner-close" aria-label="Dismiss announcement">Dismiss</button>';
+      banner.innerHTML = '<span class="ix-banner-text"></span> <a class="ix-banner-wait" href="mailto:srijna2b@gmail.com?subject=Join%20the%20waiting%20list%20at%20Prajna%20Co-hab">Join the waiting list</a><button type="button" class="ix-banner-fold" aria-expanded="true" aria-label="Fold announcement">Fold</button><button type="button" class="ix-banner-close" aria-label="Dismiss announcement">Dismiss</button>';
       banner.querySelector(".ix-banner-text").textContent = availability;
       var foldBtn = banner.querySelector(".ix-banner-fold");
       var state = "open";
@@ -1118,7 +1118,7 @@ window.PRAJNA = window.PRAJNA || {};
 
     /* ---- expanding-search (strict): collapsed 40px, expands on focus ----
        Mirror of useExpandingSearch (COLLAPSED 40, debounce announce
-       500ms). Host: Pit search (#pit-search). */
+       380ms). Host: Pit search (#pit-search). */
     (function(){
       var input = doc.getElementById("pit-search");
       if(!input){ return; }

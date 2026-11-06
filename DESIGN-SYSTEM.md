@@ -34,12 +34,7 @@ Six colours, one job each.
 | `--font-ui` | Alegreya Sans, system-ui | buttons, nav, labels, meta |
 | `--font-body` | `var(--font-ui)` | body text |
 
-**Scale (rem-based):**
-- `h1`: `clamp(1.95rem, 4.2vw, 2.75rem)`
-- `h2`: `clamp(1.35rem, 2.6vw, 1.8rem)`
-- `h3`: `1.2rem`
-- `body`: `clamp(.95rem, 1.7vw, 1.02rem)`
-- `lede`: `clamp(.96rem, 1.9vw, 1.08rem)`
+**Single type scale (master-picks):** `--fs-xs:.72rem --fs-sm:.8rem --fs-base:1rem --fs-lg:1.2rem --fs-xl:1.5rem --fs-2xl:2rem`. Headings: `h1 clamp(1.95rem,4.2vw,2.75rem)`, `h2 clamp(1.35rem,2.6vw,1.8rem)`, `h3 1.2rem`. Body `1rem` (inputs 16px).
 
 **Line height:** 1.66 for body, 1.18 for headings.
 
@@ -168,22 +163,9 @@ Panels are opaque paper, not glass. The header keeps a light blur because it gen
 
 ---
 
-## 10. Dark Mode
+## 10. Light Only (master-picks)
 
-Triggered by `prefers-color-scheme: dark`. All tokens remap; no new colours.
-
-| Light | Dark |
-|---|---|
-| `--paper: #faf5ec` | `--paper: #1a1714` |
-| `--panel: #fdfaf4` | `--panel: #211e19` |
-| `--ink: #2b2620` | `--ink: #e8e0d2` |
-| `--muted: #7a6f60` | `--muted: #b8ad9c` |
-| `--line: #e9e0d2` | `--line: #3a352c` |
-| `--water-top: #f4ecdc` | `--water-top: #1a1714` |
-| `--water-mid: #ede3cd` | `--water-mid: #15120f` |
-| `--water-deep: #e2d5b9` | `--water-deep: #110e0b` |
-
-Dark bands deepen to `rgba(26,23,20,.92)`. Text stays warm, never pure white.
+No dark remap. Single theme-color `#faf5ec` everywhere (HTML meta + manifest). Small text uses `--terra-dark`, body uses `--ink`. Water tokens are defined once in `:root` (`--water-top:#f4ecdc`, `--water-mid:#ede3cd`, `--water-deep:#e2d5b9`); no other file or block redefines them.
 
 ---
 
@@ -191,7 +173,7 @@ Dark bands deepen to `rgba(26,23,20,.92)`. Text stays warm, never pure white.
 
 | Width | Rule |
 |---|---|
-| `<= 860px` | Mobile nav (hamburger + slide-in drawer), footer padding for bottom bar |
+| `<= 1024px` | One header breakpoint: mobile nav (hamburger + slide-in drawer), footer padding for bottom bar |
 | `<= 760px` | Reduced motion optimisations, grain hidden |
 | `<= 640px` | Gallery goes single column, form controls lift, blur reduces |
 | `<= 520px` | Arch radii soften, daystrip goes 1 column |

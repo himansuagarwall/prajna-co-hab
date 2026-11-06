@@ -7,7 +7,6 @@
    New here, from design-repo-kit micro repos:
      microkit   magnetic-fill-button  -> hero/pagehead/cta primary CTA
      uniqueui   border-beam           -> featured .costcard (index/rooms)
-     uniqueui   aurora-glow-button    -> hero/pagehead primary CTA halo
      Amicro     SpotlightCard         -> .card spotlight (--mx/--my)
      react-bits Spotlight/TiltedCard  -> same spotlight + focus parity
      uselayouts animated-tabs         -> sliding pill on .gallery-filters
@@ -89,14 +88,8 @@
     pill(g, '[role="tab"]', function (t) { return t.getAttribute("aria-selected") === "true"; });
   });
 
-  /* 4. ui aurora-glow-button: rotating conic halo on the first
-     primary CTA in the hero/pagehead. Terra/ochre only. */
-  var heroBtn = doc.querySelector(".hero .btn:not(.ghost), .pagehead .btn:not(.ghost), .cta-strip .btn:not(.ghost), .cta-row .btn:not(.ghost), main .btn:not(.ghost)");
-  if (heroBtn) heroBtn.classList.add("micro-aurora");
+  /* master-picks: rotating halos removed; press/ripple/blur kept */
 
-  /* 5. uniqueui border-beam: slow light beam travels the featured
-     price card border. Hosts: .costcard on index and rooms. */
-  doc.querySelectorAll(".costcard").forEach(function (el) { el.classList.add("micro-beam"); });
 
   /* 6. react-ui-interactions card hover lift: keyboard-focus parity
      so focus-visible gets the same lift as hover. */
