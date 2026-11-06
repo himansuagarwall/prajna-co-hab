@@ -16,7 +16,9 @@
    Position is set as a percentage of the layer and nudged with a transform.
    Animating only transform/opacity keeps every floater on its own compositor
    layer, so the whole set costs the GPU almost nothing. */
-.pondfloat{
+.pondfloat{display:none!important}
+/* legacy floater layer removed in pond master; canvas carries folk */
+.pondfloat-legacy{
   position:fixed; inset:0; z-index:2; pointer-events:none;
   contain:strict; overflow:hidden;
 }
@@ -158,7 +160,7 @@
 .pondwater .pw-caustic{
   position:absolute; inset:-340px;
   background-repeat:repeat;
-  filter:blur(14px);
+  filter:blur(18px);
   will-change:transform;
 }
 .pondwater .c1{
@@ -166,7 +168,7 @@
     repeating-radial-gradient(ellipse 90px 34px at 30% 40%, rgba(255,251,240,.14) 0 38%, transparent 62%),
     repeating-radial-gradient(ellipse 64px 26px at 72% 62%, rgba(255,251,240,.10) 0 40%, transparent 64%);
   background-size:240px 180px;
-  animation:pwdrift1 56s linear infinite;
+  animation:pwdrift1 72s linear infinite;
 }
 .pondwater .c2{
   background-image:
@@ -174,7 +176,7 @@
     repeating-radial-gradient(ellipse 70px 30px at 18% 78%, rgba(255,251,240,.08) 0 40%, transparent 64%);
   background-size:320px 240px;
   opacity:.8;
-  animation:pwdrift2 84s linear infinite;
+  animation:pwdrift2 108s linear infinite;
 }
 .pondwater .pw-sheen{
   position:absolute; inset:0;
@@ -201,6 +203,7 @@
 @keyframes pondripple{
   0%   { transform:scale(.35); opacity:.9; }
   100% { transform:scale(11); opacity:0; }
+}
 /* ── 8. FOLK ART CANVAS ──────────────────────────────────────────────────
    Warli figures, diya lamps and lotus blooms drawn by pond.js on one canvas,
    fixed behind the water surface, pointer-events:none, so it never takes a

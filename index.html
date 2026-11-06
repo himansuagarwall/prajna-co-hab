@@ -25,8 +25,9 @@
 <meta name="theme-color" content="#faf5ec">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/">
 <link rel="stylesheet" href="assets/style.css?v=75">
-<link rel="stylesheet" href="assets/pond.css?v=75">
+<link rel="stylesheet" href="assets/pond.css?v=76">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="">
+<link rel="stylesheet" href="assets/map.css?v=76">
 <style>.roughdiv{height:14px;margin:1.2rem auto 0;max-width:280px}.roughdiv canvas{width:100%;height:14px;display:block}
 #map{height:260px;border-radius:14px;z-index:0}.mapbox iframe[hidden]{display:none}</style>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -227,19 +228,7 @@
 <div class="mobilebar"><a href="mailto:srijna2b@gmail.com?subject=Prajna%20Co-hab%20enquiry" data-mailsubject="Prajna Co-hab enquiry" class="mail-link">Email</a></div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin=""></script>
-<script>
-(function(){
-  var el=document.getElementById('map');
-  function fallback(){ if(el) el.remove(); }
-  if(typeof L==='undefined'){ fallback(); return; }
-  try{
-    var m=L.map('map',{scrollWheelZoom:false}).setView([18.6305,73.8826],15);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors', maxZoom:19}).addTo(m);
-    L.marker([18.6305,73.8826],{icon:L.divIcon({className:"",html:"<span style=\"display:block;width:18px;height:18px;border-radius:50% 50% 50% 0;background:var(--terra);transform:rotate(-45deg);border:2px solid #fff\"></span>",iconSize:[18,18]})}).addTo(m).bindPopup('<b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate, 411026').openPopup();
-    m.on('focus',function(){m.scrollWheelZoom.enable();}); m.on('blur',function(){m.scrollWheelZoom.disable();});
-  }catch(e){ fallback(); }
-})();
-</script>
+<script src="assets/map.js?v=76" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" integrity="sha384-R18XzqnxvVLEF+BYfhpmDx30v7eP83fAckyfoRzK7/Uf6nGqufcmsk0eAKo7S3RU" crossorigin=""></script>
 <script>
 /* Lenis smooth scroll, skipped for reduced motion or if CDN fails. */
@@ -275,6 +264,6 @@ try{
 </script>
 <script src="config.js?v=75"></script><script src="assets/site.js?v=75"></script><script src="assets/micro.js?v=75" defer></script>
 <!-- master-picks: one pond water layer (.pondwater) + folk; fluid canvas removed -->
-<script src="assets/pond.js?v=75" defer></script>
+<script src="assets/pond.js?v=76" defer></script>
 </body>
 </html>
