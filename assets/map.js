@@ -1,5 +1,8 @@
-/* Map master: Leaflet styled to DESIGN-SYSTEM, lotus marker,
-   popover with address + Enquire, static fallback frame if CDN/tiles fail. */
+/* Map master: Leaflet label-pane pattern (sample-websites #9). Two CARTO
+   layers: light_nolabels under, light_only_labels in a custom pane at
+   zIndex 650 with pointer-events none, so labels float above the quiet
+   basemap and never block the marker. Warm CSS filter keeps the parchment
+   ground. Static fallback frame if CDN/tiles fail. */
 (function(){
   "use strict";
   var el = document.getElementById("map");
@@ -32,10 +35,17 @@
   if (typeof L === "undefined") return;
   try {
     var m = L.map("map", { scrollWheelZoom:false, attributionControl:true }).setView([18.6305,73.8826], 15);
-    var tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      { attribution:"&copy; OpenStreetMap contributors", maxZoom:19 }).addTo(m);
+    var base = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+      { attribution:"&copy; OpenStreetMap contributors &copy; CARTO", subdomains:"abcd", maxZoom:19 }).addTo(m);
+    m.createPane("labels");
+    m.getPane("labels").style.zIndex = 650;
+    m.getPane("labels").style.pointerEvents = "none";
+    var labels = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png",
+      { attribution:"&copy; OpenStreetMap contributors &copy; CARTO", subdomains:"abcd", maxZoom:19, pane:"labels" }).addTo(m);
     var failed = 0;
-    tiles.on("tileerror", function(){ failed++; if (failed > 4) { m.removeLayer(tiles); } });
+    function onFail(){ failed++; if (failed > 4) { try{ m.removeLayer(base); }catch(e){} try{ m.removeLayer(labels); }catch(e){} } }
+    base.on("tileerror", onFail);
+    labels.on("tileerror", onFail);
     var icon = L.divIcon({ className:"", html:'<span class="lotus-pin">' + LOTUS + "</span>",
       iconSize:[44,44], iconAnchor:[22,44], popupAnchor:[0,-40] });
     L.marker([18.6305,73.8826], { icon:icon, title:"Prajna Co-hab" }).addTo(m)

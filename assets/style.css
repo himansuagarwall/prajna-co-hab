@@ -1996,3 +1996,28 @@ html.ix-ready img.img-error{filter:none;opacity:1;background:var(--water-mid)}
 .pform input,.pform select,.pform textarea,.pit-form input,.pit-form select,.pit-form textarea{font-size:16px}
 .card,.teasercard,.costcard{background:var(--panel);backdrop-filter:none;-webkit-backdrop-filter:none}
 :root{--fs-xs:.72rem;--fs-sm:.8rem;--fs-base:1rem;--fs-lg:1.2rem;--fs-xl:1.5rem;--fs-2xl:2rem}
+
+/* sample-patterns: double-line guide + motif (Madhubani border as structure),
+   Colive named promise, Zolo NIL transparency, pond band in Warli geometry.
+   Palette stays inside DESIGN-SYSTEM six colours. */
+.shead{position:relative;padding-top:.9rem}
+.shead::before{content:"";display:block;height:4px;border-top:1.5px solid var(--ink-deep);border-bottom:1px solid var(--ochre);margin-bottom:1rem;position:relative}
+.shead::after{content:"";position:absolute;left:50%;top:.9rem;width:34px;height:22px;transform:translateX(-50%);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22' fill='none' stroke='%23c05621' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 19C14 13 14 6 17 2c3 4 3 11 0 17Z'/%3E%3Cpath d='M17 19C12 15 7 11 4 6c5 3 10 8 13 13Z'/%3E%3Cpath d='M17 19c5-4 10-8 13-13-5 3-10 8-13 13Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.promise{margin-top:1.2rem}
+.promise h3{font-size:1rem}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.9rem}
+.pillars div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:.85rem 1rem}
+.pillars b{display:block;font-family:var(--font-ui);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.25rem}
+.pillars span{font-size:.9rem;color:var(--ink)}
+.nil-rows{margin-top:.8rem;border-top:1px solid var(--line)}
+.nil-rows div{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.nil-rows b{font-family:var(--font-ui);color:var(--terra-dark);white-space:nowrap}
+.pondband{position:relative;overflow:hidden;border-radius:14px;padding:2.2rem 1.8rem;color:var(--paper);background:linear-gradient(180deg,#2b2620 0%,#3a322a 46%,#2b2620 100%)}
+.pondband::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background:radial-gradient(40% 46% at 78% 68%,transparent 62%,rgba(245,239,230,.12) 63%,transparent 64%),radial-gradient(30% 34% at 78% 68%,transparent 62%,rgba(245,239,230,.10) 63%,transparent 64%)}
+.pondband::after{content:"";position:absolute;right:-10px;bottom:-14px;width:190px;height:120px;pointer-events:none;opacity:.28;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23d9a441' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.pondband h2{color:var(--paper);max-width:26rem}
+.pondband p{color:var(--ink-soft);max-width:34rem}
+.warli-strip{height:18px;margin:0 auto 1rem;max-width:520px;opacity:.9;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 18' fill='none' stroke='%237a5a1c' stroke-width='1.2' stroke-linecap='round'%3E%3Cpath d='M6 14v-6l6-4 6 4v6'/%3E%3Cpath d='M30 14V8l6-4 6 4v6'/%3E%3Ccircle cx='70' cy='9' r='3.4'/%3E%3Cpath d='M90 14v-6l6-4 6 4v6'/%3E%3Cpath d='M118 14V6h14'/%3E%3Ccircle cx='160' cy='9' r='3.4'/%3E%3Cpath d='M180 14v-6l6-4 6 4v6'/%3E%3Cpath d='M212 14V8l6-4 6 4v6'/%3E%3C/svg%3E") center/240px 18px repeat-x}
+@media(max-width:700px){.pillars{grid-template-columns:1fr 1fr}.pondband{padding:1.6rem 1.2rem}}
+@media(max-width:400px){.pillars{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.pondband::before,.pondband::after{animation:none}}

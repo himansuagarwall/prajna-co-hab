@@ -1,9 +1,10 @@
-/* Prajna Co-hab - service worker (v75)
+/* Prajna Co-hab - service worker (v77)
    Caches the app shell for offline reading.
 
-   What changed in v75:
+   What changed in v77:
+   - sample-patterns: CARTO label-pane map, double-line guides, promise block.
    - system-wide pond: pond.css/js/fluid.js wired on all 14 pages, incl.
-     index, tour3d and offline. Cache renamed prajna-v75.
+     index, tour3d and offline. Cache renamed prajna-v77.
    - the 7.4MB tour video, the social covers and the poster images are no
      longer precached. A first visit used to download 7.77MB before the
      worker finished installing, on a phone, on mobile data. Shell is now
@@ -15,7 +16,7 @@
    - blog.html and testimonials.html are in the shell.
    - a navigation miss retries by pathname, so ?utm_source=... still works. */
 
-var V = 'prajna-v75';
+var V = 'prajna-v77';
 
 var SHELL = [
   './',
@@ -48,6 +49,8 @@ var SHELL = [
   './assets/favicon-16x16.png',
   './assets/favicon-32x32.png',
   './assets/favicon-48x48.png',
+  './assets/map.css?v=77',
+  './assets/map.js?v=77',
   './assets/lotus.svg',
   './assets/fonts/marcellus-latin.woff2',
   './assets/fonts/alegreya-sans-latin.woff2'
