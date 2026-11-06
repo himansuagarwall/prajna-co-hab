@@ -16,3 +16,9 @@
   .guide-card{flex:0 0 82%;min-width:0}
 }
 @media (prefers-reduced-motion:reduce){ .guides-rail{scroll-behavior:auto} }
+.post-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.6rem 0}
+.post-actions button,.post-actions a{font:inherit;font-size:.82rem;font-weight:700;border:1px solid rgba(58,50,42,.2);background:var(--panel,#faf5ec);color:var(--terra-dark);border-radius:999px;padding:.35rem .8rem;cursor:pointer;text-decoration:none}
+.post-actions button:hover,.post-actions a:hover{text-decoration:underline}
+.post-actions [aria-pressed="true"]{background:var(--terra,#c05a2e);color:#faf6f0;border-color:transparent}
+.read-progress{position:fixed;top:0;left:0;height:3px;background:var(--terra,#c05a2e);width:0;z-index:999;transition:width .14s linear}
+@media (prefers-reduced-motion:reduce){.read-progress{transition:none}}
