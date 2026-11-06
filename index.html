@@ -16,8 +16,9 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json" id="ldjson">
-{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Prajna Co-hab","url":"https://himansuagarwall.github.io/prajna-co-hab/","email":"srijna2b@gmail.com","image":"https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg","description":"Co-living house with twin-sharing and single rooms at Balaji Nagar, Bhosari. Common floor with kitchen, dining, living and TV.","address":{"@type":"PostalAddress","streetAddress":"Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate","addressLocality":"Pimpri-Chinchwad","addressRegion":"Maharashtra","postalCode":"411026","addressCountry":"IN"},"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Home-style food"},{"@type":"LocationFeatureSpecification","name":"CCTV-secured entry"},{"@type":"LocationFeatureSpecification","name":"Daily-cleaned common areas"},{"@type":"LocationFeatureSpecification","name":"Covered two-wheeler parking"},{"@type":"LocationFeatureSpecification","name":"Common floor: kitchen, dining, TV lounge"}]}
+{"@context": "https://schema.org", "@type": "LodgingBusiness", "name": "Prajna Co-hab", "url": "https://himansuagarwall.github.io/prajna-co-hab/", "email": "srijna2b@gmail.com", "image": "https://himansuagarwall.github.io/prajna-co-hab/assets/og-cover.jpg", "description": "Co-living house with twin-sharing and single rooms at Balaji Nagar, Bhosari. Common floor with kitchen, dining, living and TV.", "address": {"@type": "PostalAddress", "streetAddress": "Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate", "addressLocality": "Pimpri-Chinchwad", "addressRegion": "Maharashtra", "postalCode": "411026", "addressCountry": "IN"}, "geo": {"@type": "GeoCoordinates", "latitude": 18.6305, "longitude": 73.8826}, "priceRange": "INR 7200-12000", "makesOffer": [{"@type": "Offer", "name": "Twin sharing", "price": "7200", "priceCurrency": "INR", "unitText": "per month"}, {"@type": "Offer", "name": "Twin sharing with dinner", "price": "10000", "priceCurrency": "INR", "unitText": "per month"}, {"@type": "Offer", "name": "Single private", "price": "9200", "priceCurrency": "INR", "unitText": "per month"}, {"@type": "Offer", "name": "Single with dinner", "price": "12000", "priceCurrency": "INR", "unitText": "per month"}], "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": "Home-style food"}, {"@type": "LocationFeatureSpecification", "name": "CCTV-secured entry"}, {"@type": "LocationFeatureSpecification", "name": "Daily-cleaned common areas"}, {"@type": "LocationFeatureSpecification", "name": "Covered two-wheeler parking"}, {"@type": "LocationFeatureSpecification", "name": "Common floor: kitchen, dining, TV lounge"}]}
 </script>
+<link rel="preload" as="image" href="assets/g/hero-local.avif" type="image/avif" fetchpriority="high">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <meta name="color-scheme" content="light">
@@ -157,7 +158,6 @@
       </div>
       <div class="mapbox">
         <div id="map" role="img" aria-label="Map showing Prajna Co-hab in Balaji Nagar, Bhosari"></div>
-        <iframe hidden title="Prajna Co-hab location" width="600" height="260" loading="lazy" src="https://www.google.com/maps?q=Anandrao+Lande+Road,+Balaji+Nagar,+Bhosari+Industrial+Estate,+Pimpri-Chinchwad,+Maharashtra&output=embed"></iframe>
         <div class="addr"><b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar,<br>Bhosari Industrial Estate,<br>Pimpri-Chinchwad, Maharashtra 411026</div>
       </div>
     </div>
@@ -214,7 +214,7 @@
       </div>
       <div>
         <h3>More</h3>
-        <a href="blog.html">Blog</a><a href="testimonials.html">Testimonials</a>
+        <a href="blog.html">Blog</a>
       </div>
       <div>
         <h3>Reach us</h3>
@@ -229,13 +229,13 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin=""></script>
 <script>
 (function(){
-  var el=document.getElementById('map'), fb=document.querySelector('.mapbox iframe');
-  function fallback(){ if(el) el.remove(); if(fb) fb.hidden=false; }
+  var el=document.getElementById('map');
+  function fallback(){ if(el) el.remove(); }
   if(typeof L==='undefined'){ fallback(); return; }
   try{
     var m=L.map('map',{scrollWheelZoom:false}).setView([18.6305,73.8826],15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors', maxZoom:19}).addTo(m);
-    L.marker([18.6305,73.8826]).addTo(m).bindPopup('<b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate, 411026').openPopup();
+    L.marker([18.6305,73.8826],{icon:L.divIcon({className:"",html:"<span style=\"display:block;width:18px;height:18px;border-radius:50% 50% 50% 0;background:var(--terra);transform:rotate(-45deg);border:2px solid #fff\"></span>",iconSize:[18,18]})}).addTo(m).bindPopup('<b>Prajna Co-hab</b><br>Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate, 411026').openPopup();
     m.on('focus',function(){m.scrollWheelZoom.enable();}); m.on('blur',function(){m.scrollWheelZoom.disable();});
   }catch(e){ fallback(); }
 })();
@@ -274,7 +274,7 @@ try{
 }catch(e){/* CDN unavailable: dividers stay blank, page unaffected. */}
 </script>
 <script src="config.js?v=75"></script><script src="assets/site.js?v=75"></script><script src="assets/micro.js?v=75" defer></script>
-<script src="assets/fluid.js?v=75" defer></script>
+<!-- master-picks: one pond water layer (.pondwater) + folk; fluid canvas removed -->
 <script src="assets/pond.js?v=75" defer></script>
 </body>
 </html>
