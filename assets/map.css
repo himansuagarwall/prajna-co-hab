@@ -1,7 +1,9 @@
-/* Map master: Leaflet in DESIGN-SYSTEM water/terra, lotus marker,
-   popover address + Enquire, static fallback frame. */
+/* Map master: Leaflet label-pane (CARTO light_nolabels + labels pane z650),
+   lotus marker, popover address + Enquire, static fallback frame. */
 #map{height:320px;border-radius:14px;z-index:0;background:linear-gradient(180deg,var(--water-top),var(--water-mid) 55%,var(--water-deep));overflow:hidden}
 #map .leaflet-tile-pane{filter:sepia(.28) saturate(.82) hue-rotate(-6deg) contrast(.97) brightness(1.03)}
+#map .leaflet-labels-pane,.leaflet-pane.leaflet-labels-pane{pointer-events:none}
+#map .leaflet-labels-pane img{filter:sepia(.28) saturate(.82) hue-rotate(-6deg) contrast(.97) brightness(1.03)}
 #map .leaflet-container{background:var(--water-mid);font-family:var(--font-ui);font-size:.9rem}
 #map .leaflet-control-attribution{background:rgba(253,250,244,.85);color:var(--muted);font-size:.65rem;padding:1px 6px}
 #map .leaflet-control-attribution a{color:var(--terra-dark)}
