@@ -699,7 +699,7 @@ window.PRAJNA = window.PRAJNA || {};
     if(figs.length && doc.createElement("dialog").showModal){
       var dlg = doc.createElement("dialog");
       dlg.className = "room-lb"; dlg.setAttribute("aria-label","Room photo viewer");
-      dlg.innerHTML = '<img alt=""><figcaption></figcaption><div class="lb-bar"><button type="button" class="lb-prev">Previous</button><span class="lb-count" style="color:#fff;font-family:var(--font-ui);font-size:.8rem"></span><button type="button" class="lb-next">Next</button><button type="button" class="lb-close">Close</button></div>';
+      dlg.innerHTML = '<img alt=""><figcaption></figcaption><div class="lb-bar"><button type="button" class="lb-prev">Previous</button><span class="lb-count" style="color:var(--paper);font-family:var(--font-ui);font-size:.8rem"></span><button type="button" class="lb-next">Next</button><button type="button" class="lb-close">Close</button></div>';
       doc.body.appendChild(dlg);
       var lbImg = dlg.querySelector("img"), lbCap = dlg.querySelector("figcaption"), lbCount = dlg.querySelector(".lb-count");
       var lbIdx = 0, returnFocus = null;

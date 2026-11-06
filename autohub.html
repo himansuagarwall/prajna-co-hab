@@ -20,7 +20,7 @@
 <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#faf5ec">
 <meta name="geo.region" content="IN-MH">
-<meta name="geo.placename" content="Moshi, Pune">
+<meta name="geo.placename" content="Balaji Nagar, Bhosari, Pune 411026">
 <link rel="canonical" href="https://himansuagarwall.github.io/prajna-co-hab/autohub.html">
 <link rel="stylesheet" href="assets/style.css?v=75">
   <link rel="stylesheet" href="assets/pond.css?v=75">
@@ -492,7 +492,7 @@
     <div class="fcols">
       <div class="fbrand">
         <div class="fbrandname"><svg class="lotusmark" viewBox="0 0 120 80" aria-hidden="true"><defs><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a441"/><stop offset="1" stop-color="#c05621"/></linearGradient><linearGradient  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c05621"/><stop offset="1" stop-color="#9a4522"/></linearGradient></defs><g class="lp" stroke="#3a322a" stroke-width="1.4" stroke-linejoin="round"><path d="M60 50 C46 48 28 44 14 38 C26 50 46 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C74 48 92 44 106 38 C94 50 74 54 60 50 Z" fill="url(#lgB)"/><path d="M60 50 C50 42 38 30 32 14 C46 22 58 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C70 42 82 30 88 14 C74 22 62 36 60 50 Z" fill="url(#lgA)"/><path d="M60 50 C52 36 53 18 60 6 C67 18 68 36 60 50 Z" fill="url(#lgB)"/></g><path class="rip r1" d="M24 66 Q60 71 96 66" fill="none" stroke="#d9a441" stroke-width="1.6" stroke-linecap="round"/><path d="M18 66 Q60 72 102 66" fill="none" stroke="#7a6f60" stroke-width="2" stroke-linecap="round"/></svg> Prajna <span>Co-hab</span></div>
-        <p>Owner-run co-hab at Moshi, Pune.</p>
+        <p>Owner-run co-hab at Balaji Nagar, Bhosari, Pune.</p>
       </div>
       <div>
         <h3>Explore</h3>
@@ -511,7 +511,7 @@
         <a class="mail-link" href="mailto:srijna2b@gmail.com?subject=Email%20us" data-mailsubject="Email us">Email us</a><a href="contact.html">Contact &amp; visits</a><a href="feedback.html">Feedback</a>
       </div>
     </div>
-    <div class="fbottom"><span>Prajna Co-hab · Moshi, Pune</span><span>© <span id="yr"></span></span></div>
+    <div class="fbottom"><span>Prajna Co-hab · Balaji Nagar, Bhosari, Pune 411026</span><span>© <span id="yr"></span></span></div>
   </footer>
 </div>
 
@@ -587,7 +587,7 @@
   var result = document.getElementById("pit-result");
   function val(id){ var el = document.getElementById(id); return el ? (el.value || "").trim() : ""; }
   function buildMailto(){
-    var body = "Hi Pit team,\n\nI'm asking on The Pit (Prajna Co-hab, Moshi).\n\nCategory: " + val("pit-category") + "\nVehicle type: " + val("pit-vehicle") + "\nArea: " + val("pit-area") + "\nBudget range: " + val("pit-budget") + "\nDescription:\n" + val("pit-description") + "\n\nThanks.";
+    var body = "Hi Pit team,\n\nI'm asking on The Pit (Prajna Co-hab, Balaji Nagar, Bhosari).\n\nCategory: " + val("pit-category") + "\nVehicle type: " + val("pit-vehicle") + "\nArea: " + val("pit-area") + "\nBudget range: " + val("pit-budget") + "\nDescription:\n" + val("pit-description") + "\n\nThanks.";
     var subject = "The Pit question - " + (val("pit-category") || "General") + (val("pit-area") ? " - " + val("pit-area") : "");
     return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   }
@@ -608,7 +608,7 @@
   var join = document.getElementById("pit-join-form");
   var joinResult = document.getElementById("pit-join-result");
   function joinMailto(){
-    var body = "Hi Pit team,\n\nI am requesting an optional account for The Pit (Prajna Co-hab, Moshi). I know I can post without an account.\n\nName: " + val("pit-join-name") + "\nEmail I will post from: " + val("pit-join-email") + "\nArea: " + val("pit-join-area") + "\nVehicle: " + val("pit-join-vehicle") + "\nWhy I want an account:\n" + val("pit-join-intent") + "\n\nI understand posts are read before they appear, that there is no payment via this site, and that posting stays open without an account.\n\nThanks.";
+    var body = "Hi Pit team,\n\nI am requesting an optional account for The Pit (Prajna Co-hab, Balaji Nagar, Bhosari). I know I can post without an account.\n\nName: " + val("pit-join-name") + "\nEmail I will post from: " + val("pit-join-email") + "\nArea: " + val("pit-join-area") + "\nVehicle: " + val("pit-join-vehicle") + "\nWhy I want an account:\n" + val("pit-join-intent") + "\n\nI understand posts are read before they appear, that there is no payment via this site, and that posting stays open without an account.\n\nThanks.";
     var subject = "The Pit: optional account request: " + (val("pit-join-name") || "New member") + (val("pit-join-area") ? ", " + val("pit-join-area") : "");
     return "mailto:" + MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   }
