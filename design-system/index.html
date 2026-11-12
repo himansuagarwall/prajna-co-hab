@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prajna Co-hab — design system preview</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c05621'/><text x='16' y='22' font-family='Marcellus, serif' font-size='18' fill='#faf6f0' text-anchor='middle'>P</text></svg>">
+<style>
+:root{
+--paper:#faf6f0; --panel:#fdfaf4; --ink:#2b2620; --muted:#7a7166;
+--terra:#c05621; --terra-dark:#9a4522; --ochre:#d9a441; --line:#e8e0d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Marcellus","Helvetica Neue",Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:1.02rem;padding-bottom:4rem}
+h1,h2,h3,h4{font-family:"Marcellus","Helvetica Neue",Arial,sans-serif;font-weight:700}
+a{color:var(--ink);text-decoration:none}
+ul{list-style:none}
+img{max-width:100%;display:block}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(250,246,240,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 1.5rem}
+.brand{font-family:"Marcellus",serif;font-size:1.3rem;display:flex;align-items:center;gap:.5rem}
+.brand svg{width:28px;height:28px}
+.brand span{color:var(--terra)}
+.nav-links{display:flex;gap:.6rem}
+.nav-links a{padding:.45rem .8rem;border-radius:6px;font-size:.85rem;color:var(--muted);transition:.2s}
+.nav-links a:hover{color:var(--terra-dark);background:var(--panel)}
+.mobile-toggle{display:none;background:none;border:none;color:var(--ink);font-size:1.2rem;cursor:pointer}
+@media (max-width:900px){
+ .nav-links{display:none;position:fixed;top:.85rem;right:.85rem;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.5rem .8rem;width:calc(100% - 1.7rem);flex-direction:column;gap:.5rem;z-index:20}
+ .nav-links.open{display:flex}
+ .mobile-toggle{display:block}
+}
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center;padding:2.5rem 1.5rem;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:2rem}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:.8rem 0 1rem}
+.hero p{color:var(--muted);margin-bottom:1.2rem;max-width:36rem}
+.badge{display:inline-block;background:#f3e8d2;border:1px solid var(--ochre);color:#7a5a1c;font-family:"Verdana",Arial,sans-serif;font-size:.78rem;padding:.35rem .8rem;border-radius:99px;margin-bottom:.6rem}
+.cta{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.btn{background:var(--terra);color:#faf6f0;font-family:"Verdana",Arial,sans-serif;font-size:.88rem;padding:.8rem 1.4rem;border:none;border-radius:8px;cursor:pointer;font-weight:700}
+.btn:hover{background:var(--terra-dark)}
+.btn.ghost{background:transparent;color:var(--terra);border:1.5px solid var(--terra)}
+/* price block */
+.priceblock{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1.4rem;margin:1.5rem 0}
+.priceblock h3{font-size:1.05rem;color:var(--ink);margin-bottom:.3rem}
+.price card{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.price card:last-child{border-bottom:none}
+.price card .v{font-family:"Verdana",Arial,sans-serif;font-weight:700;color:var(--terra)}
+/* FAQ */
+.faq{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;margin-top:.8rem}
+.faq summary{font-family:"Verdana",Arial,sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;color:var(--ink)}
+.faq p{color:var(--muted);font-size:.9rem}
+/* components grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem;font-size:.88rem}
+.card h4{margin-bottom:.2rem}
+/* footer */
+footer{background:var(--ink);color:#c9bfae;padding:2rem 1.5rem;font-size:.82rem}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem}
+.footer-grid h5{font-family:"Verdana",Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#9a8a70;margin-bottom:.4rem}
+.footer-grid a{color:#c9bfae}
+/* voice samples */
+.voice-samples{display:grid;gap:1rem}
+.voice-samples blockquote{font-style:italic;color:var(--muted);font-size:.9rem;font-family:"Verdana",Arial,sans-serif}
+/* palette swatch strip */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.8rem;margin:1.5rem 0}
+.swatch{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:1rem}
+.swatch .hex{font-family:"Verdana",Arial,sans-serif;font-size:.75rem;letter-spacing:.06em;color:var(--muted)}
+.swatch h4{font-family:"Marcellus",serif;font-size:.9rem}
+.swatch.sw-terra{background:#c05621;color:#faf6f0}
+.swatch.sw-terra-dark{background:#9a4522;color:#faf6f0}
+.swatch.sw-ochre{background:#d9a441;color:#faf6f0}
+.swatch.sw-muted{background:var(--muted);color:#faf6f0}
+.swatch.sw-paper{background:var(--paper)}
+.swatch.sw-ink{background:var(--ink);color:#faf6f0}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="#">Prajna <span>Co-hab</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="#hero">Home</a><a href="#rooms">Rooms</a><a href="#faq">FAQ</a><a href="#components">Parts</a>
+    </nav>
+    <button class="mobile-toggle" aria-label="Open menu" onclick="document.getElementById('nav-links').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div>
+    <span class="badge">10 beds · 4 twin · 2 private</span>
+    <h1>A room minutes from your shift. Ten beds. One house.</h1>
+    <p>Co-living for shift workers on the Bhosari–Chakan corridor. Writings first, life follows.</p>
+    <div class="cta">
+      <a class="btn" href="mailto:srijna2b@gmail.com?subject=Book%20a%20visit">Email us today</a>
+      <a class="btn ghost" href="#rooms">Rooms &amp; prices</a>
+    </div>
+  </div>
+  <div style="background:linear-gradient(135deg,#efe7da,#e3d5c2);border-radius:12px;padding:6rem 1.5rem;text-align:center;color:var(--muted)">
+    <p style="font-style:italic">“Ten beds. Four twin-sharing, two private. One house.”</p>
+  </div>
+</section>
+
+<section class="priceblock" id="rooms">
+  <h3>Rooms &amp; rates</h3>
+  <div class="card"><div>Twin-sharing</div><div class="v">7,200/month · dinner 10,000</div></div>
+  <div class="card"><div>Single</div><div class="v">9,200/month · dinner 12,000</div></div>
+  <div class="card"><div>Deposits</div><div class="v">Twin 12,000 · Single 14,000</div></div>
+  <div style="margin-top:1rem"><a class="btn ghost" style="color:var(--terra);border-color:var(--terra)" href="mailto:srijna2b@gmail.com?subject=Ask%20about%20a%20room">Ask about a room</a></div>
+</section>
+
+<section class="faq" id="faq">
+  <span class="badge" style="margin-left:-1rem;margin-top:-1rem">Good to know</span>
+  <h3 style="margin-top:.8rem">Straight answers.</h3>
+  <details><summary>What does rent actually include?</summary><p>Your room, common-floor access, WiFi, CCTV entry, housekeeping of shared areas, covered two-wheeler parking. Dinner is optional, not a row of the bed.</p></details>
+  <details><summary>How do I visit?</summary><p>Write us on email. We reply in a day. No phone published on purpose — we want to talk to you directly.</p></details>
+  <details><summary>Where is it?</summary><p>Anandrao Lande Road, Balaji Nagar, Bhosari Industrial Estate, Pimpri-Chinchwad 411026.</p></details>
+</section>
+
+<section style="margin:2rem 0">
+  <span class="badge">Parts</span>
+  <h2>Design vocabulary</h2>
+  <div class="grid" id="components">
+    <div class="card"><h4>Button</h4><p style="color:var(--muted)">Filled terra, ghost terra-pill, small step. On paper, never on terracotta.</p></div>
+    <div class="card"><h4>Price card</h4><p style="color:var(--muted)">Simple. Price in terra-dark, in Verdana. One job per card.</p></div>
+    <div class="card"><h4>Folk-line</h4><p style="color:var(--muted)">Repeating gradient. Section dividers, tags, small rules.</p></div>
+    <div class="card"><h4>Badge</h4><p style="color:var(--muted)">Ochre pill, uppercase, small. "Good to know", "10 beds".</p></div>
+    <div class="card"><h4>Price rows</h4><p style="color:var(--muted)">Plainer packing. One price per line. Compares well.</p></div>
+    <div class="card"><h4>Form</h4><p style="color:var(--muted)">Mailto-first. Honeypot. Short, warm, honest.</p></div>
+  </div>
+</section>
+
+<section class="voice-samples">
+  <span class="badge">Voice</span>
+  <h2>Living voice, not brochure</h2>
+  <div style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.4rem">
+    <blockquote>“We sleep, they work.”</blockquote>
+    <blockquote>“Rooms fill fast in March and June.”</blockquote>
+    <blockquote>“Ten beds for ten strangers who'll mostly be strangers — we'll fix that.”</blockquote>
+  </div>
+</section>
+
+<section class="swatches" style="margin-top:2rem">
+  <div class="swatch sw-paper"><h4 style="color:var(--ink)">Paper</h4><p class="hex">#faf6f0</p></div>
+  <div class="swatch sw-ink"><h4 style="color:#faf6f0">Ink</h4><p class="hex">#2b2620</p></div>
+  <div class="swatch sw-terra"><h4 style="color:#faf6f0">Terra</h4><p class="hex">#c05621</p></div>
+  <div class="swatch sw-terra-dark"><h4 style="color:#faf6f0">Terra-dark</h4><p class="hex">#9a4522</p></div>
+  <div class="swatch sw-ochre"><h4 style="color:#faf6f0">Ochre</h4><p class="hex">#d9a441</p></div>
+  <div class="swatch sw-muted"><h4 style="color:#faf6f0">Muted</h4><p class="hex">#7a7166</p></div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><h5>About</h5><p>Owner-run, no broker. Move in with one page of paper.</p></div>
+    <div><h5>Contact</h5><p>srijna2b@gmail.com</p><p>WhatsApp/we<br>Email only</p></div>
+    <div><h5>Site</h5><a href="#hero">Home</a><a href="#rooms">Rooms</a><a href="#faq">FAQ</a></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# deploy-info.txt — Prajna Co-hab: wire 3 layers, push live
+
+## 1. Objective
+Wire GEO/AEO + human-voice + design-system into the repo. Commit and push main live.
+
+## 3. Options
+1. Wire packages onto dig-prajna-website and push the feature branch.
+2. Wire packages into main and push main (chosen).
+3. Full site rebuild on the new design system.
+
+## 1. Pick
+Option 2: wire into main. Deploy main only (1-3-1 rule).
+
+## 4. Deliverables on main
+seo/ (schema-audit.md, content-protocol.md, image-alt-report.md, schema-target.html)
+content/ (voice-and-tone.md, site-copy.md, blog-guidance.md, preview.html)
+design-system/ (design-system.md, index.html, palette.swatch.html, components.html)
+plus schema patches: about.html (AboutPage + Person), contact.html (ContactPoint), tour3d.html (VirtualLocation).
+config.js unchanged. Email-only contact. No phone published. No fake reviews.

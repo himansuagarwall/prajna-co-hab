@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prajna components — design system</title><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c05621'/><text x='16' y='22' font-family='Marcellus' font-size='18' fill='#faf6f0' text-anchor='middle'>P</text></svg>">
+<style>
+:root{--paper:#faf6f0;--panel:#fdfaf4;--ink:#2b2620;--terra:#c05621;--terra-dark:#9a4522;--ochre:#d9a441;--muted:#7a7166;--line:#e8e0d4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Marcellus","Helvetica Neue",Arial,sans-serif;background:var(--paper);color:var(--ink);padding:2rem}
+h1{font-family:"Marcellus",sans-serif;font-size:1.5rem;margin-bottom:.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.4rem}
+.card h4{margin-bottom:.2rem}
+.muted{color:var(--muted);font-size:.88rem}
+.price{display:inline-block;background:var(--terra);color:#faf6f0;font-family:"Verdana",Arial,sans-serif;font-weight:700;padding:.3rem .8rem;border-radius:6px;font-size:.85rem}
+.brand{font-family:"Marcellus",sans-serif;font-size:1.2rem;display:inline-block;color:var(--ink)}
+.brand span{color:var(--terra)}
+.tag{font-family:"Verdana",Arial,sans-serif;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem 1.2rem;margin-top:.7rem}
+.faq summary{font-family:"Verdana",Arial,sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;color:var(--ink)}
+.faq p{color:var(--muted);font-size:.88rem;margin-top:.5rem}
+form p{margin:.3rem 0}
+input,textarea{border:1px solid var(--line);border-radius:6px;padding:.6rem .8rem;font-family:"Verdana",Arial,sans-serif;font-size:.88rem;background:#fff}
+button{background:var(--terra);color:#faf6f0;font-family:"Verdana",Arial,sans-serif;font-size:.85rem;padding:.7rem 1.2rem;border:none;border-radius:6px;cursor:pointer}
+button.ghost{background:transparent;color:var(--terra);border:1.5px solid var(--terra)}
+</style></head>
+<body>
+<h1>Prajna components</h1>
+<div class="grid">
+  <div class="card"><h4>Brand</h4><p class="muted"><span class="brand">Prajna <span>Co-hab</span></span> — lotus mark + terracotta accent.</p></div>
+  <div class="card"><h4>Tag</h4><p class="muted"><span class="tag">Co-living · Bhosari</span></p></div>
+  <div class="card"><h4>Price block</h4><p class="muted"><span class="price">7,200/month</span> dinner 10,000</p></div>
+  <div class="card"><h4>Button — filled</h4><button style="float:left;margin-right:1rem">Ask about a room</button><p class="muted" style="clear:left">on paper, never on terracotta</p></div>
+  <div class="card"><h4>Button — ghost</h4><button class="ghost" style="float:left;margin-right:1rem">See rooms</button><p class="muted" style="clear:left">outlined terracotta</p></div>
+  <div class="card"><h4>FAQ</h4><details open><summary>What does rent include?</summary><p>Your room, common-floor access, WiFi, CCTV, housekeeping. Dinner is optional.</p></details></div>
+  <div class="card"><h4>Form</h4><form style="margin-top:.6rem"><input placeholder="Your name" style="width:100%"><input placeholder="Email" style="margin-top:.4rem"><textarea></textarea><button style="width:100%">Send</button></form></div>
+</div>
+</body></html>

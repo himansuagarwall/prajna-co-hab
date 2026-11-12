@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prajna palette — design system</title><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c05621'/><text x='16' y='22' font-family='Marcellus' font-size='18' fill='#faf6f0' text-anchor='middle'>P</text></svg>">
+<style>
+:root{--paper:#faf6f0;--ink:#2b2620;--terra:#c05621;--terra-dark:#9a4522;--ochre:#d9a441;--muted:#7a7166;--line:#e8e0d4;--panel:#fdfaf4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Marcellus","Helvetica Neue",Arial,sans-serif;background:var(--paper);color:var(--ink);padding:2rem}
+h1{font-family:"Marcellus",sans-serif;font-size:1.5rem;margin-bottom:.4rem}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+.swatch{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:1.2rem}
+.swatch .name{font-family:"Verdana",Arial,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.swatch .code{font-family:"Verdana",Arial,sans-serif;font-size:.85rem;font-weight:700;color:var(--ink)}
+.swatch .sample{font-size:.7rem;color:var(--muted);margin-top:.3rem}
+.sw-terra{background:var(--terra);color:#faf6f0}.sw-terra-dark{background:var(--terra-dark);color:#faf6f0}.sw-ochre{background:var(--ochre);color:#faf6f0}.sw-muted{background:var(--muted);color:#faf6f0}.sw-paper{background:var(--paper)}.sw-ink{background:var(--ink);color:#faf6f0}.sw-panel{background:var(--panel)}.sw-line{background:var(--line)}
+</style></head>
+<body>
+<h1>Prajna colour system</h1>
+<p class="muted" style="max-width:56rem">Warm paper + terracotta accent. Paper for the page, terracotta for the thing, ochre for the divider. Respect the role, keep the warmth.</p>
+<div class="grid">
+  <div class="swatch sw-paper"><div class="name">Paper</div><div class="code">#faf6f0</div><div class="sample">page background</div></div>
+  <div class="swatch sw-panel"><div class="name">Panel</div><div class="code">#fdfaf4</div><div class="sample">card / block</div></div>
+  <div class="swatch sw-ink"><div class="name">Ink</div><div class="code">#2b2620</div><div class="sample">body text</div></div>
+  <div class="swatch sw-muted"><div class="name">Muted</div><div class="code">#7a7166</div><div class="sample">labels, secondary</div></div>
+  <div class="swatch sw-terra"><div class="name">Terra</div><div class="code">#c05621</div><div class="sample">accent / button</div></div>
+  <div class="swatch sw-terra-dark"><div class="name">Terra-dark</div><div class="code">#9a4522</div><div class="sample">hover / strong</div></div>
+  <div class="swatch sw-ochre"><div class="name">Ochre</div><div class="code">#d9a441</div><div class="sample">rule / tag (decorative)</div></div>
+  <div class="swatch sw-line"><div class="name">Line</div><div class="code">#e8e0d4</div><div class="sample">border</div></div>
+</div>
+</body></html>
