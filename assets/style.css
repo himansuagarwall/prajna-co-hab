@@ -1,2023 +1,230 @@
 :root{
-  /* v42: one side-padding rhythm for every container. */
-  --pad-x:clamp(18px,4vw,28px);
-
-  /* v42: solid paper panels. No translucency, no glass on cards. */
-  --panel:#fdfaf4;
-  --panel-2:#fbf7ef;
-
-  /* ---- ONE palette, one job per colour. Nothing decorative may use terracotta,
-     nothing that acts or costs may use ochre. ---- */
-  --ink:#2b2620;          /* weight: headings, body, dark bands */
-  --ink-deep:#3a322a;     /* the dark bands, warm not black */
-  --paper:#faf5ec;        /* one paper. was five competing creams */
-  --card:var(--panel);
-  --line:#e9e0d2;
-  --terra:#c05621;        /* ACTION ONLY: buttons, prices, links, call bars */
-  --terra-dark:#9a4522;
-  --ochre:#d9a441;        /* ORNAMENT ONLY: lotus, rules, dots, trim. never text */
-  --muted:#7a6f60;        /* one secondary text grey */
-  --sh:0 14px 34px rgba(58,50,42,.10);
-  --ease:cubic-bezier(.22,.61,.36,1);
-  --r-sm:8px;
-  --paper-deep:#f2ead9;   /* only for the base of the vertical wash */
-  /* v40 water column: three steps DOWN from paper so the additive caustics
-     have contrast to read against. Still warm cream, not grey - the water is
-     a tint of the same earth, and every tone derives from --paper. */
-  --water-top:#f4ecdc;    /* at the surface */
-  --water-mid:#ede3cd;    /* mid column */
-  --water-deep:#e2d5b9;   /* toward the bed */
-  --ochre-soft:#f6ead0;   /* ochre at whisper strength, for tag fills */
-  --ochre-ink:#7a5a1c;    /* readable text on --ochre-soft */
-  --ink-soft:#cdc4b6;     /* text inside the dark bands */
+  --paper:#faf6f0;--panel:#fdfaf4;--ink:#2b2620;--muted:#7a7166;
+  --terra:#c05621;--terra-dark:#9a4522;--ochre:#d9a441;--line:#e8e0d4;
+  --sh:0 10px 24px rgba(58,50,42,.10);--ease:cubic-bezier(.22,.61,.36,1);
+  --r-sm:8px;--r-md:12px;--r-pill:999px;
+  --font-head:'Marcellus',serif;
+  --font-ui:'Alegreya Sans',ui-sans-serif,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --font-body:'Verdana','Arial',sans-serif;
+  --sp-sm:16px;--sp-md:24px;--sp-lg:32px;--sp-xl:48px;
 }
+@font-face{font-family:'Marcellus';src:url('fonts/marcellus-latin.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Alegreya Sans';src:url('fonts/alegreya-sans-latin.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:transparent;color:var(--ink);line-height:1.68;font-size:1.02rem;padding-bottom:64px;animation:bodyin 760ms ease both}
-@keyframes bodyin{from{opacity:0}to{opacity:1}}
-.wrap{max-width:1020px;margin:0 auto;padding:0 var(--pad-x)}
-h1,h2,h3,h4{font-weight:700;letter-spacing:-.012em;line-height:1.18}
-h1{font-size:clamp(1.95rem,4.2vw,2.75rem)}
-h2{font-size:clamp(1.35rem,2.6vw,1.8rem)}
-h3{font-size:1.08rem}
+body{font-family:var(--font-body);line-height:1.66;font-size:1rem;color:var(--ink);padding-bottom:56px}
+.wrap{max-width:1020px;margin:0 auto;padding:0 clamp(18px,4vw,28px)}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:400;line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,4.6vw,3rem);margin:.5rem 0 .85rem}
+h2{font-size:clamp(1.5rem,2.9vw,2rem);margin:.5rem 0 .7rem}
+h3{font-size:1.15rem}
 p{color:var(--ink)}
 a{color:var(--terra-dark)}
-.lede{font-size:1.05rem;max-width:40rem}
+.lede{font-size:1.08rem;max-width:42rem}
 img{max-width:100%}
-.tag{font-family:var(--font-ui);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-dark)}
-/* v38: ochre as text was 2.07:1. Ornament colour, never text. */
-.tag.gold{color:var(--ochre-ink)}
-/* reveal system */
-/* folk trim: dashes + dots, opens like a doorway */
-.folkline{height:6px;transform-origin:left;background:
-  radial-gradient(circle at 10px 3.5px, var(--paper) 1.6px, transparent 2px) 0 0/28px 7px,
-  repeating-linear-gradient(90deg,var(--terra) 0 12px,var(--ochre) 12px 20px,var(--terra-dark) 20px 30px);opacity:.9;animation:folkopen 760ms var(--ease) both}
-@keyframes folkopen{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-/* sticky header */
-header{position:sticky;top:0;z-index:40;background:rgba(250,246,240,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:.85rem 0 .6rem;transition:box-shadow 380ms ease}
-header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.08);border-bottom:1px solid var(--line)}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:nowrap}
-.brand{font-size:1.28rem;font-weight:700;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.55rem}
+::selection{background:var(--terra);color:var(--paper)}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:var(--r-xs)}
+
+/* header + nav */
+header{position:sticky;top:0;z-index:50;background:rgba(250,246,238,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.8rem 0 .55rem}
+header.scrolled{box-shadow:0 8px 24px rgba(43,38,32,.09);border-bottom:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.brand{font-size:1.28rem;font-weight:400;font-family:var(--font-head);text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.5rem;min-height:44px}
 .brand span{color:var(--terra-dark)}
 .fmark{width:30px;height:19px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat}
 .navlinks{display:flex;gap:.4rem;flex-wrap:nowrap}
-.navlinks a{font-family:var(--font-ui);font-size:.74rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:6px;position:relative;transition:color 220ms ease,background 220ms ease}
+.navlinks a{font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:6px;position:relative;transition:color 220ms ease,background 220ms ease}
 .navlinks a::after{content:"";position:absolute;left:.6rem;right:.6rem;bottom:.18rem;height:2px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform 220ms var(--ease)}
 .navlinks a:hover{color:var(--terra-dark);background:var(--ochre-soft)}
 .navlinks a:hover::after,.navlinks a.on::after{transform:scaleX(1)}
 .navlinks a.on{color:var(--terra-dark)}
-@media(max-width:1024px){ /* master-picks: one header breakpoint 1024 */
-  .navlinks{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.2rem;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .navlinks::-webkit-scrollbar{display:none}
-  .navlinks a{white-space:nowrap}
-}
-/* buttons: folk stitch */
-.textlink{display:inline-block;color:var(--terra-dark);font-family:var(--font-ui);font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
-.btn{display:inline-block;background:var(--terra);color:var(--paper);text-decoration:none;padding:.78rem 1.55rem;border-radius:6px;font-family:var(--font-ui);font-size:.85rem;border:none;cursor:pointer;transition:transform 140ms var(--ease),background-color 220ms ease,box-shadow 220ms ease;
-  background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px;
-  box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28), inset 0 0 0 4px var(--terra)}
-.btn:hover{background-color:var(--terra-dark);transform:translateY(-1px);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.36), inset 0 0 0 4px var(--terra-dark), 0 8px 18px rgba(154,69,34,.22)}
+@media(max-width:1024px){.navlinks{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.2rem;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ .navlinks::-webkit-scrollbar{display:none}
+ .navlinks a{white-space:nowrap}}
+
+/* buttons */
+.textlink{color:var(--terra-dark);font-family:var(--font-ui);font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
+.btn{display:inline-block;background:var(--terra);color:var(--paper);border:1.5px solid var(--paper);border-radius:var(--r-sm);font-family:var(--font-ui);font-size:.85rem;cursor:pointer;min-height:46px;padding:.78rem 1.55rem;transition:background-color 220ms ease,transform 140ms var(--ease),box-shadow 220ms ease}
+.btn:hover{background-color:var(--terra-dark);transform:translateY(-1px)}
 .btn:active{transform:translateY(0) scale(.98)}
-.btn.ghost{background-color:transparent;color:var(--terra-dark);border:1.5px dashed var(--ochre);box-shadow:none;
-  background-image:radial-gradient(rgba(192,90,46,.07) 1px, transparent 1.3px);background-size:7px 7px}
-.btn.ghost:hover{background-color:var(--ochre-soft);box-shadow:0 8px 18px rgba(217,164,65,.2)}
-.btn.sm{padding:.5rem 1rem;font-size:.78rem}
-/* hero */
-.hero{padding:3.4rem 0 2.6rem;display:grid;grid-template-columns:1.15fr .85fr;gap:2.8rem;align-items:center;position:relative}
-.hero h1{margin:.6rem 0 .9rem}
+.btn.ghost{background-color:transparent;color:var(--terra-dark);border:1.5px dashed var(--ochre)}
+.btn.ghost:hover{background-color:var(--ochre-soft);transform:translateY(-1px)}
+.btn.sm{padding:.5rem 1rem;font-size:.78rem;border-radius:var(--r-xs)}
+
+/* hero + pagehead */
+.hero{padding:3.2rem 0 2.6rem;display:grid;grid-template-columns:1.15fr .9fr;gap:2.6rem;align-items:center}
+.hero .eyebrow{font-family:var(--font-ui);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.7rem}
+.hero h1{margin:.5rem 0 .8rem}
+.hero .lede{font-size:1.08rem;max-width:42rem}
 .hero .cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
-.badge{display:inline-block;background:var(--ochre-soft);border:1px solid var(--ochre);color:var(--ochre-ink);font-family:var(--font-ui);font-size:.72rem;padding:.3rem .8rem;border-radius:99px;margin-bottom:.7rem}
-.hero-lotus{position:absolute;right:2%;bottom:6px;width:150px;height:88px;pointer-events:none;opacity:.08;animation:float 9s ease-in-out infinite alternate;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.hero-lotus{position:absolute;right:2%;bottom:4px;width:140px;height:80px;pointer-events:none;opacity:.07;animation:float 9s ease-in-out infinite alternate}
 @keyframes float{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(-14px) rotate(2deg)}}
-@media(max-width:720px){.hero{grid-template-columns:1fr;gap:1.6rem}}
-/* load-in for hero children */
-.fadeup{animation:fadeUp 760ms var(--ease) both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-/* pagehead */
-.pagehead{padding:3rem 0 2rem;position:relative}
-.pagehead h1{margin:.55rem 0 .8rem}
-.pagehead p{max-width:40rem}
-.pagehead::after{content:"";position:absolute;right:-20px;top:0;width:210px;height:125px;pointer-events:none;animation:float 10s ease-in-out infinite alternate;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23c05a2e' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.08}
-@media(max-width:720px){.pagehead::after{opacity:.05;width:140px;height:84px;right:-14px}}
-.shead{max-width:38rem;margin-bottom:1.5rem}
-.shead h2{margin:.5rem 0 .55rem}
-section{padding:3rem 0;border-top:1px solid var(--line);position:relative}
-section.flat{border-top:none;padding-top:1.6rem}
-/* mandana ornament on section borders */
-section::before{content:"";position:absolute;left:0;right:0;top:-6px;height:10px;
-  background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 10' fill='%23d9a441'%3E%3Ccircle cx='8' cy='5' r='2.2'/%3E%3Crect x='30' y='1.5' width='7' height='7' transform='rotate(45 33.5 5)'/%3E%3Ccircle cx='70' cy='5' r='2.8'/%3E%3Crect x='103' y='1.5' width='7' height='7' transform='rotate(45 106.5 5)'/%3E%3Ccircle cx='132' cy='5' r='2.2'/%3E%3C/svg%3E") center/140px 10px no-repeat;opacity:.55;padding:0 6px}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:1.6rem}}
+.pagehead{padding:3.2rem 0 2rem}
+.pagehead h1{margin:.5rem 0 .8rem}
+.pagehead p{max-width:42rem}
+@media(max-width:860px){.pagehead::after{display:none}}
+
+/* sections + cards (flat folk, 8px, no shadow) */
+section{padding:clamp(2.2rem,4.5vw,3.4rem) 0}
+section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
+section:not(.flat)::before{display:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:1.4rem}
 .grid.g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.card{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.5rem;position:relative;transition:box-shadow 380ms ease,border-color 380ms ease;box-shadow:0 1px 2px rgba(58,50,42,.05),0 8px 22px -14px rgba(58,50,42,.18)}
-.card.tilt{transform-style:preserve-3d}
-.card.tilt:hover{box-shadow:var(--sh);border-color:var(--line);z-index:2}
-.card:before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;border-radius:0 0 3px 3px;
-  background:repeating-linear-gradient(90deg,var(--ochre) 0 8px,transparent 8px 14px);opacity:.35;transition:opacity 380ms ease}
-.card:hover:before{opacity:.8}
-.card h3{margin-bottom:.35rem}
-.price{color:var(--terra-dark);font-family:var(--font-ui);font-weight:700;margin:.5rem 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.4rem}
+.card h3{margin:.5rem 0 .35rem}
 .card p,.card li{font-size:.93rem;color:var(--muted)}
-.card ul{list-style:none;margin-top:.55rem}
 .card li{padding-left:1.15rem;position:relative}
-.card li:before{content:"";position:absolute;left:0;top:.55em;width:.45rem;height:.45rem;transform:rotate(45deg);background:var(--terra)}
-.teasercard{display:block;text-decoration:none;color:var(--ink)}
-.teasercard .go{display:inline-block;margin-top:.7rem;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);font-weight:700;transition:transform 220ms var(--ease)}
-.teasercard:hover .go{transform:translateX(4px)}
-/* central feature panel (Auto Hub) */
-.feature{background:linear-gradient(180deg,rgba(43,38,32,.94),rgba(43,38,32,.88));border-radius:16px;padding:2.8rem 2.2rem;text-align:center;position:relative;overflow:hidden;
-  background-image:radial-gradient(rgba(250,246,240,.06) 1px, transparent 1.3px);background-size:8px 8px}
-.feature:before{content:"";position:absolute;inset:auto -40px -60px auto;width:260px;height:150px;pointer-events:none;animation:float 11s ease-in-out infinite alternate;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23d9a441' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.16}
-.feature h2{color:var(--paper)}
-.feature p{color:var(--ink-soft);max-width:37rem;margin:.6rem auto 1.3rem}
-.feature .cta-row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-/* photo placeholders */
-.ph{background:linear-gradient(135deg,var(--water-mid),var(--water-mid));border:1px dashed var(--line);border-radius:12px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--font-ui);font-size:.75rem;text-align:center;padding:1rem;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23a08a68' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E"),linear-gradient(135deg,var(--water-mid),var(--water-mid));background-size:90px 52px,auto;background-repeat:no-repeat;background-position:center 62%,center}
-.amen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:1.4rem}
-.amen div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.7rem .9rem;font-family:var(--font-ui);font-size:.8rem}
-.loc{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;align-items:center}
-.mapbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.9rem;box-shadow:var(--sh)}
-.mapbox iframe{width:100%;height:260px;border:0;display:block;filter:saturate(.92) contrast(.98);opacity:.94}
-.mapbox .addr{padding:1rem 1.2rem;color:var(--ink)}
-.mapbox .addr small{color:var(--muted)}
-.note{font-size:.8rem;color:var(--muted);margin-top:1.1rem}
-/* gallery */
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.05rem;margin-top:1.4rem}
-.gal figure{margin:0;cursor:zoom-in;overflow:hidden;border-radius:12px;position:relative}
-.gal img,.gal .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;transition:transform 760ms var(--ease)}
-.gal figure:hover img,.gal figure:hover .ph{transform:scale(1.045)}
-.gal figcaption{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);padding:.5rem .2rem}
-/* forms */
-form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.14);border-radius:12px;padding:1.7rem;margin-top:1.4rem;position:relative;box-shadow:0 1px 2px rgba(58,50,42,.05),0 10px 26px -16px rgba(58,50,42,.20)}
-.pform label{display:block;font-family:var(--font-ui);font-size:.75rem;font-weight:700;margin:1rem 0 .3rem;color:var(--ink)}
-.pform label:first-of-type{margin-top:0}
-.pform input,.pform select,.pform textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:6px;font-family:var(--font-ui);font-size:1rem;background:var(--paper);color:var(--ink);transition:border-color 220ms ease,box-shadow 220ms ease}
-.pform input:focus,.pform select:focus,.pform textarea:focus{outline:2px solid var(--terra);outline-offset:2px;border-color:var(--terra)}
-.pform .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.stars{display:flex;gap:.3rem;flex-direction:row-reverse;justify-content:flex-end}
-.stars label{font-size:1.55rem;color:var(--line);cursor:pointer;margin:0;transition:color 140ms ease,transform 140ms ease}
-.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra-dark);transform:scale(1.08)}
-.fresult{display:none;margin-top:1rem;padding:.8rem 1rem;border-radius:6px;background:var(--ochre-soft);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.8rem;color:var(--ochre-ink)}
+.card li::before{content:"";position:absolute;left:.1rem;top:.55em;width:.42rem;height:.42rem;transform:rotate(45deg);background:var(--terra)}
+.price{color:var(--terra-dark);font-family:var(--font-ui);font-weight:700;margin:.5rem 0}
+.price-block{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.4rem;margin:1rem 0}
+.price-block .price{font-size:1.4rem}
+
+/* forms + stars + FAQ */
+form.pform{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.6rem;margin-top:1.4rem}
+form.pform label{display:block;font-family:var(--font-ui);font-size:.75rem;font-weight:700;margin:1rem 0 .3rem;color:var(--ink)}
+form.pform input,.pform select,.pform textarea{width:100%;padding:.68rem .85rem;border:1px solid var(--line);border-radius:var(--r-xs);font-family:var(--font-ui);font-size:1rem;background:var(--paper);color:var(--ink);transition:border-color 220ms ease,box-shadow 220ms ease}
+form.pform input:focus,form.pform select:focus,form.pform textarea:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px rgba(192,90,46,.14)}
+form.pform .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fresult{display:none;margin-top:1rem;padding:.8rem 1rem;border-radius:var(--r-sm);background:var(--ochre-soft);border:1px solid var(--ochre);font-size:.82rem;color:var(--ochre-ink)}
 .fresult.show{display:block}
-/* board */
-.board{margin-top:1.4rem}
-.post{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ochre);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem;transition:transform 220ms var(--ease),box-shadow 220ms ease}
-.post:hover{transform:translateX(4px);box-shadow:var(--sh)}
-.post .meta{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
-.post .topic{display:inline-block;background:var(--ochre-soft);color:var(--ochre-ink);font-family:var(--font-ui);font-size:.68rem;padding:.15rem .55rem;border-radius:99px;margin-left:.5rem}
-.post p{font-size:.93rem;margin-top:.3rem}
-.demo-tag{display:inline-block;background:var(--water-mid);color:var(--muted);font-family:var(--font-ui);font-size:.65rem;padding:.15rem .5rem;border-radius:99px;vertical-align:middle}
-.faq details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;margin-top:.8rem}
+.stars{display:flex;gap:.3rem;flex-direction:row-reverse;justify-content:flex-end}
+.stars label{font-size:1.55rem;color:var(--line);cursor:pointer;margin:0}
+.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--terra-dark);transform:scale(1.08)}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1rem 1.2rem;margin-top:.8rem}
 .faq summary{font-family:var(--font-ui);font-size:.9rem;font-weight:700;cursor:pointer;color:var(--ink)}
 .faq p{font-size:.92rem;margin-top:.6rem}
-/* dark CTA strip with cream lotus */
-.cta-strip{background:linear-gradient(180deg,rgba(43,38,32,.93),rgba(43,38,32,.87));color:var(--paper);padding:3rem 0;text-align:center;position:relative;overflow:hidden;
-  background-image:radial-gradient(rgba(250,246,240,.05) 1px, transparent 1.3px);background-size:8px 8px}
-.cta-strip:before{content:"";position:absolute;left:-30px;top:50%;transform:translateY(-50%);width:200px;height:118px;pointer-events:none;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23f5efe6' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3Cpath d='M60 58C48 52 34 50 12 50c16 10 34 12 48 8Z'/%3E%3Cpath d='M60 58c12-6 26-8 48-8-16 10-34 12-48 8Z'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.1}
-.cta-strip h2{color:var(--paper)}
-.cta-strip p{color:var(--ink-soft);margin:.5rem 0 1.3rem}
-/* footer */
-footer{margin-top:2.4rem;border-top:1px solid var(--line)}
-.fcols{display:grid;grid-template-columns:1.4fr repeat(4,.8fr);gap:2rem;padding:2.4rem 0 1.6rem}
-.fbrandname{font-size:1.15rem;font-weight:700}
-.fbrandname span{color:var(--terra-dark)}
-.fcols p{font-size:.85rem;margin-top:.6rem;max-width:16rem}
-.fcols h4{font-family:var(--font-ui);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
-.fcols a{display:block;font-family:var(--font-ui);font-size:.82rem;color:var(--ink);text-decoration:none;padding:.22rem 0;transition:color 220ms ease,transform 220ms ease}
-.fcols a:hover{color:var(--terra-dark);transform:translateX(3px)}
-.fbottom{border-top:1px solid var(--line);padding:1.1rem 0 2.6rem;font-family:var(--font-ui);font-size:.74rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-@media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.fcols{grid-template-columns:1fr}}
-/* mobile bar + lightbox */
-.mobilebar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;z-index:50;box-shadow:0 -8px 24px rgba(43,38,32,.08)}
-.mobilebar a{flex:1;text-align:center;padding:.85rem 0;font-family:var(--font-ui);font-size:.85rem;font-weight:700;text-decoration:none}
-.mobilebar .mail-link{color:var(--paper);background:var(--terra);background-image:radial-gradient(rgba(250,246,240,.14) 1px, transparent 1.3px);background-size:7px 7px}
-@media(max-width:720px){.loc{grid-template-columns:1fr}.pform .row{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-}
-/* ---------- v5: conversion core ---------- */
-.familyband{text-align:center;padding:2.4rem 1rem .8rem;border-top:1px solid var(--line)}
-.familyband .dia{display:inline-block;width:.55rem;height:.55rem;transform:rotate(45deg);background:var(--ochre);opacity:.75;margin:0 .9rem;vertical-align:.35rem}
-.fblarge{font-size:clamp(1.05rem,2vw,1.3rem);font-weight:400;letter-spacing:.02em;color:var(--muted,var(--muted));margin:.5rem 0 .2rem}
-.fbsub{max-width:40rem;margin:0}
-.persona{font-family:var(--font-ui);font-size:.78rem;color:var(--terra-dark);margin:-.3rem 0 .35rem}
-.promises{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem;margin-top:1.4rem}
-.promises div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.85rem .9rem .85rem 2.1rem;font-family:var(--font-ui);font-size:.83rem;position:relative;color:var(--ink);transition:transform 220ms var(--ease),box-shadow 220ms ease}
-.promises div:hover{transform:translateY(-2px);box-shadow:var(--sh)}
-.promises div::before{content:"";position:absolute;left:.85rem;top:50%;transform:translateY(-50%) rotate(45deg);width:.5rem;height:.5rem;background:var(--terra)}
-.step .num{display:inline-flex;align-items:center;justify-content:center;width:2.3rem;height:2.3rem;border-radius:50%;background:var(--terra);color:var(--paper);font-family:var(--font-head);font-size:1.15rem;margin-bottom:.7rem;box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.3),inset 0 0 0 4px var(--terra)}
-.costcard{margin-top:1.5rem}
-.costrows{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
-.costrows>div{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;background:var(--panel);border:1px dashed var(--ochre);border-radius:8px;padding:.7rem .9rem;font-family:var(--font-ui);font-size:.83rem}
-.costrows b{color:var(--terra-dark);white-space:nowrap}
-.costcard .demo-tag{margin-top:.8rem}
-@media(max-width:640px){.costrows{grid-template-columns:1fr}}
-.menucard{margin-top:1.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.6rem}
-.menucard .day{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.75rem .8rem;transition:transform 220ms var(--ease),box-shadow 220ms ease}
-.menucard .day:hover{transform:translateY(-2px);box-shadow:var(--sh)}
-.menucard .day b{display:block;font-family:var(--font-ui);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.3rem}
-.menucard .day span{font-size:.8rem;color:var(--muted);line-height:1.5;display:block}
-.voice .q{font-size:2.2rem;line-height:.55;color:var(--ochre);font-family:var(--font-head);margin:.3rem 0 .7rem}
-.voice p{font-size:.95rem;color:var(--ink);font-style:italic}
-.voice .who{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);margin-top:.8rem}
-.voice .strs{color:var(--ochre);letter-spacing:.12em;font-size:.85rem;margin-top:.15rem}
-.tourbox{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:rgba(43,38,32,.9);box-shadow:var(--sh);margin-top:1.4rem}
-.tourbox video{display:block;width:100%;aspect-ratio:16/9;background:var(--ink)}
-.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.6rem;text-align:center}
-.statrow>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.1rem .8rem}
-.statrow b{display:block;font-size:1.9rem;color:var(--terra-dark);font-family:var(--font-head);line-height:1.1}
-.statrow span{font-family:var(--font-ui);font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
-@media(max-width:560px){.statrow{grid-template-columns:1fr}}
-.plaque{margin:1.8rem 0 0;background:var(--panel);border:2px solid var(--terra);border-radius:14px;padding:1.6rem 1.8rem;text-align:center;position:relative;box-shadow:0 1px 2px rgba(58,50,42,.05),0 10px 26px -16px rgba(58,50,42,.20)}
+
+/* board + testimonials */
+.board{margin-top:1.4rem}
+.post{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ochre);border-radius:var(--r-sm);padding:1rem 1.2rem;margin-bottom:.8rem}
+.post .meta{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
+.post .topic{background:var(--ochre-soft);color:var(--ochre-ink);font-family:var(--font-ui);font-size:.68rem;padding:.15rem .55rem;border-radius:99px;margin-left:.5rem}
+.post p{font-size:.93rem;margin-top:.3rem}
+.plaque{border:2px solid var(--terra);border-radius:var(--r-md);padding:1.6rem 1.8rem;text-align:center;margin:1.8rem 0 0}
 .plaque h3{font-size:1.2rem;margin-bottom:.8rem}
 .plaque ul{list-style:none;text-align:left}
 .plaque li{padding-left:1.3rem;position:relative;font-size:.9rem;color:var(--muted);margin-top:.45rem}
-.plaque li::before{content:"";position:absolute;left:0;top:.5em;width:.42rem;height:.42rem;transform:rotate(45deg);background:var(--ochre)}
-@media(min-width:861px){.mail-float{display:flex}}
-/* v43: .mobilebar is display:flex at every width, so the phone bottom bar
-   also rendered on desktop where the floating button already covers it. */
-@media(min-width:861px){.mobilebar{display:none!important}}
+.plaque li::before{background:var(--ochre);content:"";position:absolute;left:0;top:.5em;width:.42rem;height:.42rem;transform:rotate(45deg)}
 
-/* ---------- v6: type system, modern hand ---------- */
-/* v55 - THIS BLOCK WAS NEVER APPLIED. It was written as SCSS: @font-face and a
-   second :root nested INSIDE a :root rule. Plain CSS has no rule nesting, so
-   the browser's parser discarded all of it - meaning --font-head, --font-ui and
-   --font-body were never defined, and document.fonts.size was 0. Every
-   heading, button and paragraph on the site silently fell back to Times New
-   Roman. The font files were being fetched (HTTP 200) and then thrown away.
-   The custom properties and the @font-face rules are now at top level. */
-/* v44: self-hosted OFL fonts. Optima (the old --font-head) ships ONLY on
-   macOS, so Windows and Android - most of the phone traffic - silently fell
-   through to a generic sans and saw a different site than the Mac. Marcellus
-   + Alegreya Sans are vendored locally in assets/fonts/ (31KB total) so every
-   platform renders the same. No CDN request, nothing render-blocking. */
-@font-face{
-  font-family:'Marcellus';
-  src:url('fonts/marcellus-latin.woff2') format('woff2');
-  font-weight:400;font-style:normal;font-display:swap;
-}
-@font-face{
-  font-family:'Alegreya Sans';
-  src:url('fonts/alegreya-sans-latin.woff2') format('woff2');
-  font-weight:400;font-style:normal;font-display:swap;
-}
-:root{
-  --font-head:'Marcellus',Optima,'Palatino Linotype',Palatino,Georgia,serif;
-  --font-ui:'Alegreya Sans',ui-sans-serif,-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  --font-body:var(--font-ui);
-  --r-xs:2px;--r-sm:8px;--r-md:12px;--r-pill:999px;
-}
-/* v44: a duplicate body/h1/h2/h3 block used to sit here and silently
-   overwrote the type scale above with a second, different set of numbers.
-   Merged into one scale; rem-based sizing so a user's browser font setting
-   actually scales the page. */
-body{font-size:1rem;line-height:1.66}
-h1,h2,h3,h4{font-family:var(--font-head);font-weight:400;line-height:1.2}
-h1{font-size:clamp(2.1rem,4.6vw,3rem)}
-h2{font-size:clamp(1.5rem,2.9vw,2rem)}
-h3{font-size:1.2rem}
-h4{font-size:1.02rem}
-p{color:var(--ink);font-family:var(--font-body)}
-.tag,.btn,.navlinks a,.badge,.persona,.fcols a,.fcols h4,.fbottom,.post .meta,.post .topic,.demo-tag,.note,.figcaption,figcaption,.amen div,.price,.costrows>div,.menucard .day b,.voice .who,.statrow span,.plaque li,.pform label,.pform input,.pform select,.pform textarea,.faq summary,.card li,.card p{font-family:var(--font-ui)}
-.tag{font-size:.7rem;letter-spacing:.16em}
-.fmark{filter:saturate(1.05)}
-.lede{font-size:1.06rem;max-width:41rem}
-/* lining figures where numbers are the point */
-.price,.statrow b,.costrows b,.menucard .day b,.voice .strs,.step .num{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
-/* de-decorate: folk motifs stay, repetition goes */
-section:not(.flat)::before{display:none}
-.card:before{display:none}
-.card{border-radius:var(--r-md);box-shadow:none;transition:border-color 380ms ease,transform 380ms var(--ease)}
-.card.tilt:hover{box-shadow:none;border-color:var(--ochre)}
-.promises div,.amen div,.menucard .day,.mapbox,form.pform{border-radius:var(--r-sm);box-shadow:none}
-.mapbox{box-shadow:none}
-form.pform{box-shadow:none}
-.plaque{border-radius:var(--r-md)}
-.feature,.tourbox,.cta-strip{border-radius:var(--r-md)}
-.ph{background:radial-gradient(circle at 50% 42%,var(--water-mid),var(--water-mid));border:1px solid var(--line);border-radius:var(--r-sm);color:var(--muted);font-family:var(--font-ui);font-size:.72rem;letter-spacing:.04em}
-.btn{border-radius:var(--r-sm)}
-.btn.ghost{border-style:solid;border-color:var(--ochre)}
-.mobilebar a{border-radius:0}
+/* voice + statrow + tourbox */
+.voice .q{font-size:2.2rem;line-height:.55;color:var(--ochre);font-family:var(--font-head);margin:.3rem 0 .7rem}
+.voice p{font-size:.95rem;font-style:italic}
+.voice .who{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);margin-top:.8rem}
+.voice .strs{color:var(--ochre);letter-spacing:.12em;font-size:.85rem;margin-top:.15rem}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.6rem;text-align:center}
+.statrow>div{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.1rem .8rem}
+.statrow b{display:block;font-size:1.9rem;color:var(--terra-dark);font-family:var(--font-head);line-height:1.1}
+.statrow span{text-transform:uppercase;font-family:var(--font-ui);font-size:.7rem;color:var(--muted)}
+.tourbox{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:rgba(250,246,238,.5);box-shadow:var(--sh)}
+.tourbox video{display:block;width:100%;aspect-ratio:16/9;background:var(--ink)}
 
-/* ---------- v6: a11y, print, tap targets ---------- */
-.skip{position:absolute;left:-9999px;top:0;background:var(--terra);color:var(--paper);padding:.7rem 1.1rem;border-radius:0 0 var(--r-sm) 0;font-family:var(--font-ui);font-size:.85rem;z-index:200}
-.skip:focus{left:0}
-:focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:var(--r-xs)}
-.navlinks a,.fcols a,.mobilebar a,.btn,.chip{min-height:44px;display:inline-flex;align-items:center}
-.fcols a{display:flex}
-.stars label{min-height:32px}
-@media(pointer:coarse){.footer,.fcols a{padding:.5rem 0}}
-@media(max-width:380px){h1{font-size:2.05rem}.wrap{padding:0 16px}}
-@media print{
-  .bgfx,.lotusdraw,.mail-float,.mobilebar,header,.folkline,.nav,.cta-strip,.tourbox{display:none!important}
-  .flow,.reveal{opacity:1!important;transform:none!important;filter:none!important}
-  body{background:var(--panel);font-size:11pt}
-  .wrap{max-width:none;padding:0}
-  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:var(--muted)}
-  section{page-break-inside:avoid}
-}
-
-/* ---------- v7: ground, texture, motion ---------- */
-:root{
-  --paper-warm:var(--paper);
-  --weave:repeating-linear-gradient(45deg,rgba(192,90,46,.05) 0 1px,transparent 1px 7px),
-          repeating-linear-gradient(-45deg,rgba(43,38,32,.035) 0 1px,transparent 1px 7px);
-  --grain:repeating-conic-gradient(from 0deg,rgba(43,38,32,.028) 0% 25%,transparent 0% 50%) 0 0/3px 3px;
-}
-/* v10: ground is the canvas layer's job (see .bgfx); body stays transparent */
-body{background:transparent}
-
-/* v10.1: panels are GLASS, not walls. The folk art must read through every card,
-   top of the page to the footer, on every page. */
-.card,.promises div,.amen div,.menucard .day,.post,.mapbox,form.pform,.plaque,.statrow>div{
-  background-image:var(--weave);background-color:var(--panel);
-  background-blend-mode:normal,multiply;
-}
-.feature,.cta-strip,.tourbox,.plaque,.familyband{
-  background-color:rgba(43,38,32,.14);
-}
-header{background:rgba(250,246,240,.66)!important}
-body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background-image:var(--weave),var(--grain);opacity:.55;mix-blend-mode:multiply}
-.vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 45%,transparent 52%,rgba(43,38,32,.07) 100%)}
-/* v10: content sits on top via normal flow, NOT via a positive z-index that
-   would bury the ambient canvas. .bgfx/.vignette stay at negative depth. */
-body>*:not(.bgfx):not(.vignette):not(.mobilebar):not(.mail-float):not(.pondfloat):not(.collage):not(.pondreveal):not(.pondwater):not(#pond-canvas){position:relative;z-index:auto}
-/* v8: motion lives BEHIND everything, never beside it */
-/* v40: this bare duplicate used to re-flatten the ground. Removed - the
-   single water wash further down is the only thing allowed to set it. */
-body{position:relative;isolation:isolate}
-.bgfx{
-  position:fixed!important;
-  top:0;left:0;
-  /* 100vw/100vh INCLUDE the scrollbar gutter, so a 100vw canvas is always
-     wider than the content area. Measured on a 390px phone: scrollWidth 399
-     against clientWidth 390 - 9px of horizontal scroll on every page. Fixed
-     positioning resolves percentages against the initial containing block,
-     which is the client box, so 100%/100% is both correct and gutter-proof.
-     The canvas resizes from its own JS on resize, so nothing else shifts. */
-  width:100%;
-  height:100%;
-  z-index:-3!important;
-  pointer-events:none;
-  display:block;
-}
-body::before{z-index:-2!important}
-.vignette{z-index:-1!important}
-/* cards, forms and the dark panels get a hand-made surface */
-/* superseded by v10.1 glass */
-.feature{
-  background-image:var(--weave),radial-gradient(120% 130% at 20% 0%, rgba(217,164,65,.16), transparent 58%),radial-gradient(rgba(250,246,240,.06) 1px, transparent 1.3px);
-  background-size:auto,auto,8px 8px;
-}
-.cta-strip{
-  background-image:var(--weave),radial-gradient(90% 130% at 82% 0%, rgba(217,164,65,.18), transparent 60%);
-}
-/* folk motif watermarks on the quiet sections */
-.ripplelotus{position:absolute;inset:auto -16px -22px auto;width:min(220px,34vw);aspect-ratio:120/70;
-  background-repeat:no-repeat;background-position:bottom right;background-size:contain;opacity:.09;pointer-events:none;z-index:0}
-section{position:relative}
-section>*:not(.ripplelotus){position:relative;z-index:1}
-@media(max-width:760px){.ripplelotus{width:120px;opacity:.07}}
-.lotusdraw{display:block;width:64px;height:auto;margin:0 auto .6rem;color:var(--ochre)}
-.cta-strip .lotusdraw{color:var(--paper);opacity:.09}
-.plaque{padding-bottom:1.6rem}
-.plaque .lotusdraw{top:auto;bottom:1.5rem;transform:translateX(-50%);width:180px;opacity:.13}
-@keyframes drawlotus{from{stroke-dashoffset:160}to{stroke-dashoffset:0}}
-.flow{opacity:0;transform:translateY(16px);transition:opacity 760ms var(--ease),transform 760ms var(--ease)}
-.flow.flow-in{opacity:1;transform:none}
-.card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow{transform:translateY(12px)}
-.card.flow.flow-in,.promises div.flow.flow-in,.menucard .day.flow.flow-in,.amen div.flow.flow-in{transform:none}
-.reveal{opacity:1;transform:none;transition:none}
-/* reduced motion: keep the texture, drop the movement */
-html.reduce .bgfx{background-image:radial-gradient(900px 600px at 82% 6%, rgba(217,164,65,.18), transparent 60%);background-color:transparent}
-html.reduce .flow{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){
-  .bgfx{display:none}
-  .lotusdraw{opacity:.07}
-  .flow{opacity:1;transform:none}
-}
-
-/* v7: the pagehead lotus is redundant against the textured ground */
-.pagehead::after{content:none}
-
-/* v7: section separators are hairlines only - the ground carries the texture */
-section:not(.flat)::before{content:none}
-
-/* v7.1: never let a cached shell hide a new deploy */
-.bgfx,.lotusdraw,.ripplelotus{will-change:transform,opacity}
-
-/* ---------- v8: motion integrated behind the content, on every page ---------- */
-/* the ground is a real layer of the page, not a panel beside it */
-/* v10: html carries only the flat paper fallback; the gradient wash lives on the
-   canvas layer so it can never paint over the motion. */
-html{
-  /* v40: the base needs to be MEANINGFULLY below white for water to read
-     against. v35's wash bottomed out at --paper-deep, which is still ~242 lum,
-     leaving the additive caustics only ~13 lum of headroom - which is why the
-     whole water stack rendered invisible no matter how its alphas were tuned.
-     Deepened to the tinted water tone so light has room to pool and fold.
-     !important because FOUR separate html{background} rules had accumulated
-     over v35/v37/v38 and the last one silently won every time. */
-  background:linear-gradient(180deg,var(--water-top) 0%,var(--water-mid) 38%,var(--water-deep) 100%) !important;
-  background-attachment:fixed !important;
-}
-body{background:transparent}
-/* glass panels: content stays fully legible while the folk art keeps moving under it */
-.card,.promises div,.amen div,.menucard .day,.post,.mapbox,form.pform,.plaque,.statrow>div,.faq details{
-  border-color:rgba(232,224,212,.9);
-  box-shadow:0 1px 0 rgba(255,255,255,.6) inset;
-}
-/* dark panels keep their weight but take a hint of the moving ground */
-/* every section is a window onto the same ground; nothing paints over it */
-section,.pagehead,.hero,footer,.familyband,.wrap{background:transparent}
-/* a whisper of folk ink on the paragraph text so it reads as one handmade surface */
-p,li{text-shadow:0 1px 0 rgba(255,255,255,.35)}
-.ripplelotus{opacity:.11;mix-blend-mode:multiply}
-@media(max-width:760px){.ripplelotus{opacity:.09}}
-/* keep it cheap on phones: fewer, larger motifs */
-
-
-/* ---------- v9: one continuous surface, top to bottom ---------- */
-/* every band takes the same woven ground so nothing cuts the page in half */
-.feature,.cta-strip,.tourbox,.plaque,.familyband,.mobilebar,footer,.mapbox,.statrow>div,.voice{
-  background-image:var(--weave);
-  background-blend-mode:soft-light;
-}
-.feature,.cta-strip{position:relative;overflow:hidden}
-.feature::after,.cta-strip::after{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background:radial-gradient(120% 100% at 12% 0%, rgba(217,164,65,.16), transparent 55%),
-             radial-gradient(90% 90% at 92% 100%, rgba(192,90,46,.14), transparent 60%);
-}
-.feature>*, .cta-strip>*{position:relative;z-index:1}
-/* the video keeps its frame but stops being a black hole */
-.tourbox video{background:linear-gradient(135deg,var(--ink),var(--ink-deep))}
-/* the map dissolves into the page instead of sitting on it */
-.mapbox{border-color:rgba(232,224,212,.85)}
-/* the final band: the ground fades out rather than stopping dead */
-footer{border-top:1px solid rgba(232,224,212,.8);background-image:linear-gradient(180deg,rgba(255,255,255,0),rgba(244,236,223,.55)),var(--weave)}
-/* arrival rhythm: everything on the way down joins the same motion */
-.hero .cta-row,.familyband,.tourbox,.costrows>div,.voice,.statrow>div,.plaque,.board .post,.loc,.picker,.day{
-  opacity:0;transform:translateY(14px);transition:opacity 760ms var(--ease),transform 760ms var(--ease);
-}
-.hero .cta-row.in,.familyband.in,.tourbox.in,.costrows>div.in,.voice.in,.statrow>div.in,.plaque.in,.board .post.in,.loc.in,.day.in{
-  opacity:1;transform:none;
-}
-/* the folk line rides the very top and ties the page together */
-.folkline{background-image:radial-gradient(circle at 10px 3px, rgba(250,246,240,.9) 1.5px, transparent 2px),
-  repeating-linear-gradient(90deg,var(--terra) 0 14px,var(--ochre) 14px 24px,var(--terra-dark) 24px 36px)}
-
-/* v9: the two remaining breakers - the footer strip and the bottom bar blend into the ground */
-footer{margin-top:2.4rem}
-.fbottom{border-top:1px solid rgba(232,224,212,.7);background:transparent}
-.mobilebar{border-top:1px solid rgba(232,224,212,.9)}
-.mobilebar .mail-link{background:var(--terra)}
-/* no band may ever paint a flat rectangle over the ground again */
-.feature,.cta-strip,.tourbox,.plaque,.familyband,.mobilebar,footer,.statrow>div,.voice,.post,.card,
-.promises div,.amen div,.menucard .day,.faq details,.mapbox,form.pform,.costrows>div{
-  background-clip:padding-box;
-}
-
-/* ============================================================
-   v12 - ONE SURFACE, TOP TO BOTTOM.
-   Every band, panel and block lets the ambient layer read through.
-   This block is last on purpose: it wins the cascade outright.
-   ============================================================ */
-
-/* no element anywhere may paint an opaque page-covering fill again */
-body, html, main, .wrap, section, header, footer, .pagehead, .hero,
-.band, .strip, .familyband, .voice, .loc, .picker, .day, .costrows,
-.costrows>div, .statrow, .statrow>div, .plaque, .board, .post, .amen,
-.amen div, .promises, .promises div, .menucard, .menucard .day,
-.mapbox, .faq, .faq details, .tourbox, .tourbox video, form.pform,
-.card, .tile, .voice .q {
-  background-color: transparent !important;
-}
-
-/* glass, not walls: 45-52% so the folk art is plainly visible through every panel */
-.card, .promises div, .amen div, .menucard .day, .post, .mapbox,
-form.pform, .plaque, .statrow>div, .faq details, .costrows>div, .voice {
-  background-image: none !important;
-  background-color: transparent !important;
-}
-
-/* the dark bands stay dark but only as a veil: the ground shows through them too */
-.feature {
-  background-image: linear-gradient(180deg, rgba(43,38,32,.86), rgba(43,38,32,.80)) !important;
-  background-color: transparent !important;
-}
-.cta-strip {
-  background-image: linear-gradient(180deg, rgba(43,38,32,.84), rgba(43,38,32,.78)),
-                    radial-gradient(90% 130% at 82% 0%, rgba(217,164,65,.20), transparent 60%) !important;
-  background-color: transparent !important;
-}
-.tourbox {
-  background-image: linear-gradient(180deg, rgba(43,38,32,.82), rgba(43,38,32,.76)) !important;
-  background-color: transparent !important;
-}
-.tourbox video { background: linear-gradient(135deg, rgba(43,38,32,.55), rgba(58,50,42,.5)) !important; }
-
-/* the sticky header is a thin glass lid, never a slab */
-header {
-  background: rgba(250,246,240,.55) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-}
-
-/* the bottom bar too */
-.mobilebar { background: var(--panel) !important; backdrop-filter: blur(14px) !important; -webkit-backdrop-filter: blur(14px) !important; }
-
-/* footer fades into the ground rather than covering it */
-footer { background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(244,236,223,.35)) !important; background-color: transparent !important; }
-
-/* form fields stay readable: paper-white but see-through enough */
-.pform input, .pform select, .pform textarea { background: var(--panel) !important; border:1px solid rgba(58,50,42,.18) !important; }
-
-/* photo placeholders keep their wash but let motion through */
-.ph { background-color: rgba(239,231,218,.62) !important; }
-
-/* on phones keep it cheap */
-@media(max-width:640px){
-  /* v42: content panels never blur; only the two scrolling chrome bars may. */
-  .feature, .cta-strip, .tourbox { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-}
-
-/* ============================================================
-   v13 - ROLE DISCIPLINE.
-   Six colours, one job each. This is what stops them contradicting.
-   ============================================================ */
-
-/* TERRACOTTA = action and money only. Never ornament, never headings. */
-.btn, .btn.primary, .mail-float, .mobilebar .mail-link,
-.board .ask, .card .btn, a.cta {
-  background-color: var(--terra) !important;
-}
-.btn:hover, .mail-float:hover { background-color: var(--terra-dark) !important; }
-a { color: var(--terra-dark); }
-.price, .rate, .amount, .statrow b { color: var(--terra-dark); }
-.tag { color: var(--terra-dark); }
-
-/* OCHRE = ornament only. Rules, dots, trim, watermark. Never text, never buttons. */
-.tag.gold { color: var(--ochre-ink) !important; }
-.folkline { background-color: var(--ochre); }
-.familyband .dia { background-color: var(--ochre); }
-.voice .q { color: var(--ochre) !important; }
-.voice .strs { color: var(--ochre) !important; }
-.badge { border-color: var(--ochre); background: var(--ochre-soft); color: var(--ochre-ink); }
-.fresult, .post .topic { background: var(--ochre-soft); border-color: var(--ochre); color: var(--ochre-ink); }
-h1, h2, h3, h4 { color: var(--ink); }
-
-/* INK = weight. All body and secondary text resolves to two values only. */
-body, p, li, .voice p { color: var(--ink); }
-p, .lede, .fbottom, .who, .familyband p, .fblarge { color: var(--ink); }
-.feature p, .cta-strip p, .feature li, .cta-strip li { color: var(--ink-soft); }
-
-/* THE DARK BANDS: warm brown veils, not black slabs. Minimal, on-surface. */
-.feature, .cta-strip, .tourbox {
-  background-image: linear-gradient(180deg, rgba(58,50,42,.88), rgba(58,50,42,.82)) !important;
-  background-color: transparent !important;
-}
-.tourbox video { background: linear-gradient(135deg, rgba(58,50,42,.68), rgba(58,50,42,.58)) !important; }
-/* v43: .plaque h3 was in this dark-band selector list, so a paper-coloured
-   heading sat on the paper v42 panel - effectively invisible. Only the dark
-   bands keep paper text now. */
-.feature h2, .feature h3, .cta-strip h2, .cta-strip h3 { color: var(--paper) !important; }
-.feature .lotusdraw, .cta-strip .lotusdraw { color: var(--ochre) !important; opacity:.18; }
-
-/* ONE paper: the wash runs water-top -> water-deep and nothing else. */
-/* v40: the html{background} that lived here was a duplicate of the same
-   property and silently overrode the water wash. Deleted - one rule now. */
-header { background: rgba(250,245,236,.58) !important; }
-.mobilebar { background: rgba(250,245,236,.68) !important; }
-footer { background-image: linear-gradient(180deg, rgba(250,245,236,0), rgba(242,234,217,.45)) !important; }
-
-/* borders resolve to one hairline colour everywhere */
-.card, .promises div, .amen div, .menucard .day, .post, .mapbox,
-form.pform, .plaque, .statrow>div, .faq details, .costrows>div, .tourbox, .ph {
-  border-color: var(--line) !important;
-}
-/* dots and diamonds all take the ochre trim, at one opacity */
-.card li:before { background: var(--ochre) !important; }
-
-/* ============ v14 - real photos ============ */
-/* hero shot: same box the placeholder had, but a real photo fills it */
-a.ph.heroshot { border: 1px solid var(--line); padding: 0; background: none; overflow: hidden; display: block; border-radius: 12px; }
-a.ph.heroshot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 11px; }
-/* gallery figures: photos carry their own frame */
-.gal figure img { background: var(--water-mid); }
-
-/* ================= v16 FOLK SHAPE PASS - doorways, not rectangles =================
-   The house is the product. Every photo becomes a doorway (arched top, grounded
-   base) - the oldest Indian home signal. Buttons become little doorways too.
-   No new colours: ochre stays ornament, terracotta stays action. */
-
-/* Doorway arches on all photos */
-.gal img,.gal .ph{border-radius:150px 150px 10px 10px}
-a.ph.heroshot{border-radius:190px 190px 12px 12px}
-.ph{border-radius:150px 150px 10px 10px}
-section.flat figure.reveal img,figure.reveal>img{border-radius:150px 150px 10px 10px}
-/* keep the folk illustration arched too */
-.about-folk img,section figure img[src*="folk-entrance"]{border-radius:170px 170px 12px 12px}
-
-/* Buttons as small doorways: arched crown, grounded base, ochre sill */
-.btn{border-radius:14px 14px 7px 7px;position:relative}
-.btn::after{content:"";position:absolute;left:14%;right:14%;bottom:6px;height:1.5px;background:rgba(250,246,240,.32);border-radius:2px;pointer-events:none}
-.btn.ghost::after{background:rgba(217,164,65,.4)}
-.btn.sm::after{bottom:4px}
-
-/* A day in the house - the rhythm strip */
+/* teasers / feature / amen / loc / daystrip + mapbox / costcard / menucard + note */
+.teasercard{display:block;text-decoration:none;color:var(--ink);transition:transform 220ms var(--ease)}
+.teasercard:hover{transform:translateY(-3px)}
+.teasercard .go{display:inline-block;margin-top:.7rem;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);font-weight:700;opacity:.8}
+.feature{background:linear-gradient(180deg,rgba(43,38,32,.92),rgba(43,38,32,.86));border-radius:var(--r-md);padding:2.8rem 2.2rem;text-align:center}
+.feature h2{color:var(--paper)}
+.feature p{color:var(--ink-soft);max-width:37rem;margin:.6rem auto 1.3rem}
+.feature .cta-row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.loc{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;align-items:center}
+.amen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem}
+.amen div{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem .9rem;font-family:var(--font-ui);font-size:.8rem}
+.ph{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--muted);font-size:.75rem;display:flex;align-items:center;justify-content:center;padding:1rem}
 .daystrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 .day .dtime{display:block;font-family:var(--font-ui);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem}
 .day .ddia{display:block;width:9px;height:9px;background:var(--ochre);transform:rotate(45deg);margin:0 0 .7rem 0}
 .day p{font-size:.92rem;margin:0;color:var(--ink)}
 @media(max-width:860px){.daystrip{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.daystrip{grid-template-columns:1fr}.day{padding:1rem .9rem}}
-/* arches soften on small screens so images don't lose their tops */
-@media(max-width:520px){.gal img,.gal .ph,.ph,a.ph.heroshot{border-radius:80px 80px 8px 8px}}
-
-/* ============ v17 SCHEME CONSISTENCY - the site is a paper house ============ */
-html{color-scheme:light}
-::selection{background:var(--ochre-soft);color:var(--ink)}
-:focus-visible{outline-color:var(--terra)}
-
-/* ============ v18 BORDERLESS PASS - no seams anywhere, glass + shadow only ============
-   Header, footer, sides, sections, cards, photos: zero lines. Separation comes from
-   the translucent glass, soft shadows and spacing rhythm. Focus rings stay (a11y). */
-header.scrolled{border-bottom:none!important}
-section{border-top:none!important;padding:3.2rem 0}
-footer,.fbottom,.mobilebar,.familyband{border:none!important}
-.card,.day,.mapbox,.badge,.fresult,.post .topic,.gal img,.gal .ph,.ph,a.ph.heroshot{border:none!important}
-.card.tilt:hover,.card.tilt:hover{border:none!important;box-shadow:var(--sh)}
-.btn.ghost{border:none!important;background-color:var(--ochre-soft)!important;color:var(--ochre-ink)!important}
-.btn.ghost:hover{box-shadow:0 8px 18px rgba(217,164,65,.22)!important}
-.pform input,.pform select,.pform textarea{border:1px solid rgba(58,50,42,.28)!important}
-.pform input:focus,.pform select:focus,.pform textarea:focus{border:1px solid var(--terra)!important;box-shadow:0 0 0 3px rgba(192,86,33,.18)!important;outline:2px solid var(--terra);outline-offset:1px}
-/* one side-padding rhythm for every page */
-.wrap{padding-left:var(--pad-x)!important;padding-right:var(--pad-x)!important}
-
-/* ============ v19 LIVE VACANCY + VECTOR LOTUS ============ */
-.fmark{background:none!important}
-.lotusmark{width:27px;height:18px;flex:none;color:var(--terra)}
-.vacancy{margin-left:auto;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.02em;color:var(--ink);background:rgba(246,234,208,.9);padding:.32rem .75rem;border-radius:99px;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
-@keyframes vpulse{0%,100%{opacity:1}50%{opacity:.3}}
-@media(max-width:900px){.vacancy{display:none}}
-
-/* ============ v20 BLOOMING LOTUS - the mark grows out of its pond ============ */
-.lotusmark{width:30px;height:20px;color:var(--terra)}
-.lotusmark .lp{transform-box:fill-box;transform-origin:50% 100%;animation:lbloom 7s var(--ease) infinite alternate}
-@keyframes lbloom{from{transform:scale(1) rotate(0deg)}to{transform:scale(1.05) rotate(-.6deg)}}
-.lotusmark .r1{transform-box:fill-box;transform-origin:center;animation:lrip 5.5s ease-out infinite}
-@keyframes lrip{0%{transform:scale(.55);opacity:0}25%{opacity:.7}70%{transform:scale(1.18);opacity:0}100%{transform:scale(1.18);opacity:0}}
-@media(prefers-reduced-motion:reduce){.lotusmark .lp,.lotusmark .r1{animation:none}}
-
-/* ============ v21 BIG LOTUS - the emblem opens every page ============ */
-.lotusbig{width:60px;height:40px;display:block;margin:0 0 .35rem 0;filter:drop-shadow(0 4px 8px rgba(154,69,34,.12))}
-.lotusmid{width:34px;height:23px;display:inline-block;vertical-align:-6px;margin:0 .45rem .15rem 0;filter:drop-shadow(0 2px 5px rgba(154,69,34,.10))}
-@media(max-width:520px){.lotusbig{width:48px;height:32px}.lotusmid{width:28px;height:19px;vertical-align:-5px}}
-
-/* ============ v42 SOLID - panels are opaque paper, not glass ============
-   This block used to be "v22 GLASS SLAB": every panel got a translucent
-   rgba(250,246,240,.82) fill plus inset white highlights, and the header got
-   backdrop-filter blur(10px) saturate(1.05). That is what read as "glass
-   fluid" - milky panels floating on the moving water, soft baked-in edges,
-   and body text sitting on a backdrop that shifts underneath it. Panels are
-   now FULLY OPAQUE paper with one crisp border and one soft shadow, so text
-   always sits on a still, solid surface and the edges line up cleanly. The
-   header keeps a light blur because it genuinely scrolls over content - that
-   is the only glass left in the site. */
-.card,.promises div,.amen div,.post,.voice,.statrow>div,.tourbox,.costrows>div,
-.plaque,.menucard .day,.step,.mapbox,.pitstats,.board .post{
-  background:var(--panel)!important;
-  border:1px solid rgba(58,50,42,.14)!important;
-  box-shadow:0 1px 2px rgba(58,50,42,.05), 0 10px 26px -16px rgba(58,50,42,.20)!important;
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
-}
-header{
-  backdrop-filter:blur(10px) saturate(1.05)!important;
-  -webkit-backdrop-filter:blur(10px) saturate(1.05)!important;
-  box-shadow:0 1px 0 rgba(58,50,42,.08), 0 10px 30px rgba(58,50,42,.06)!important;
-}
-.flow{opacity:0;transform:translateY(26px);transition:opacity 760ms var(--ease),transform 760ms var(--ease);will-change:opacity,transform}
-.card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow{transform:translateY(20px)}
-/* v42 FIX: the arrival END state must out-rank the START state. These two rules
-   used to be !important on the start values only, so .card.flow (specificity
-   0,2,0 + !important) beat .flow.flow-in (0,2,0 + no !important) and every card
-   in the page sat PERMANENTLY at translateY(20px) scale(.984) - 20px low and
-   1.6% small, never animating in. On mobile, where a card is nearly full width,
-   that read as the whole layout being subtly off. The end state now carries
-   !important and matches the start state's specificity, so it always wins. */
-/* v44: transform:none!important here beat the INLINE transform that the
-   .tilt handler in site.js writes on mousemove, so 3D tilt was dead on
-   every card once it revealed. opacity/filter keep !important (they settle
-   the reveal); the transform lock is dropped so tilt wins. */
-.flow.flow-in{opacity:1!important;filter:none!important}
-/* v42: the card/panel start states further down the file are .card.flow etc
-   at specificity (0,2,0). A bare .flow.flow-in ties on specificity and the
-   later rule wins, which left every card parked at translate3d(0,26px,0)
-   scale(.988) - 26px low, 1.2% small, never arriving. This selector list
-   out-ranks them all at (0,3,0) and is the single authority for the arrival
-   END state. */
-.card.flow.flow-in,.promises div.flow.flow-in,.menucard .day.flow.flow-in,
-.amen div.flow.flow-in,.post.flow.flow-in,.voice.flow.flow-in,
-.costrows>div.flow.flow-in,.statrow>div.flow.flow-in,.plaque.flow.flow-in,
-.step.flow.flow-in,.faq details.flow.flow-in,.loc.flow.flow-in,.day.flow.flow-in,
-.familyband.flow.flow-in,.tourbox.flow.flow-in,.board .post.flow.flow-in,
-.hero .cta-row.flow.flow-in{opacity:1!important;filter:none!important}
-html.reduce .flow{opacity:1!important;transform:none!important}
-
-/* v24: the vacancy badge is a tap now */
-a.vacancy{color:inherit;text-decoration:none}
-/* ============ v27 FLUID - continuous adaptation, any screen, no steps ============ */
-body{font-size:clamp(.95rem,1.7vw,1.02rem);overflow-x:clip;-webkit-text-size-adjust:100%}
-.lede{font-size:clamp(.96rem,1.9vw,1.08rem)}
-.hero{gap:clamp(1.2rem,4vw,2.8rem)!important;padding-top:clamp(2rem,6vw,3.4rem)!important;padding-bottom:clamp(1.6rem,5vw,2.6rem)!important}
-.grid,.gal,.amen,.daystrip{gap:clamp(.7rem,2vw,1.25rem)!important}
-.daystrip{grid-template-columns:repeat(auto-fit,minmax(148px,1fr))!important}
-.statrow{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))!important}
-.loc{gap:clamp(1.2rem,4vw,2.2rem)!important}
-.fcols{gap:clamp(1.2rem,3.5vw,2rem)!important}
-img{height:auto}
-.board .post,.pform,.faq details,.voice,.card p,.post p{overflow-wrap:break-word;hyphens:auto}
-input,select,textarea{font-size:max(16px,.95rem)}
-.brand{font-size:clamp(.98rem,2.4vw,1.12rem)}
-.navlinks{gap:clamp(.9rem,2.4vw,1.6rem)}
-@media(max-width:480px){.navlinks a{padding-inline:.4rem;font-size:.82rem}.fblarge{font-size:clamp(1rem,4vw,1.2rem)}}
-
-/* ============ v29 MOBILE FOCUS - de-cluttered, thumb-first ============ */
-.miniopen{flex:1.1;text-align:center;font-family:var(--font-ui);font-size:.72rem;font-weight:700;color:var(--ochre-ink);background:rgba(246,234,208,.95);padding:.45rem .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* v46: the footer's last line sat FLUSH against the fixed bottom bar on a phone
-   - measured zero gap in a real render. body{padding-bottom} alone does not
-   fix it because the bar is position:fixed and overlays the flow. One variable
-   now drives the bar's real height AND the space reserved beneath the page,
-   so the two cannot drift apart again. */
-:root{--bar-h:56px}
-.mobilebar{padding-bottom:env(safe-area-inset-bottom,0);min-height:var(--bar-h)}
-.mobilebar a{padding:.7rem 0}
-body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 10px)}
-@media(max-width:640px){
-  .gal{grid-template-columns:repeat(2,1fr)!important;gap:.55rem!important}
-  .card,.post,.voice,.menucard .day,.step,.faq details,.tourbox,.pitstats>div{padding:.85rem .8rem!important}
-  .grid,.amen,.gal{margin-top:.9rem!important}
-  .hero h1{font-size:clamp(1.5rem,6.4vw,1.95rem)}
-  .lede{line-height:1.55}
-  .shead{margin-bottom:.6rem}
-  section{padding-top:clamp(1.4rem,4vw,2.4rem)!important;padding-bottom:clamp(1.4rem,4vw,2.4rem)!important}
-}
-@media(max-width:860px){.mail-float{display:none!important}}
-
-/* ============ v31 CRAFT - the details you feel more than see ============ */
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-track{background:var(--water-mid)}
-::-webkit-scrollbar-thumb{background:var(--ink-soft);border-radius:6px;border:2px solid var(--water-mid)}
-::-webkit-scrollbar-thumb:hover{background:#d9a441}
-.btn:active{transform:translateY(1px) scale(.985)}
-.btn:hover::after{opacity:1}
-.shead h2{position:relative;padding-bottom:.45rem}
-.shead h2::after{content:"";position:absolute;left:0;bottom:0;width:2.4em;height:3px;border-radius:2px;background:var(--ochre);transform:scaleX(0);transform-origin:left;transition:transform 760ms var(--ease) 140ms}
-.flow-in .shead h2::after,html.reduce .shead h2::after{transform:scaleX(1)}
-.voice{position:relative}
-.gal figure{transition:transform 760ms var(--ease),box-shadow 760ms var(--ease);border-radius:150px 150px 10px 10px;overflow:hidden}
-.gal figure:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(43,38,32,.14)}
-
-/* ==========================================================================
-   v34 - SEAMLESS PASS
-   Fixes the mobile blur no-op, gives glass panels real compositor layers so
-   the ambient canvas can't force them to repaint, folds the vignette and
-   grain into the canvas stack, and finishes the accessibility gaps.
-   ========================================================================== */
-
-/* --- 1. The mobile blur reduction was DEAD: it sat before the v22 slab which
-   re-set 9-10px with !important. This is the same intent, last in the file. --- */
-@media (max-width:640px){
-  header{
-    backdrop-filter:blur(4px)!important;
-    -webkit-backdrop-filter:blur(4px)!important;
-  }
-  .mobilebar{
-    backdrop-filter:blur(4px)!important;
-    -webkit-backdrop-filter:blur(4px)!important;
-  }
-}
-
-/* --- 2. LAYER PROMOTION. backdrop-filter is doing two jobs: blurring AND
-   promoting each panel to its own GPU layer. The blur we keep; the promotion
-   we now ask for explicitly, so the canvas repaint can't drag every panel
-   back through the main paint pass. translate3d is the cheap promotion. --- */
-/* v42: this promotion was applied to ~15 element classes UNCONDITIONALLY,
-   so every card, plaque, stat row and post carried a permanent GPU layer on
-   every page. On a phone that is dozens of composited layers alive at once,
-   which is what made the mobile scroll feel rough - the compositor runs out
-   of headroom and starts dropping frames. It is now scoped to the elements
-   that actually need it (the ones that genuinely animate or tilt), and the
-   .flow elements are promoted only WHILE they are animating, because
-   will-change on .flow already handles that hand-off. */
-.card,.promises div,.amen div,.post,.voice,.statrow>div,.costrows>div,
-.plaque,.menucard .day,.step,.mapbox,.pitstats,.board .post,
-.teasercard,.fbrand,.fcols>div{
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-}
-/* only these two genuinely move in 3D on interaction */
-.post:hover,.gal figure:hover{
-  transform:translate3d(0,0,0);
-}
-/* hover lifts must stay 3D translates or the layer decomposes mid-interaction */
-.post:hover{transform:translate3d(4px,0,0)}
-.promises div:hover,.menucard .day:hover{transform:translate3d(0,-2px,0)}
-.gal figure:hover{transform:translate3d(0,-4px,0)}
-.btn:hover{transform:translate3d(0,-1px,0)}
-.fcols a:hover{transform:translate3d(2px,0,0)}
-
-/* --- 3. The canvas pauses while you scroll (see fluid.js v34). While paused,
-   the grain/vignette overlays stop being recomputed, so they stay in CSS but
-   lose their blend cost: multiply over a static frame is cheap. --- */
-html.is-scrolling body::before{opacity:.42}
-body::before{transition:opacity 220ms linear}
-
-/* --- 4. ONE easing. The file had five curves doing the same job; these are
-   the two roles only: arrivals and interactions. --- */
-:root{
-  --ease-in:cubic-bezier(.22,.61,.36,1);   /* things arriving */
-  --ease-io:cubic-bezier(.4,0,.2,1);       /* things responding */
-}
-.flow,.reveal,.card,.btn,.fcols a,.navlinks a::after,
-.pform input,.pform select,.pform textarea{
-  transition-timing-function:var(--ease-in);
-}
-.btn:active{transition-timing-function:var(--ease-io)}
-
-/* --- 5. The slideshow caption sat UNDER the dot rail. Lift the caption,
-   give the rail its own floor, and reserve the frame so an odd-sized photo
-   can never bounce the track. --- */
-/* v42: caption is in flow below the image, so the old overlay offset is removed. */
-/* the caption faded on every auto-advance frame; promote it */
-
-/* --- 6. Voice cards rendered TWO opening quotes: the HTML glyph and a CSS
-   ::before. The ::before is the decorative one; suppress it when the quote
-   already carries a real mark. --- */
-.voice .q{text-indent:0}
-.voice.quoted::before{display:none}
-
-/* --- 7. Optical detail: a proportional section rule instead of a fixed bar,
-   and a hairline that survives zoom. --- */
-.shead h2::after{
-  height:1px;
-  width:clamp(28px,6vw,52px);
-  transform-origin:left;
-  transform:scaleX(.28);
-  transition:transform 760ms var(--ease-in);
-}
-.flow-in .shead h2::after,html.reduce .shead h2::after{transform:scaleX(1)}
-
-/* --- 8. Seams: the two-tone call/WhatsApp bar was flattened to one colour by
-   an !important override; restore the call button to paper so the bar reads
-   as two decisions, not one slab. --- */
-.mobilebar .mail-link{
-  background:var(--panel)!important;
-  color:var(--ochre-ink)!important;
-  border-right:1px solid var(--line);
-}
-/* the footer's inner hairline cut across the fade */
-.fbottom{border-top:none!important}
-
-/* --- 9. Accessibility: keep focus visible on the glass, and give the star
-   rail a reachable, visible focus ring instead of display:none inputs. --- */
-:focus-visible{outline:2px solid var(--ochre-ink);outline-offset:2px}
-.stars input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
-.stars input:focus-visible + label{outline:2px solid var(--ochre-ink);outline-offset:3px;border-radius:3px}
-.stars label{cursor:pointer}
-
-/* --- 10. Print: the arrival system left everything below the fold blank. --- */
-@media print{
-  .flow,.reveal{opacity:1!important;transform:none!important}
-  body::before,.vignette{display:none!important}
-}
-
-/* --- 11. Firefox never got the styled scrollbar. --- */
-html{scrollbar-color:var(--ochre) transparent;scrollbar-width:thin}
-
-/* --- 12. Reduced motion: the slideshow kept auto-advancing and anchor
-   scrolling still animated. Both now honour the preference. --- */
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-}
-
-/* v34: visible-to-screen-readers-only text (star rating names) */
-.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
-
-/* ==========================================================================
-   v35 - ONE BODY OF WATER
-   The canvas paints the water. These layers are the AIR ABOVE IT: the grain is
-   suspended silt, the vignette is the depth falloff at the pond's edge, and the
-   frame wash is the light pooling on the surface. They all share one light
-   travel time (--tide, 9.5s) so nothing reads as a separate effect stacked on
-   top. Everything that moves here moves on transform/opacity only.
-   ========================================================================== */
-:root{
-  --tide: 9.5s;                  /* one full pass of surface light */
-  --tide-ease: cubic-bezier(.45,.05,.55,.95);
-}
-
-/* --- the grain is silt hanging in the water: it drifts, very slowly, and
-   rises a little. Animating background-position is paint work, so it rides a
-   pre-tiled layer instead and only moves when the page is not scrolling. --- */
-body::before{
-  inset:-24px!important;                       /* oversized so drift has room */
-  opacity:.5;
-  background-image:var(--weave),var(--grain);
-  background-repeat:repeat,repeat;
-  background-size:auto,3px 3px;
-  animation:siltdrift 61s linear infinite;
-}
-/* v42 MOBILE: two full-screen position:fixed layers (multiply grain + screen
-   light) blended over a canvas that is itself repainting is the single most
-   expensive thing on this page for a phone GPU, and it is what makes the
-   mobile scroll feel rough. On phones we drop the grain layer entirely (it is
-   a 3px tiled texture at 50% - invisible at phone pixel density) and flatten
-   the screen-blend light to a plain overlay, so the compositor has one
-   animated layer instead of three. The canvas water is what people actually
-   see; the grain was competing with it for headroom. */
-@media(max-width:700px){
-  body::before{display:none!important}
-  body::after{mix-blend-mode:normal!important;opacity:.5!important}
-  .bgfx{transition:none}
-}
-@keyframes siltdrift{
-  0%   {transform:translate3d(0,0,0)}
-  25%  {transform:translate3d(-7px,-11px,0)}
-  50%  {transform:translate3d(4px,-19px,0)}
-  75%  {transform:translate3d(7px,-8px,0)}
-  100% {transform:translate3d(0,0,0)}
-}
-/* when the page moves, the water moves with it - and the silt settles */
-html.is-scrolling body::before{animation-play-state:paused;opacity:.34}
-html.was-scrolling body::before{opacity:.4}
-
-/* --- vignette: the pond edge. Deepens while you scroll (you are moving
-   through the water), settles back when you stop. --- */
-.vignette{
-  background:
-    radial-gradient(125% 95% at 50% 44%,transparent 50%,rgba(43,38,32,.085) 100%),
-    radial-gradient(150% 110% at 50% 120%,rgba(43,38,32,.055),transparent 58%);
-  transition:opacity 760ms var(--tide-ease);
-}
-html.is-scrolling .vignette{opacity:.70}
-html.was-scrolling .vignette{opacity:.84}
-
-/* --- the light pooling on the surface, on the content frame itself.
-   One ::after on body, never touching layout. --- */
-body::after{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(80% 55% at 50% -8%,rgba(255,252,244,.20),transparent 62%),
-             radial-gradient(60% 40% at 12% 104%,rgba(217,164,65,.10),transparent 60%);
-  mix-blend-mode:screen;
-  opacity:.6;
-  animation:surfacebr var(--tide) var(--tide-ease) infinite alternate;
-  transition:opacity 760ms linear;
-}
-@keyframes surfacebr{
-  from{transform:translate3d(0,0,0) scale(1)}
-  to  {transform:translate3d(0,-1.6%,0) scale(1.035)}
-}
-html.is-scrolling body::after{opacity:.92;transition:opacity 220ms linear}
-/* v39: the light LINGERS. It comes up with the water and takes nearly a
-   second to sink back, so the surface reads as still settling rather than
-   being switched off the instant the page stops. */
-html.was-scrolling body::after{opacity:.78;transition:opacity .85s var(--tide-ease)}
-
-/* --- arrival: content does not "drop in", it RESURFACES - rising with a
-   little water drag, the way something floats up off a pond bed. --- */
-.flow{
-  opacity:0;
-  /* v57: no scale() here. Scaling a block moves its left and right
-     edges inward, so every heading visibly shifted ~3px sideways during the
-     reveal and then snapped back to the column. A reveal should lift. */
-  transform:translate3d(0,20px,0);
-  filter:blur(3px);
-  transition:opacity 760ms var(--ease-in),
-             transform 760ms cubic-bezier(.16,.84,.36,1),
-             filter 760ms var(--ease-in);
-}
-.flow.flow-in{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
-/* cards get a longer float so they read as heavier, deeper objects */
-.card.flow,.promises div.flow,.menucard .day.flow,.amen div.flow,
-.post.flow,.voice.flow,.costrows>div.flow{
-  transform:translate3d(0,26px,0);
-  transition-duration:760ms,760ms,760ms;
-}
-
-/* --- the ground itself drifts a hair as you scroll (parallax breathing),
-   handled on the canvas; this only guarantees no hard edge ever shows. --- */
-.bgfx{transition:none}
-
-/* --- section rules fill like water finding its level --- */
-.shead h2::after{transform-origin:left;will-change:transform}
-
-/* --- links and buttons get a ripple-scale nudge, not a jump --- */
-.btn,.fcols a{transition:transform 380ms cubic-bezier(.2,.8,.3,1),
-                          background-color 380ms var(--ease-io),
-                          color 380ms var(--ease-io)}
-
-/* --- reduced motion: keep the water as a still photograph --- */
-html.reduce body::before,
-html.reduce body::after{animation:none}
-html.reduce .vignette{opacity:1}
-html.reduce .flow{filter:none;transform:none;opacity:1}
-@media (prefers-reduced-motion: reduce){
-  body::before,body::after{animation:none!important}
-  .flow{opacity:1!important;transform:none!important;filter:none!important}
-}
-
-/* v35 guard, rewritten in v40. It used to pin --paper -> --paper-deep, an
-   almost-white wash, which was itself flattening the water after the v40 base
-   was set. Now it simply re-asserts the v40 water column so ANY later rule
-   cannot collapse the ground back to a single pale value. */
-html{
-  background:linear-gradient(180deg,var(--water-top) 0%,var(--water-mid) 38%,var(--water-deep) 100%)!important;
-  background-attachment:fixed!important;
-}
-
-
-/* ==========================================================================
-   v38 - AUDIT PASS
-   Contrast repairs, the hidden-attribute fix, and killing dead selectors.
-   ========================================================================== */
-
-/* ochre is ORNAMENT. The moment it is text it fails contrast, so anything
-   that was ochre-as-text moves onto the readable terracotta. */
-.tag.gold{color:var(--terra-dark)!important;background:rgba(246,234,208,.9)}
-.voice .q{color:var(--ochre-ink)}
-.voice .strs{color:var(--terra-dark)}
-/* small terracotta text: 4.21:1 fails AA for body size, push to terra-dark */
-.tag,.go{color:var(--terra-dark)}
-/* sub-.8rem muted text over moving glass needs more than #7a6f60 */
-.dtime,.who,figcaption,.fbottom{color:var(--muted)}
-
-/* the vacancy pill is display:inline-flex with no [hidden] reset, so an empty
-   badge rendered in the header on every page. */
-.vacancy[hidden]{display:none!important}
-
-/* star labels were 32px tall; WCAG target is 44 */
-.stars label{padding:.4rem .12rem;min-width:44px;min-height:44px;display:inline-flex;
-             align-items:center;justify-content:center}
-
-/* lightboxes had no dialog semantics */
-
-
-/* ==========================================================================
-   v38 - DEEP SWEEP
-   ========================================================================== */
-
-
-/* dead selectors: .chip and .pitstats match nothing in any page */
-
-/* v45: the GSAP motion layer's one piece of chrome. A 2px terracotta rule under
-   the header showing how far down the page you are - the only global addition,
-   and it uses --terra (the action colour) because it is a navigational signal,
-   not ornament. Hidden entirely under reduced motion. */
-.scrollbar-progress{
-  position:fixed;top:0;left:0;right:0;height:2px;z-index:120;
-  background:linear-gradient(90deg,var(--terra),var(--ochre));
-  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;
-}
-@media (prefers-reduced-motion: reduce){ .scrollbar-progress{display:none} }
-html.reduce .scrollbar-progress{display:none}
-
-/* v46: clearance for the fixed bottom bar.
-   The bar is position:fixed, so it is OUT of flow and the page's last flow box
-   (the footer) ends exactly where the bar begins - measured 0px gap in a real
-   mobile render, which is the "overlap" he saw. body{padding-bottom} cannot fix
-   this because nothing follows the footer in the flow. Reserve the space on the
-   footer itself, driven by the same --bar-h variable the bar uses. */
-@media (max-width:860px){
-  footer{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0) + 14px)}
-  body{padding-bottom:0}
-}
-
-/* v47: the ochre surface glow was bleeding into the page gutters.
-   body::after paints two radial gradients with mix-blend-mode:screen, one of them
-   rgba(217,164,65,.10) anchored bottom-left. The content column is narrower than
-   the viewport, so on a wide window that glow filled the gutters either side and
-   read as a tan band sitting BEHIND the rate panels (visible beside and between
-   them, since those panels are opaque but the gutter is not).
-   Constrain the glow to the content column and clamp it so it cannot pool in the
-   margins. The water canvas keeps full bleed; only this decorative glow is scoped. */
-body::after{
-  background:
-    radial-gradient(80% 55% at 50% -8%,rgba(255,252,244,.20),transparent 62%),
-    radial-gradient(55% 38% at 18% 102%,rgba(217,164,65,.07),transparent 58%);
-}
-@media (min-width:1100px){
-  /* on wide screens the gutters must read as plain paper, not ochre */
-  body::after{
-    background:
-      radial-gradient(70% 50% at 50% -8%,rgba(255,252,244,.18),transparent 60%);
-  }
-}
-
-/* ══════════════════════════════════════════════════════════════════════════
-   v48 - ONE MOTION SCALE
-   The site had ~8 different durations (220ms 220ms 220ms 380ms 760ms 760ms .7s 760ms)
-   for the same class of interaction, which is what makes a page feel assembled
-   rather than designed: nothing shares a rhythm. Everything below is derived
-   from four steps, so every hover, press and reveal is on the same beat.
-   0 = instant feedback, 1 = hover, 2 = state change, 3 = arrival.
-   ══════════════════════════════════════════════════════════════════════════ */
-:root{
-  --t0:140ms;   /* press / click feedback - must feel instant */
-  --t1:220ms;   /* hover, colour, small transforms */
-  --t2:380ms;   /* state changes: open, close, swap */
-  --t3:760ms;   /* arrival: reveals, entrances */
-
-  /* one entering curve, one exiting. Material's, because they are the pair
-     that actually reads as "smooth" rather than "bouncy" or "dull". */
-  --e-out:cubic-bezier(.22,.61,.36,1);     /* decelerate - things arriving */
-  --e-in-out:cubic-bezier(.4,0,.2,1);      /* both ends - things moving */
-}
-
-/* ---- hover + press: one duration, one curve, everywhere ---- */
-.btn,.navlinks a,.fcols a,.mobilebar a{transition:transform var(--t1) var(--e-out),
-  background-color var(--t1) var(--e-in-out),color var(--t1) var(--e-in-out),
-  box-shadow var(--t1) var(--e-in-out)}
-.btn:active{transform:translateY(1px) scale(.985);transition-duration:var(--t0)}
-a:active{transition-duration:var(--t0)}
-
-.card,.promises div,.amen div,.menucard .day,.post,.tourbox,
-.pitstats,.board .post,.voice,.statrow>div,.faq details,.costrows>div{
-  transition:transform var(--t1) var(--e-out),box-shadow var(--t1) var(--e-out),
-             border-color var(--t1) var(--e-in-out)}
-
-/* ---- the whole-document scroll: kill the browser's own smoothing on
-   touch, keep it on desktop where it feels intentional ---- */
-@media (hover:none){
-  html{scroll-behavior:auto}
-}
-
-/* ---- focus: visible, on the same beat, never removed ---- */
-:focus-visible{outline:2px solid var(--terra);outline-offset:3px;
-  transition:outline-offset var(--t1) var(--e-out)}
-:focus:not(:focus-visible){outline:none}
-
-/* ---- the one genuinely new thing: a soft scroll-linked settle.
-   A held element that eases its own entrance reads as weight; a hard
-   intersection snap reads as a jump cut. This only sets a custom property
-   from scroll position - no per-frame JS, no rAF loop. ---- */
-@property --settle{syntax:"<number>";inherits:false;initial-value:0}
-
-/* v48 - the scroll-velocity response.
-   --sv is set by motion.js from the user's actual scroll speed (0..1) and
-   decays back to 0. Nothing here animates on its own; the page just leans
-   into the scroll and settles when you stop. That settle is the "seamless"
-   part - a page that reacts to how you move, not just where you are. */
-:root{--sv:0}
-
-/* the marks lift and lean very slightly with scroll speed */
-html.is-moving .lotusmark{
-  transform:translateY(calc(var(--sv) * -1.5px));
-  transition:transform 140ms linear;
-}
-html:not(.is-moving) .lotusmark{
-  transform:translateY(0);
-  transition:transform var(--t2) var(--e-out);
-}
-
-/* the water surface brightens a touch as you move through it */
-html.is-moving body::after{opacity:calc(.6 + var(--sv) * .3)}
-
-/* the scroll bar fills a little faster than the page, so it leads the eye */
-html.is-moving .scrollbar-progress{filter:brightness(1.12)}
-
-/* reduced motion: the response is decoration, so remove it entirely */
-@media (prefers-reduced-motion: reduce){
-  html.is-moving .lotusmark{transform:none}
-  html.is-moving body::after{opacity:.6}
-}
-html.reduce .lotusmark{transform:none}
-
-/* v49 - Prajna gallery: real photos first, motion kept on a short leash. */
-.gallery-shell{padding:clamp(1rem,3vw,2rem) 0 3rem}
-.gallery-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem 1.5rem;flex-wrap:wrap;margin:0 0 1.25rem}
-.gallery-count{font-family:var(--font-ui);font-size:.8rem;color:var(--muted);margin:.45rem 0}
-.gallery-filters{display:flex;flex-wrap:wrap;gap:.45rem}
-.gallery-filters button{min-height:44px;padding:.55rem .9rem;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);font:600 .78rem var(--font-ui);cursor:pointer;transition:background-color var(--t1) var(--e-in-out),color var(--t1) var(--e-in-out),border-color var(--t1) var(--e-in-out),transform var(--t1) var(--e-out)}
-.gallery-filters button:hover{transform:translateY(-2px);border-color:var(--terra)}
-.gallery-filters button[aria-pressed="true"]{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.8rem,1.8vw,1.25rem);align-items:start}
-.gallery-item{min-width:0;margin:0;padding:.55rem;background:var(--panel);border:1px solid rgba(58,50,42,.08);border-radius:14px;box-shadow:0 8px 22px rgba(58,50,42,.06);overflow:hidden;transition:box-shadow var(--t2) var(--e-out),border-color var(--t2) var(--e-in-out)}
-.gallery-item[hidden]{display:none!important}
-.gallery-image-link{--tilt-x:0deg;--tilt-y:0deg;position:relative;display:block;overflow:hidden;border-radius:10px;background:var(--water-mid);aspect-ratio:3/2;perspective:900px;transform:perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));transform-style:preserve-3d;transition:transform 220ms var(--e-out)}
-/* v57: the photos are all 1200x800 = exactly 3:2 and the cell is 3:2, so
-   object-fit:cover never actually crops. It stays as a guard in case a
-   future photo has a different ratio. */
-.gallery-image-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 760ms var(--e-out),filter 380ms var(--e-in-out)}
-.gallery-image-link:hover img,.gallery-image-link:focus-visible img{transform:scale(1.028);filter:saturate(1.03)}
-.gallery-image-link.is-tilting{transform:perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-2px)}
-.gallery-zoom{position:absolute;right:.75rem;bottom:.75rem;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(250,245,236,.94);color:var(--ink-deep);font:500 1.35rem/1 var(--font-ui);opacity:0;transform:translateY(4px);transition:opacity var(--t1) var(--e-out),transform var(--t1) var(--e-out)}
-.gallery-image-link:hover .gallery-zoom,.gallery-image-link:focus-visible .gallery-zoom{opacity:1;transform:translateY(0)}
-.gallery-item figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;padding:.72rem .45rem .4rem;color:var(--ink);font-size:.9rem;font-weight:650}
-.gallery-kind{flex:none;color:var(--muted);font:500 .68rem var(--font-ui);letter-spacing:.035em}
-.gallery-motion-ready .gallery-item:not(.gallery-visible){opacity:0;transform:translateY(12px)}
-.gallery-motion-ready .gallery-item{transition:opacity 760ms var(--e-out),transform 760ms var(--e-out),box-shadow var(--t2) var(--e-out),border-color var(--t2) var(--e-in-out)}
-.gallery-motion-ready .gallery-item.gallery-visible{opacity:1;transform:translateY(0)}
-.gallery-item:hover{border-color:rgba(192,86,33,.22);box-shadow:0 14px 32px rgba(58,50,42,.12)}
-@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){
-  .gallery-toolbar{gap:.35rem;margin-bottom:1rem}
-  .gallery-filters{gap:.35rem}
-  .gallery-filters button{min-height:44px;padding:.45rem .7rem;font-size:.72rem}
-  .gallery-grid{grid-template-columns:minmax(0,1fr);gap:.85rem}
-  .gallery-image-link{aspect-ratio:3/2}
-  .gallery-zoom{opacity:1;transform:none;width:34px;height:34px}
-}
-@media(prefers-reduced-motion:reduce){
-  .gallery-image-link,.gallery-image-link img,.gallery-item,.gallery-filters button,.gallery-step,.gallery-zoom{transition:none!important}
-  .gallery-motion-ready .gallery-item:not(.gallery-visible){opacity:1;transform:none}
-}
-
-/* immersive fullscreen lightbox with 3D parallax */
-.lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 380ms ease,visibility 380ms ease}
-.lightbox-backdrop.is-open{opacity:1;visibility:visible}
-.lightbox-container{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:clamp(1rem,3vw,3rem)}
-.lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem}
-.lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;transform:scale(.92) translateZ(0);transition:transform 760ms cubic-bezier(.34,1.56,.64,1);will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
-.lightbox-backdrop.is-open .lightbox-image{transform:scale(1) translateZ(0)}
-.lightbox-image-wrapper.is-tilting .lightbox-image{transition:none}
-.lightbox-close{position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);z-index:10001;width:48px;height:48px;border-radius:50%;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:var(--paper);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 220ms ease,transform 220ms ease}
-.lightbox-close:hover{background:rgba(250,245,236,.18);transform:scale(1.05)}
-.lightbox-step{position:absolute;top:50%;transform:translateY(-50%);z-index:10001;width:48px;height:56px;border-radius:999px;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:var(--paper);font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 220ms ease,transform 220ms ease}
-.lightbox-step:hover{background:rgba(250,245,236,.18);transform:translateY(-50%) scale(1.05)}
-.lightbox-prev{left:clamp(1rem,3vw,2rem)}.lightbox-next{right:clamp(1rem,3vw,2rem)}
-.lightbox-counter{position:absolute;bottom:clamp(1rem,3vw,2rem);left:50%;transform:translateX(-50%);z-index:10001;color:rgba(250,245,236,.8);font:500 .82rem var(--font-ui);font-variant-numeric:tabular-nums;margin:0}
-.lightbox-caption{color:var(--paper);text-align:center;font-size:.95rem;margin-top:.8rem}
-@media(max-width:900px){
-  .lightbox-image{max-width:95vw;max-height:80vh}
-  .lightbox-step{width:40px;height:48px;font-size:1.7rem}
-}
-@media(max-width:560px){
-  .lightbox-image{max-width:98vw;max-height:75vh}
-  .lightbox-close,.lightbox-step{width:40px;height:44px;font-size:1.5rem}
-  .lightbox-prev{left:.75rem}.lightbox-next{right:.75rem}
-}
-
-/* v50 - one owner per arrival transform, with hover states restored after it. */
-.promises div.flow.flow-in,.amen div.flow.flow-in,.post.flow.flow-in,
-.voice.flow.flow-in,.costrows>div.flow.flow-in,.menucard .day.flow.flow-in{
-  transform:translate3d(0,0,0)
-}
-.promises div.flow.flow-in:hover{transform:translateY(-2px)}
-.post.flow.flow-in:hover{transform:translateX(4px)}
-.menucard .day.flow.flow-in:hover{transform:translateY(-2px)}
-/* ══════════════════════════════════════════════════════════════════════════
-   v51 - FRESH WATER. One coherent pond.
-
-   MEASURED BEFORE (this is why, not vibes):
-   The caustics were drawing at alpha 0.30/0.20 with additive 'lighter'
-   compositing, onto a bed already sitting at luminance 247-251. Adding light
-   to near-white can only push toward 255 - the measured per-tile standard
-   deviation was 2.8-7, which is flat paper. The water could not possibly
-   read, because there was no headroom left to draw into.
-
-   Meanwhile two warm ground systems were fighting: this file set the html to a
-   tan column (#efe5d2 -> #e4d8bd, lum 230->217) while the canvas painted its
-   own near-white bed on top of it. Neither one was ever fully seen. On top of
-   that, a full-screen multiply grain at 0.5 plus a vignette was dragging tiles
-   down to luminance 155 with sd 22 - that is the mud, not water.
-
-   THE FIX, three parts:
-   1. The ground is ONE column, tuned mid-tone so light has somewhere to go.
-   2. The caustic filaments are brighter and thicker (done in fluid.js), so the
-      bed-to-filament contrast is what your eye reads as water.
-   3. The grain and vignette stop muddying it. Texture, not fog.
-   ══════════════════════════════════════════════════════════════════════════ */
-:root{
-  /* The column. A shallow pond over warm earth: the light end is lifted and
-     barely cooled so it reads CLEAN, the deep end keeps the earth warmth so
-     it never goes grey. Luminance runs ~235 down to ~205 - deliberately NOT
-     near-white, because near-white is exactly what killed the caustics. */
-  /* single-source */
-  /* single-source */
-  /* single-source */
-
-  --paper:var(--paper);
-  --panel:#fdfaf4;
-}
-html{
-  background:linear-gradient(180deg,
-    var(--water-top) 0%,
-    var(--water-mid) 42%,
-    var(--water-deep) 100%)!important;
-  background-attachment:fixed!important;
-}
-
-/* The silt grain: texture you can feel, not fog you can see. Multiply was
-   turning the whole column to mud at 0.5; this is a whisper. */
-body::before{
-  opacity:.22!important;
-  mix-blend-mode:multiply;
-}
-/* The pond edge. Barely there - it should frame the water, not dim it. */
-.vignette{
-  background:
-    radial-gradient(128% 96% at 50% 44%,transparent 58%,rgba(58,50,42,.045) 100%),
-    radial-gradient(150% 110% at 50% 122%,rgba(58,50,42,.03),transparent 62%);
-}
-html.is-scrolling .vignette{opacity:.78}
-html.was-scrolling .vignette{opacity:.88}
-
-/* The surface light. Cool white, because fresh water catches a clean sky.
-   Screen blend stays, but it lifts rather than yellows. */
-body::after{
-  background:radial-gradient(84% 58% at 50% -10%,rgba(255,255,252,.26),transparent 64%),
-             radial-gradient(62% 42% at 10% 106%,rgba(230,214,176,.10),transparent 62%);
-  mix-blend-mode:screen;
-  opacity:.62;
-}
-
-/* Panels sit ON the water, so they need to read as sitting on it: a hair of
-   warmth at the top edge where light would catch, not a flat white slab. */
-.card,form.pform,.faq details,.promises div,.amen div,.statrow>div,
-.menucard .day,.post,.teasercard,.pitstats>div,.plaque{
-  background:linear-gradient(180deg,rgba(253,250,244,.94),rgba(250,246,238,.90));
-}
-/* The one hard edge that used to fight the water: the header. */
-header{
-  background:rgba(250,246,238,.72)!important;
-  backdrop-filter:blur(8px) saturate(1.04)!important;
-  -webkit-backdrop-filter:blur(8px) saturate(1.04)!important;
-}
-/* ══════════════════════════════════════════════════════════════════════════
-   v53 - EMAIL CHANNEL + REAL RATES
-   .mail-link replaces .wa-link everywhere; the floating desktop button is
-   renamed too so no CSS still targets a channel we have closed.
-   ══════════════════════════════════════════════════════════════════════════ */
-.mail-float{position:fixed;right:22px;left:auto;bottom:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:var(--terra);display:none;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(154,69,34,.35),inset 0 0 0 1.5px rgba(250,246,240,.3),inset 0 0 0 4px var(--terra);transition:transform var(--t1) var(--e-out),background-color var(--t1) var(--e-in-out)}
-.mail-float:hover{transform:translateY(-3px) scale(1.05);background-color:var(--terra-dark)}
-.mail-float svg{width:24px;height:24px;fill:#fff}
-.mail-float::after{content:"Email us";position:absolute;right:66px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--paper);font-family:var(--font-ui);font-size:.72rem;padding:.4rem .7rem;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--t1) var(--e-in-out)}
-.mail-float:hover::after{opacity:1}
-@media(min-width:861px){.mail-float{display:flex}}
-@media(max-width:860px){.mail-float{display:none!important}}
-
-/* the second price (with dinner) sits under the headline rate */
-.price-alt{margin:-.35rem 0 .5rem;font-family:var(--font-ui);font-size:.8rem;color:var(--ink)}
-.price-alt span{color:var(--terra-dark);font-weight:700}
-
-/* the terms strip under the cost card */
+@media(max-width:520px){.daystrip{grid-template-columns:1fr}}
+.mapbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;font-size:.9rem}
+.mapbox .addr{padding:1rem 1.2rem}
+.mapbox .addr small{color:var(--muted)}
+.mapbox iframe{width:100%;height:260px;border:0;display:block}
+.costrows{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.costrows>div{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;background:var(--panel);border:1px dashed var(--ochre);border-radius:var(--r-sm);padding:.7rem .9rem;font-family:var(--font-ui);font-size:.83rem}
+.costrows b{color:var(--terra-dark);white-space:nowrap}
+.menucard{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.6rem}
+.menucard .day{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:.75rem .8rem}
+.menucard .day b{display:block;font-family:var(--font-ui);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.3rem}
+.menucard .day span{font-size:.8rem;color:var(--muted);line-height:1.5;display:block}
+.note{font-size:.8rem;color:var(--muted);margin-top:1.1rem}
+
+/* costcard (price card wrap) */
+.costcard{margin-top:1.5rem}
 #termsline{display:block;font-family:var(--font-ui);font-size:.8rem;color:var(--muted);margin-top:.7rem}
 
-/* the mobile bar is now a single email action - give it the full width */
-@media(max-width:860px){.mobilebar .mail-link{flex:1}}
+/* gallery (incl. lightbox) */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.05rem;margin-top:1.4rem}
+.gal figure{margin:0;cursor:zoom-in;overflow:hidden;border-radius:var(--r-sm);position:relative}
+.gal img,.gal .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-sm);display:block}
+.gal figcaption{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);padding:.5rem .2rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.8rem,1.8vw,1.25rem);align-items:start}
+.gallery-item{min-width:0;margin:0;padding:.55rem;background:var(--panel);border:1px solid rgba(58,50,42,.08);border-radius:var(--r-sm);box-shadow:0 8px 22px rgba(58,50,42,.06);overflow:hidden}
+.gallery-image-link{position:relative;display:block;overflow:hidden;border-radius:10px;background:var(--water-mid);aspect-ratio:3/2}
+.gallery-image-link img{display:block;width:100%;height:100%;object-fit:cover}
+.gallery-item figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;padding:.72rem .45rem .4rem;color:var(--ink);font-size:.9rem;font-weight:650}
+.gallery-kind{flex:none;color:var(--muted);font:500 .68rem var(--font-ui);letter-spacing:.035em}
+@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lightbox-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(22,20,17,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 380ms ease,visibility 380ms ease}
+.lightbox-backdrop.is-open{opacity:1;visibility:visible}
+.lightbox-container{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:1rem}
+.lightbox-image-wrapper{perspective:1200px;transform-style:preserve-3d;will-change:transform;max-width:90vw;max-height:85vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem}
+.lightbox-image{display:block;max-width:90vw;max-height:85vh;object-fit:contain;box-shadow:0 24px 80px rgba(0,0,0,.5);border-radius:6px}
+.lightbox-close{position:absolute;top:1rem;right:1rem;z-index:10001;width:48px;height:48px;border-radius:50%;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:var(--paper);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-step{position:absolute;top:50%;transform:translateY(-50%);z-index:10001;width:48px;height:56px;border-radius:999px;border:1px solid rgba(250,245,236,.2);background:rgba(250,245,236,.08);color:var(--paper);font-size:2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-step:hover{background:rgba(250,245,236,.18);transform:translateY(-50%) scale(1.05)}
+.lightbox-prev{left:1rem}.lightbox-next{right:1rem}
+.lightbox-counter{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10001;color:rgba(250,245,236,.8);font:500 .82rem var(--font-ui);font-variant-numeric:tabular-nums}
+.lightbox-caption{color:var(--paper);text-align:center;font-size:.95rem;margin-top:.8rem}
+@media(max-width:900px){.lightbox-image{max-width:95vw;max-height:80vh}}
+@media(max-width:560px){.lightbox-close,.lightbox-step{width:40px;height:44px;font-size:1.5rem}}
 
-/* clipboard confirmation under the share button */
-#share-note{display:none;font-family:var(--font-ui);font-size:.78rem;color:var(--terra-dark);margin-top:.6rem}
+/* CTA strip + footer */
+.cta-strip{background:var(--ink-deep);color:var(--paper);padding:3rem 0}
+.cta-strip h2{color:var(--paper)}
+.cta-strip p{color:var(--ink-soft);margin:.5rem 0 1.3rem}
+footer{margin-top:2.4rem;border-top:1px solid var(--line)}
+.fcols{display:grid;grid-template-columns:1.4fr repeat(4,.8fr);gap:2rem;padding:2.4rem 0 1.6rem}
+.fbrandname{font-size:1.15rem;font-weight:400;font-family:var(--font-head);color:var(--ink)}
+.fbrandname span{color:var(--terra-dark)}
+.fcols p{font-size:.85rem;margin-top:.6rem;max-width:16rem}
+.fcols h4{font-family:var(--font-ui);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+.fcols a{display:block;font-family:var(--font-ui);font-size:.82rem;color:var(--ink);text-decoration:none;padding:.22rem 0}
+.fcols a:hover{color:var(--terra-dark)}
+.fbottom{border-top:1px solid var(--line);padding:1.1rem 0 2.6rem;font-family:var(--font-ui);font-size:.74rem;color:var(--muted);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+@media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fcols{grid-template-columns:1fr}}
 
-/* ══════════════════════════════════════════════════════════════════════════
-   v55 - POLISH PASS
-   1. The font stack was dead (SCSS nesting in a .css file) - fixed above.
-   2. Tap targets: the brand, the vacancy pill and the skip link were all under
-      44px, which is the WCAG 2.5.5 minimum and the single easiest thing to
-      get wrong on a phone.
-   3. Section rhythm: .flat sections were at 25.6px and normal ones at 51.2px -
-      a silent 2x jump that read as a mistake rather than a choice.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* mobile bar + reduced motion */
+.mobilebar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.84);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;z-index:50}
+.mobilebar a{flex:1;text-align:center;padding:.85rem 0;font-family:var(--font-ui);font-size:.85rem;font-weight:700;text-decoration:none}
+.mobilebar .mail-link{color:var(--paper);background:var(--terra);border:none}
+@media(max-width:860px){.loc{grid-template-columns:1fr}.pform .row{grid-template-columns:1fr}}
+@media (pointer:coarse){.mobilebar a{padding:.7rem 0}}
+@media(max-width:640px){.costrows{grid-template-columns:1fr}}
+@media(max-width:560px){.statrow{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-/* 2. tap targets - hit area grows, the visual stays the same size */
-.brand{min-height:44px;padding:.4rem 0;display:inline-flex;align-items:center}
-a.vacancy{min-height:44px;padding:0 .55rem;display:inline-flex;align-items:center;white-space:nowrap}
-.skip{min-height:44px;display:inline-flex;align-items:center}
-.fcols a,.mobilebar a{min-height:44px;display:flex;align-items:center}
-.fcols a{padding:.55rem 0}
-.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center}
+/* scroll-reveal wrapper */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity var(--t2) var(--ease),transform var(--t2) var(--ease);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
-/* 3. one section rhythm. .flat keeps a lighter top gap (it always follows a
-   page heading) but the jump is 1.4x, not 2x, so it reads as intent. */
-section{padding:clamp(2.2rem,4.5vw,3.4rem) 0}
-section.flat{padding-top:clamp(1.6rem,3vw,2.2rem)}
+/* arched folk photo (about / gallery) */
+.img-arch{border-radius:var(--r-md) var(--r-md) 8px 8px;display:block;overflow:hidden}
+.img-arch img{width:100%;display:block;border-radius:var(--r-md) var(--r-md) 8px 8px}
+.caption{font-family:var(--font-ui);font-size:.74rem;color:var(--muted);padding:.7rem .2rem}
 
-/* ══════════════════════════════════════════════════════════════════════════
-   v55.1 - CONTRAST: the money must be readable.
-   Measured, not assumed:
-     .costrows b  (the rent + deposit figures) rendered var(--terra) on #fdfaf4
-     = 4.39:1 at 0.83rem - normal-size text, so WCAG AA needs 4.5:1. It was
-     failing, on the single most important string on the page.
-     .price       var(--terra) on #fdfaf4 = 4.39:1, but it is 1.9rem so it passes
-     as large text. Darkened anyway: the two prices should read as one voice,
-     and this is the content people came for.
-     Verified after the change: .costrows b 6.21:1, .price 6.21:1. Both PASS.
+/* hero note line */
+.hero-note{font-size:1.05rem;color:var(--ink);font-weight:400}
+.hero-note b{color:var(--terra-dark)}
 
-   Static audit also flagged --ink-soft and --ochre as text. Both are false
-   positives: the .voice block that used ochre was removed in v50, and
-   ink-soft only ever paints on the dark .feature / .cta-strip bands, where
-   it reads at 5.7:1 or better.
-   ══════════════════════════════════════════════════════════════════════════ */
-.costrows b{color:var(--terra-dark)}
-.price{color:var(--terra-dark)}
-.price-alt span{color:var(--terra-dark)}
+/* hidden honeypot + its label */
+.hp{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
+.hp label{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);margin-bottom:.3rem}
 
-/* ══════════════════════════════════════════════════════════════════════════
-   v57 - GALLERY, REBUILT FOR "NOT CROPPED, EFFORTLESS, ELEGANT"
-   - every cell is exactly the photo's own 3:2 ratio, so nothing is cut
-   - the decorative "+" badge is gone; the whole frame is the target and the
-     cursor plus a real focus ring carry the affordance instead
-   - the lift on hover is smaller (1.028) so it reads as a photograph moving,
-     not a carousel animation
-   ══════════════════════════════════════════════════════════════════════════ */
-.gallery-image-link{cursor:zoom-in}
-.gallery-image-link:focus-visible{outline:3px solid var(--terra);outline-offset:4px;border-radius:10px}
-.gallery-item{padding:.5rem}
-.gallery-item figcaption{padding:.7rem .5rem .45rem;align-items:baseline}
-.gallery-grid{gap:clamp(.7rem,1.6vw,1.1rem)}
-
-/* ══════════════════════════════════════════════════════════════════════════
-   v58.1 - FORM CONTROLS MEET THE 44px TOUCH TARGET
-   Measured at 390px: name 37.8px, phone 37.8px, interest select 39.8px,
-   move-in 37.8px. All under the 44px minimum, and these are the four controls
-   a visitor has to touch to reach you, so they matter more than a nav link.
-   padding .68rem + .85rem line-height gave 37.8; a min-height keeps the
-   comfortable desktop size untouched and only lifts the small end.
-   ══════════════════════════════════════════════════════════════════════════ */
-.pform input,.pform select,.pform textarea{min-height:46px}
-.pform textarea{min-height:110px}
-.pform select{padding-right:2.2rem}
-
-/* ══════════════════════════════════════════════════════════════════════════
-   v59 - SENTENCE-LEVEL LINK GETS A REAL HIT AREA
-   pune.html's lede is a single link wrapping the whole sentence, so its hit
-   area was only 19px tall - the visitor has to land on the glyphs. Padding
-   grows the target to ~44px; the negative margin cancels the layout shift so
-   the line spacing on screen is unchanged.
-   Inline links inside a sentence (discover.html "feedback form") are left
-   alone - WCAG 2.5.8 exempts those, and padding there would break the flow.
-   ══════════════════════════════════════════════════════════════════════════ */
-.lede > a:only-child{display:inline-block;padding:.72rem 0;margin:-.72rem 0}
-
-/* ══════════════════════════════════════════════════════════════════════════
-   v60 - DESIGN SYSTEM POLISH
-   ══════════════════════════════════════════════════════════════════════════ */
-
-/* --- 1. Consistent spacing scale (8px base) --- */
-:root{
-  --sp-xs:8px; --sp-sm:16px; --sp-md:24px; --sp-lg:32px; --sp-xl:48px; --sp-2xl:64px;
-}
-
-/* --- 2. Scroll-driven reveal animations via Intersection Observer --- */
-[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity var(--t3) var(--e-out),transform var(--t3) var(--e-out);will-change:opacity,transform}
-[data-reveal="scale-in"]{transform:scale(.96)}
-[data-reveal].revealed{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){
-  [data-reveal]{opacity:1;transform:none;transition:none}
-}
-
-/* --- 3. Mobile nav: hamburger + slide-in drawer --- */
-.nav-toggle{display:none;width:44px;height:44px;border:none;background:transparent;cursor:pointer;position:relative;z-index:70;padding:0}
-.nav-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px auto;border-radius:2px;transition:transform var(--t1) var(--e-in-out),opacity var(--t1) var(--e-in-out)}
-.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
-.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-@media(max-width:860px){
-  .nav-toggle{display:block}
-  .navlinks{position:fixed;inset:0;width:100vw;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:var(--sp-xl);z-index:65;transform:translateX(100%);transition:transform var(--t2) var(--e-in-out),visibility var(--t2);pointer-events:none;visibility:hidden}
-  .navlinks.open{transform:translateX(0);pointer-events:auto;visibility:visible}
-  .navlinks a{font-size:1.1rem;padding:.6rem 0}
-}
-
-/* --- 4. Micro-interaction refinements --- */
-/* nav link underline anim already exists; add a subtle scale on active */
-.navlinks a.on{transform:scale(1.04)}
-/* card hover: lift + shadow intensify */
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(58,50,42,.14)}
-/* button: press feedback already exists; add focus-visible glow */
-.btn:focus-visible{box-shadow:0 0 0 3px rgba(192,86,33,.35)}
-/* teasercard arrow: smooth slide */
-.teasercard .go{transition:transform var(--t1) var(--e-out),opacity var(--t1) var(--e-in-out)}
-.teasercard:hover .go{transform:translateX(6px);opacity:.8}
-/* statrow: subtle border color shift on hover */
-.statrow>div:hover{border-color:var(--ochre)}
-
-/* master-picks: light-only, dark remap removed */
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   v61 - UTILITY STANDARDISATION
-   Replace inline styles with reusable classes so the whole site reads
-   from one stylesheet, not a dozen one-off values.
-   ══════════════════════════════════════════════════════════════════════════ */
-
-/* spacing helpers derived from --sp scale */
-.mt-1{margin-top:var(--sp-xs)}     /* 8px */
-.mt-2{margin-top:var(--sp-sm)}     /* 16px */
-.mt-3{margin-top:var(--sp-md)}     /* 24px */
-.mt-4{margin-top:var(--sp-lg)}     /* 32px */
-.mb-2{margin-bottom:var(--sp-sm)}
-.mb-3{margin-bottom:var(--sp-md)}
-
-/* cta-row is already the standard flex row for buttons */
-.cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
-
-/* images that need the folk arch + responsive behaviour */
-.img-arch{width:100%;height:auto;border-radius:14px;display:block}
-
-/* caption style for figure captions */
-.caption{text-align:center;font-size:.85rem;color:var(--muted);margin-top:.6rem}
-
-/* animation delays for staggered reveals */
-.delay-2{animation-delay:140ms}
-.delay-3{animation-delay:.23s}
-.delay-4{animation-delay:380ms}
-
-/* link reset for image links */
-.img-link{text-decoration:none;display:block}
-
-/* form button wrappers */
-
-/* visible to screen readers only */
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
-
-/* hide element completely */
-.hidden{display:none!important}
-
-/* meta text variant for captions/notes */
-.meta-text{font-size:.85rem;color:var(--muted)}
-
-/* centered block */
-.center-block{justify-content:center;display:flex}
-
-/* heading override for special cases */
-.heading-override{font-size:clamp(1.5rem,3vw,2rem);margin-top:.5rem}
-
-/* accent border + text for callout elements */
-.accent-border{color:var(--ochre);border-color:var(--ochre)}
-
-/* additional animation delays */
-.delay-3{animation-delay:.23s}
-.delay-2{animation-delay:140ms}
-
-/* ---- lead capture: honeypot + result states (2026-11-05) ----
-   The honeypot is off-screen for humans and still tabbable-skipped for
-   keyboards, so only a script fills it. Result states are colour-coded so
-   a failed send never looks like a successful one. */
-.hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.fresult.fresult-ok{border-color:var(--ink);background:var(--panel);color:var(--ink)}
-.fresult.fresult-err{border-color:var(--terra-dark);background:rgba(154,69,34,.10);color:var(--terra-dark)}
-.fresult.fresult-info{border-color:var(--ochre);background:var(--ochre-soft);color:var(--ochre-ink)}
-.fresult a{color:inherit;text-decoration:underline;font-weight:700}
-.pform .req{color:var(--terra-dark);font-weight:700}
-
-/* --- audit fix pass: price table, form panel, interior timings --- */
-.pricetable{display:grid;gap:.5rem}
-.pricerow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:1rem;padding:.7rem .4rem;border-bottom:1px solid var(--line);align-items:center}
-.pricerow.header{font-family:var(--font-ui);font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
-@media(max-width:640px){.pricerow{grid-template-columns:1fr 1fr}.pricerow.header{display:none}.pricerow:not(.header) > span[data-label]::before{content:attr(data-label);display:block;font-family:var(--font-ui);font-weight:700;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}}
-form.pform{background:var(--panel);border:1px solid rgba(58,50,42,.25)}
-.pform input,.pform select,.pform textarea{border:1px solid rgba(58,50,42,.35);background:var(--panel)}
-:root{--t-press:140ms;--t-hover:220ms;--t-state:380ms;--t-arrival:760ms}
-.btn{transition:transform var(--t-press) var(--e-out),background-color var(--t-hover) var(--e-in-out),box-shadow var(--t-hover) var(--e-in-out)}
-.btn:hover{transition-duration:var(--t-hover)}
-.btn:active{transform:scale(.97);transition-duration:var(--t-press)}
-.card,.teasercard{transition:transform var(--t-hover) var(--e-out),box-shadow var(--t-hover) var(--e-out)}
-.navlinks a{transition:color var(--t-hover) var(--e-in-out),background var(--t-hover) var(--e-in-out),transform var(--t-state) var(--e-out)}
-.flow,.reveal{transition-duration:var(--t-arrival)}
-@media(prefers-reduced-motion:reduce){.btn,.card,.teasercard,.navlinks a,.flow,.reveal{transition:none!important;transform:none!important}}
-
-html{overflow-x:clip}
-
-/* ============================================================
-   INTERIOR rich-effects pass (vanilla port of interior.dev
-   timings: press 140ms, hover 220ms, state 380ms, arrival 760ms;
-   easing cubic-bezier(.22,.61,.36,1)). No new colours: only
-   --terra/--terra-dark/--ochre/--ochre-soft/--ink/--muted/--line.
-   Everything below is gated on html.ix-ready (added by site.js)
-   so no-JS visitors see the untouched static site.
-   ============================================================ */
-.reading-progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--terra);z-index:90;pointer-events:none}
-html.ix-ready header{transition:transform 380ms cubic-bezier(.22,.61,.36,1),box-shadow 380ms ease}
-html.ix-ready header.hide-away{transform:translateY(-100%)}
-html.ix-ready header.hide-away.scrolled{box-shadow:none}
-/* press-depth + ripple + loading-button */
-html.ix-ready .btn{overflow:hidden;position:relative}
-html.ix-ready .btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28),inset 0 0 0 4px var(--terra),0 2px 6px rgba(154,69,34,.18)}
-.ripple{position:absolute;border-radius:50%;background:rgba(250,246,240,.45);transform:scale(0);pointer-events:none;animation:rip 760ms cubic-bezier(.22,.61,.36,1) forwards}
-.btn.ghost .ripple{background:rgba(192,86,33,.22)}
-@keyframes rip{to{transform:scale(1);opacity:0}}
-.btn.is-loading{opacity:.75;pointer-events:none}
-.btn.is-loading::before{content:"";display:inline-block;width:.85em;height:.85em;margin-right:.5em;vertical-align:-.12em;border:2px solid rgba(250,246,240,.4);border-top-color:var(--paper);border-radius:50%;animation:spin 760ms linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* blur-up-image + skeleton-swap */
-html.ix-ready img{background:linear-gradient(100deg,var(--water-mid) 40%,var(--ochre-soft) 50%,var(--water-mid) 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite;transition:filter 380ms cubic-bezier(.22,.61,.36,1),opacity 380ms}
-html.ix-ready img:not(.loaded){filter:blur(10px) saturate(.85);opacity:.7}
-html.ix-ready img.loaded{animation:none}
-@keyframes shimmer{to{background-position:-200% 0}}
-/* segmented-control + tabs (rooms pricing) */
-.segmented{display:inline-flex;background:var(--ochre-soft);border:1px solid var(--ochre);border-radius:999px;padding:3px;gap:2px;margin:.4rem 0 1rem;max-width:100%}
-.segmented [role="tab"]{border:none;background:transparent;font-family:var(--font-ui);font-size:.8rem;min-height:44px;padding:.5rem 1rem;border-radius:999px;cursor:pointer;color:var(--ochre-ink);transition:background 220ms cubic-bezier(.22,.61,.36,1),color 220ms}
-.segmented [role="tab"][aria-selected="true"]{background:var(--terra);color:var(--paper)}
-.segmented [role="tab"]:focus-visible{outline:2px solid var(--terra-dark);outline-offset:2px}
-.plan-plain .pricerow > :nth-child(3),.plan-meal .pricerow > :nth-child(2){opacity:.42;transition:opacity 380ms cubic-bezier(.22,.61,.36,1)}
-.plan-plain .pricerow > :nth-child(2),.plan-meal .pricerow > :nth-child(3){color:var(--terra-dark);font-weight:700}
-/* scroll-spy section chips */
-.spy-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
-.spy-nav a{font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:none;padding:.4rem .7rem;border:1px solid var(--line);border-radius:999px;transition:color 220ms,background 220ms,border-color 220ms}
-.spy-nav a.on{color:var(--paper);background:var(--terra);border-color:var(--terra)}
-/* accordion: animated details (progressive; native open/close still works) */
-html.ix-ready details::details-content{block-size:0;opacity:0;transition:block-size 380ms cubic-bezier(.22,.61,.36,1),opacity 380ms,content-visibility 380ms;overflow:hidden}
-html.ix-ready details[open]::details-content{block-size:auto;opacity:1}
-html.ix-ready .faq summary{cursor:pointer}
-html.ix-ready .faq summary::-webkit-details-marker{display:none}
-html.ix-ready .faq summary::after{content:"+";float:right;color:var(--terra);font-weight:700;transition:transform 220ms cubic-bezier(.22,.61,.36,1)}
-html.ix-ready details[open] > summary::after{transform:rotate(45deg)}
-/* show-more */
-.showmore-btn{margin-top:1rem}
-/* snap-carousel: room photos on small screens */
-@media(max-width:720px){
-  html.ix-ready #room-photos .grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;padding-bottom:.6rem;-webkit-overflow-scrolling:touch}
-  html.ix-ready #room-photos .grid > figure{flex:0 0 82%;scroll-snap-align:start}
-}
-/* modal lightbox (rooms photos) */
-.room-lb{border:none;padding:0;background:transparent;max-width:min(92vw,900px);width:100%}
-.room-lb::backdrop{background:rgba(43,38,32,.72)}
-.room-lb img{width:100%;max-height:76vh;object-fit:contain;border-radius:12px;background:var(--paper)}
-.room-lb figcaption{color:var(--paper);font-family:var(--font-ui);font-size:.85rem;text-align:center;margin-top:.6rem}
-.room-lb .lb-bar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.6rem}
-.room-lb button{background:var(--terra);color:var(--paper);border:none;border-radius:8px;padding:.5rem 1rem;font-family:var(--font-ui);cursor:pointer}
-/* floating-label + inline-validation */
-.pform .fld{position:relative;padding-top:1.15rem}
-.pform .fld > label{position:absolute;top:1.8rem;left:.85rem;font-size:.85rem;color:var(--muted);pointer-events:none;transition:top 220ms cubic-bezier(.22,.61,.36,1),font-size 220ms,color 220ms}
-.pform .fld input::placeholder,.pform .fld textarea::placeholder{color:transparent}
-.pform .fld input,.pform .fld textarea{padding-top:1.15rem}
-.pform .fld.is-float > label,.pform .fld:focus-within > label{top:.35rem;font-size:.68rem;color:var(--terra-dark)}
-.pform .fld-err{display:none;font-family:var(--font-ui);font-size:.74rem;color:var(--terra-dark);margin-top:.35rem}
-.pform .fld-err.show{display:block}
-.pform input[aria-invalid="true"]{border-color:var(--terra-dark);box-shadow:0 0 0 3px rgba(192,86,33,.16)}
-/* tooltip-group (amenities/promises) */
-[data-tip]{position:relative}
-[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);background:var(--ochre-soft);color:var(--ink);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.72rem;line-height:1.4;padding:.45rem .6rem;border-radius:8px;width:max-content;max-width:220px;white-space:normal;opacity:0;pointer-events:none;transition:opacity 220ms cubic-bezier(.22,.61,.36,1),transform 220ms cubic-bezier(.22,.61,.36,1);z-index:20}
-[data-tip]:hover::after,[data-tip]:focus-visible::after{opacity:1;transform:translate(-50%,0)}
-/* copy-button */
-.copy-btn{background:transparent;color:var(--terra-dark);border:1.5px dashed var(--ochre);border-radius:8px;padding:.45rem .9rem;font-family:var(--font-ui);font-size:.78rem;cursor:pointer;transition:background 220ms}
-.copy-btn:hover{background:var(--ochre-soft)}
-.copy-btn.copied{background:var(--terra);color:var(--paper);border-color:var(--terra)}
-/* live-activity pulse on vacancy dot */
-.vdot{animation:pulse 760ms ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.65}}
-/* value-flash on config price updates */
-.value-flash{animation:vflash 760ms cubic-bezier(.22,.61,.36,1)}
-@keyframes vflash{0%{background:var(--ochre-soft);border-radius:4px}100%{background:transparent}}
-/* text-reveal for page headings (arrival) */
-html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:treveal 760ms cubic-bezier(.22,.61,.36,1) both}
-@keyframes treveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){
-  .reading-progress,.vdot,.value-flash,.ripple,html.ix-ready img,html.ix-ready .pagehead h1,html.ix-ready .hero h1{animation:none!important;transition:none!important}
-  html.ix-ready img:not(.loaded){filter:none;opacity:1}
-  html.ix-ready header.hide-away{transform:none}
-  html.ix-ready details::details-content{transition:none}
-}
-
-/* ============================================================
-   premium-reset (2026-11-05) - header first, then vocabulary.
-   One row, max 95px desktop. No second-row slab: at 1024px the
-   nav becomes the glass drawer, so links never wrap or scroll
-   sideways at any width. Vacancy lives only in the header.
-   Timings are the interior set: 140 / 220 / 380 / 760.
-   ============================================================ */
-header{
-  max-height:95px;
-  padding:.55rem 0;
-}
-header .nav{
-  flex-wrap:nowrap;
-  gap:.75rem;
-  min-height:44px;
-}
-header .brand{
-  font-family:var(--font-head);
-  font-size:1.06rem;
-  font-weight:400;
-  letter-spacing:.01em;
-  white-space:nowrap;
-  flex:none;
-}
-header .brand span{color:var(--terra-dark)}
-header .navlinks{
-  flex-wrap:nowrap;
-  gap:.15rem;
-  margin-left:auto;
-}
-header .navlinks a{
-  font-size:.82rem;
-  font-weight:400;
-  letter-spacing:.02em;
-  white-space:nowrap;
-  padding:.4rem .55rem;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center;
-}
-header .vacancy{
-  flex:none;
-  margin-left:.5rem;
-  font-size:.76rem;
-  /* single status line: short plain text, never wraps */
-  max-width:15rem;
-}
-header .vacancy .vtxt{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-header .vacancy .vdot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--terra);flex:none;
-}
-/* hide-on-scroll already wired via html.ix-ready header.hide-away (380ms) */
-html.ix-ready header{transition:transform var(--t-state,380ms) var(--e-out),box-shadow var(--t-hover,220ms) var(--e-in-out)}
-/* 1024px and below: hamburger + glass drawer. No horizontal link strip. */
-@media(max-width:1024px){
-  /* mobile target 67px: 44px row + .72rem top/bottom padding */
-  header{padding:.72rem 0}
-  header .vacancy{display:none}
-  header .nav-toggle{display:block;flex:none;margin-left:auto}
-  header .navlinks{
-    position:fixed;
-    left:0;right:auto;top:0;bottom:0;
-    width:min(86vw,340px);
-    height:100dvh;
-    margin-left:0;
-    padding:5.5rem 1.5rem 2rem;
-    flex-direction:column;
-    align-items:stretch;
-    justify-content:flex-start;
-    gap:.25rem;
-    background:rgba(250,245,236,.94);
-    backdrop-filter:blur(16px) saturate(1.05);
-    -webkit-backdrop-filter:blur(16px) saturate(1.05);
-    box-shadow:var(--sh);
-    transform:translateX(-102%);
-    transition:transform var(--t-state,380ms) var(--e-out),visibility var(--t-state,380ms);
-    visibility:hidden;
-    pointer-events:none;
-    z-index:65;
-  }
-  header .navlinks.open{transform:translateX(0);visibility:visible;pointer-events:auto}
-  header .navlinks a{
-    font-family:var(--font-head);
-    font-size:1.25rem;
-    padding:.7rem .25rem;
-    border-bottom:1px solid var(--line);
-  }
-  header .navlinks a::after{display:none}
-}
-/* master-picks: light-only, dark remap removed */
-
-@media(prefers-reduced-motion:reduce){
-  header,header .navlinks{transition:none!important}
-}
-
-/* ============================================================
-   premium-ui (2026-11-05) - index spacing / hierarchy / one CTA.
-   Appended BELOW the premium-reset header block; header lane
-   owns everything above. Existing tokens only: six colours,
-   Marcellus headings, arch crowns from v16, interior timings
-   140/220/380/760. No new motion, no new colour.
-   ============================================================ */
-/* Hero: breathe at the top, calm column, one primary action.
-   The two ghost buttons become quiet text links beside it. */
-.hero{padding:clamp(3rem,6vw,4.2rem) 0 clamp(2.6rem,5vw,3.4rem);gap:clamp(2rem,4vw,3.2rem)}
-.hero .tag{display:inline-block;margin-bottom:.9rem}
-.hero h1{font-family:var(--font-head);margin:.4rem 0 1rem;max-width:18ch}
-.hero .lede{margin:0 0 .4rem;max-width:34rem}
-.hero .cta-row{gap:.6rem 1.5rem;align-items:center;margin-top:1.8rem}
-.hero .cta-row .btn.ghost,.feature .cta-row .btn.ghost{
-  background:none!important;color:var(--terra-dark)!important;
-  font-weight:700;text-decoration:underline;text-underline-offset:.25em;
-  text-decoration-color:var(--ochre);padding:.6rem .1rem;min-height:44px}
-.hero .cta-row .btn.ghost::after,.feature .cta-row .btn.ghost::after{display:none}
-.hero .cta-row .btn.ghost:hover,.feature .cta-row .btn.ghost:hover{
-  background:none!important;color:var(--terra-dark)!important;box-shadow:none!important;transform:none}
-.hero .share-btn{text-decoration:none}
-#share-note{font-family:var(--font-ui);font-size:.78rem;color:var(--muted)}
-/* Hero photo: arch crown stands, soft ground shadow only */
-a.ph.heroshot{box-shadow:var(--sh);transition:transform var(--t1,220ms) var(--e-out),box-shadow var(--t1,220ms) var(--e-out)}
-a.ph.heroshot:hover{transform:translateY(-3px);box-shadow:var(--sh)}
-/* Section rhythm: generous air, clear hierarchy */
-main section{padding:clamp(3.2rem,6vw,4.6rem) 0}
-main section.flat{padding-top:clamp(2rem,4vw,3rem)}
-main .shead{margin-bottom:2rem}
-main .shead h2{font-family:var(--font-head);margin:.3rem 0 .6rem}
-main .shead .lede{margin:0}
-main .grid{gap:1.5rem;margin-top:1.8rem}
-main .costcard{margin-top:2rem}
-main .feature{padding:clamp(2.6rem,5vw,3.6rem) clamp(1.4rem,4vw,2.6rem)}
-main .cta-strip{padding:clamp(2.8rem,5vw,3.8rem) 1rem}
-main .familyband{padding:2.8rem 1rem 1.2rem}
-main .fblarge{font-family:var(--font-head)}
-main .daystrip{gap:1.25rem}
-main .loc{gap:clamp(1.6rem,4vw,2.6rem)}
-/* Cards lift on hover (existing shadow), never gain a border */
-main .card.tilt{transition:transform var(--t1,220ms) var(--e-out),box-shadow var(--t1,220ms) var(--e-out),border-color var(--t1,220ms) var(--e-in-out)}
-main .card.tilt:hover{transform:translateY(-3px);box-shadow:var(--sh)}
-@media(max-width:720px){
-  .hero{padding-top:2.6rem}
-  .hero .cta-row{margin-top:1.5rem}
-  main .grid{gap:1.1rem}
-}
-@media(prefers-reduced-motion:reduce){
-  a.ph.heroshot,main .card.tilt{transition:none}
-  a.ph.heroshot:hover,main .card.tilt:hover{transform:none}
-}
-
-/* ============================================================
-   redesign-vague (2026-11-05) - index only.
-   Decide surface: one idea per section, one CTA per view.
-   Overrides the accumulated layers above for the new index
-   structure; other pages keep their existing treatment.
-   Six colours, Marcellus, arch crowns, 140/220/380/760.
-   ============================================================ */
-main .hero{grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:center;padding:clamp(2.6rem,6vw,4.2rem) 0 clamp(2.4rem,5vw,3.6rem)}
-main .hero-copy{max-width:34rem}
-main .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ochre-ink);margin-bottom:1rem}
-main .hero h1{max-width:16ch;margin:0}
-main .hero .lede{margin-top:1.1rem}
-main .hero-note{margin-top:1.6rem;padding-top:1.1rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
-main .heroshot{display:block}
-main .heroshot img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:150px 150px 12px 12px;border:1px solid var(--line);box-shadow:var(--sh);display:block;transition:transform var(--t1,220ms) var(--e-out)}
-main .heroshot:hover img{transform:translateY(-4px)}
-@media(max-width:820px){main .hero{grid-template-columns:1fr}main .hero h1{max-width:none}}
-main section{padding:clamp(2.4rem,5vw,3.4rem) 0}
-main .shead{max-width:42rem;margin-bottom:2rem}
-main .grid.g2{grid-template-columns:repeat(2,1fr)}
-@media(max-width:700px){main .grid.g2{grid-template-columns:1fr}}
-main .roomcard .price{font-size:1.7rem;font-family:var(--font-head)}
-main .roomsub{color:var(--terra-dark);font-size:.85rem}
-main .inclusions{margin-top:1.25rem}
-main .inclusions ul{columns:2;column-gap:2.5rem}
-main .inclusions li{break-inside:avoid}
-@media(max-width:640px){main .inclusions ul{columns:1}}
-main .terms{margin-top:1rem;font-size:.85rem;color:var(--muted)}
-main .pitband{display:grid;grid-template-columns:1.4fr auto;gap:2rem;align-items:center}
-main .pitband .lede{margin-top:.7rem}
-@media(max-width:720px){main .pitband{grid-template-columns:1fr}}
-main .cta-strip{border-radius:var(--r-md);padding:clamp(2.8rem,6vw,4rem) 1.5rem}
-main .faq details{margin-top:.7rem}
-main .faq summary{min-height:44px;display:flex;align-items:center}
-@media(max-width:640px){main .costrows{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){
-  main .heroshot img{transition:none}
-  main .heroshot:hover img{transform:none}
-}
-/* redesign-vague: the new index does not load fluid.js/motion.js, so the
-   legacy .in-gated arrival rules above would leave the hero CTA and cost
-   rows at opacity:0. Pin them visible; arrival is not part of this page. */
-main .hero .cta-row,main .costrows>div,main .loc,main .cta-strip{opacity:1!important;transform:none!important}
-main .hero .cta-row{margin-top:1.4rem}
-
-/* ============================================================
-   INTERIOR strict pass (2026-11-05) - styles for the vanilla
-   headless-hook ports in assets/site.js. Timings 140/220/380/760,
-   easing cubic-bezier(.22,.61,.36,1). Existing tokens only.
-   ============================================================ */
-.ix-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-/* press-depth (strict): JS pointer tracking drives .is-pressed */
-html.ix-ready .btn.is-pressed,html.ix-ready button.is-pressed,html.ix-ready .chip.is-pressed,html.ix-ready .segmented [role="tab"].is-pressed{transform:translateY(2px) scale(.98);box-shadow:inset 0 0 0 1.5px rgba(250,246,240,.28),inset 0 0 0 4px var(--terra),0 2px 6px rgba(154,69,34,.18);transition-duration:140ms}
-/* ripple (strict): minVisible 220ms, fade 380ms, max 4 */
-html.ix-ready .btn,html.ix-ready button,html.ix-ready .chip{position:relative;overflow:hidden}
-.ripple-ix{position:absolute;border-radius:50%;background:rgba(250,246,240,.45);transform:scale(0);pointer-events:none;animation:ripIx 760ms cubic-bezier(.22,.61,.36,1) forwards;z-index:0}
-.btn.ghost .ripple-ix{background:rgba(192,86,33,.22)}
-@keyframes ripIx{to{transform:scale(var(--rip-scale,2));opacity:.35}}
-.ripple-ix.released{opacity:0;transition:opacity 380ms cubic-bezier(.22,.61,.36,1)}
-/* loading-button (strict): pending/success/error */
-.btn.is-success{background:var(--terra-dark)!important;color:#fff!important}
-.btn.is-error{background:var(--terra)!important}
-.btn[data-status="pending"]::after{content:"Sending...";margin-left:.5em;font-size:.9em}
-.btn[data-status="pending"]{opacity:.85}
-/* blur-up-image (strict): error keeps skeleton, no blur */
-html.ix-ready img.img-error{filter:none;opacity:1;background:var(--water-mid)}
-/* skeleton-swap: shimmer shell */
-.ix-skeleton{display:flex;flex-direction:column;gap:.6rem;margin:1rem 0}
-.ix-skeleton span{display:block;height:72px;border-radius:12px;background:linear-gradient(100deg,var(--water-mid) 40%,var(--ochre-soft) 50%,var(--water-mid) 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
-.ix-skeleton span:nth-child(2){height:52px}.ix-skeleton span:nth-child(3){height:52px}
-/* text-reveal (strict): 10px rise + blur(8px), .06s stagger */
-.tv-word{display:inline-block;opacity:0;transform:translateY(10px);filter:blur(8px);transition:opacity 760ms cubic-bezier(.22,.61,.36,1),transform 760ms cubic-bezier(.22,.61,.36,1),filter 760ms cubic-bezier(.22,.61,.36,1)}
-.tv-in .tv-word{opacity:1;transform:none;filter:blur(0)}
-.tv-done .tv-word{opacity:1;transform:none;filter:none;transition:none}
-/* live-activity */
-.vdot.is-live{animation:pulse 760ms ease-in-out infinite}
-/* tooltip-group (strict): JS-driven .tip-open */
-[data-tip].tip-open .tip-body{opacity:1;transform:translate(-50%,0)}
-.tip-body{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);background:var(--ochre-soft);color:var(--ink);border:1px solid var(--ochre);font-family:var(--font-ui);font-size:.72rem;line-height:1.4;padding:.45rem .6rem;border-radius:8px;width:max-content;max-width:220px;white-space:normal;opacity:0;pointer-events:none;transition:opacity 220ms cubic-bezier(.22,.61,.36,1),transform 220ms cubic-bezier(.22,.61,.36,1);z-index:20}
-/* progress-bar (strict) */
-.ix-progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;z-index:91;pointer-events:none;background:transparent}
-.ix-progress-fill{display:block;height:100%;background:var(--terra);transform:scaleX(0);transform-origin:0 50%}
-/* collapsible-banner (strict) */
-.ix-banner{display:flex;align-items:center;gap:.8rem;margin:0 0 1rem;padding:.7rem 1rem;background:var(--ochre-soft);border:1px solid var(--ochre);border-radius:12px;font-family:var(--font-ui);font-size:.85rem;transition:opacity 380ms cubic-bezier(.22,.61,.36,1)}
-.ix-banner-text{flex:1}
-.ix-banner button{border:1px solid var(--ochre);background:transparent;border-radius:8px;padding:.35rem .7rem;font-family:var(--font-ui);font-size:.78rem;cursor:pointer;color:var(--terra-dark)}
-.ix-banner-fold:hover,.ix-banner-close:hover{background:var(--terra);color:var(--paper);border-color:var(--terra)}
-.ix-banner.is-folded .ix-banner-text{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-.ix-banner.is-leaving{opacity:0}
-/* expanding-search (strict) */
-.ix-expanding{position:relative;transition:max-width 220ms cubic-bezier(.22,.61,.36,1)}
-.ix-search-count{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);font-family:var(--font-ui);font-size:.75rem;color:var(--muted)}
-@media(max-width:720px){
-  .ix-expanding .pit-search{max-width:44px!important;border-radius:999px;transition:max-width 220ms cubic-bezier(.22,.61,.36,1),border-radius 220ms}
-  .ix-expanding.is-open .pit-search{max-width:100%!important;border-radius:10px}
-  .ix-expanding:not(.is-open)::after{content:"Search";position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--font-ui);font-size:.8rem;color:var(--muted);pointer-events:none}
-  .ix-expanding:not(.is-open) .pit-search{color:transparent}
-}
-/* filter-grid (strict) */
-.ix-filter-count{display:inline-block;margin-left:.4em;font-size:.72rem;background:var(--ochre-soft);border:1px solid var(--ochre);border-radius:999px;padding:.05rem .45rem;min-width:1.6em;text-align:center}
-.gallery-item{transition:opacity 380ms cubic-bezier(.22,.61,.36,1),transform 380ms cubic-bezier(.22,.61,.36,1)}
-.gallery-item.ix-fading{opacity:.4;transform:scale(.97)}
-/* dropdown (strict) */
-.ix-dropdown.is-open{box-shadow:0 0 0 3px rgba(192,86,33,.18)}
-/* popover (strict) */
-.ix-popover{position:absolute;min-width:160px;max-width:320px;background:var(--panel);border:1px solid var(--line);border-radius:11px;box-shadow:0 8px 24px rgba(43,38,32,.16);padding:.8rem 1rem;font-family:var(--font-ui);font-size:.82rem;line-height:1.5;color:var(--ink);opacity:0;transform:translateY(-4px);transition:opacity 220ms cubic-bezier(.22,.61,.36,1),transform 220ms cubic-bezier(.22,.61,.36,1);z-index:80}
-.ix-popover.is-open{opacity:1;transform:none}
-.ix-popover[aria-hidden="true"]{pointer-events:none}
-/* task-steps (strict) */
-.ix-steps{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0 0 1.2rem;padding:0}
-.ix-steps li{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-ui);font-size:.76rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.35rem .7rem;background:var(--panel)}
-.ix-steps li span{display:inline-flex;align-items:center;justify-content:center;width:1.4em;height:1.4em;border-radius:50%;border:1.5px solid var(--ochre);font-size:.7rem;font-weight:700;color:var(--ochre-ink)}
-.ix-steps li.active{color:var(--terra-dark);border-color:var(--terra)}
-.ix-steps li.active span{background:var(--terra);border-color:var(--terra);color:var(--paper)}
-.ix-steps li.done{color:var(--ink)}
-.ix-steps li.done span{background:var(--terra-dark);border-color:var(--terra-dark);color:var(--paper);font-size:.55rem;content:""}
-/* new-items-pill (strict) */
-.ix-new-pill{position:fixed;left:50%;bottom:5.2rem;transform:translateX(-50%);z-index:60;background:var(--terra);color:var(--paper);border:none;border-radius:999px;padding:.55rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(43,38,32,.25)}
-.ix-new-pill[hidden]{display:none}
-/* load-more + pagination (strict) */
-.ix-sentinel{height:1px}
-.ix-loadmore{margin-top:1.2rem}
-.ix-pager{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-top:1rem;font-family:var(--font-ui);font-size:.82rem}
-.ix-pager button{border:1px solid var(--ochre);background:var(--panel);border-radius:8px;padding:.45rem .9rem;font-family:var(--font-ui);cursor:pointer;color:var(--terra-dark)}
-.ix-pager button:disabled{opacity:.4;cursor:not-allowed}
-.ix-pager button:not(:disabled):hover{background:var(--terra);color:var(--paper);border-color:var(--terra)}
-/* icon-morph (strict): .is-x mirrors [aria-expanded=true] */
-.nav-toggle.is-x span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-toggle.is-x span:nth-child(2){opacity:0}
-.nav-toggle.is-x span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-@media(prefers-reduced-motion:reduce){
-  html.ix-ready .btn.is-pressed,html.ix-ready button.is-pressed,.ripple-ix,.tv-word,.tip-body,.ix-banner,.ix-expanding,.ix-expanding .pit-search,.gallery-item,.ix-popover,.ix-new-pill{transition:none!important;animation:none!important;transform:none}
-  .ix-skeleton span{animation:none}
-  .tv-word{opacity:1;transform:none;filter:none}
-}
-
-/* micro wiring v73: vanilla ports from design-repo-kit micro repos (see MICRO-WIRING.md).
-   interior timings: press 140ms, hover 220ms, state 380ms, arrival 760ms. */
-.micro-tabs{position:relative}
-.micro-tabs>button,.micro-tabs>[role="tab"]{position:relative;z-index:1}
-.micro-pill{position:absolute;background:var(--ink-deep);border-radius:999px;transition:left .38s cubic-bezier(.22,.61,.36,1),width .38s cubic-bezier(.22,.61,.36,1),top .38s cubic-bezier(.22,.61,.36,1),height .38s cubic-bezier(.22,.61,.36,1);z-index:0;pointer-events:none}
-.gallery-filters.micro-tabs button[aria-pressed="true"]{background:transparent;border-color:transparent;color:var(--paper)}
-.segmented.micro-tabs [role="tab"]{background:transparent}
-.segmented.micro-tabs .micro-pill{background:var(--terra)}
-.segmented.micro-tabs [role="tab"][aria-selected="true"]{background:transparent;color:var(--paper)}
-@property --micro-a{syntax:"<angle>";initial-value:0deg;inherits:false}
-@keyframes microAurora{to{--micro-a:360deg}}
-@property --micro-b{syntax:"<angle>";initial-value:0deg;inherits:false}
-.card{background-image:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(217,164,65,.12),transparent 65%)}
-.card.micro-focus{box-shadow:var(--sh);border-color:var(--ochre)}
-@media(prefers-reduced-motion:reduce){
-  .micro-pill{transition:none!important}
-  .card{background-image:none!important}
-}
-
-/* master-picks: small text terra-dark, body ink */
-.note,.gal figcaption,.post .meta,.voice .who,.fcols h4,.tag,.persona,.menucard .day b{color:var(--terra-dark)}
-.card p,.card li{color:var(--ink)}
-
-/* master-picks: 16px inputs, opaque cards, single type scale */
-.pform input,.pform select,.pform textarea,.pit-form input,.pit-form select,.pit-form textarea{font-size:16px}
-.card,.teasercard,.costcard{background:var(--panel);backdrop-filter:none;-webkit-backdrop-filter:none}
-:root{--fs-xs:.72rem;--fs-sm:.8rem;--fs-base:1rem;--fs-lg:1.2rem;--fs-xl:1.5rem;--fs-2xl:2rem}
-
-/* sample-patterns: double-line guide + motif (Madhubani border as structure),
-   Colive named promise, Zolo NIL transparency, pond band in Warli geometry.
-   Palette stays inside DESIGN-SYSTEM six colours. */
-.shead{position:relative;padding-top:.9rem}
-.shead::before{content:"";display:block;height:4px;border-top:1.5px solid var(--ink-deep);border-bottom:1px solid var(--ochre);margin-bottom:1rem;position:relative}
-.shead::after{content:"";position:absolute;left:50%;top:.9rem;width:34px;height:22px;transform:translateX(-50%);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22' fill='none' stroke='%23c05621' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 19C14 13 14 6 17 2c3 4 3 11 0 17Z'/%3E%3Cpath d='M17 19C12 15 7 11 4 6c5 3 10 8 13 13Z'/%3E%3Cpath d='M17 19c5-4 10-8 13-13-5 3-10 8-13 13Z'/%3E%3C/svg%3E") center/contain no-repeat}
-.promise{margin-top:1.2rem}
-.promise h3{font-size:1rem}
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.9rem}
-.pillars div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:.85rem 1rem}
-.pillars b{display:block;font-family:var(--font-ui);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--terra-dark);margin-bottom:.25rem}
-.pillars span{font-size:.9rem;color:var(--ink)}
-.nil-rows{margin-top:.8rem;border-top:1px solid var(--line)}
-.nil-rows div{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
-.nil-rows b{font-family:var(--font-ui);color:var(--terra-dark);white-space:nowrap}
-.pondband{position:relative;overflow:hidden;border-radius:14px;padding:2.2rem 1.8rem;color:var(--paper);background:linear-gradient(180deg,#2b2620 0%,#3a322a 46%,#2b2620 100%)}
-.pondband::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background:radial-gradient(40% 46% at 78% 68%,transparent 62%,rgba(245,239,230,.12) 63%,transparent 64%),radial-gradient(30% 34% at 78% 68%,transparent 62%,rgba(245,239,230,.10) 63%,transparent 64%)}
-.pondband::after{content:"";position:absolute;right:-10px;bottom:-14px;width:190px;height:120px;pointer-events:none;opacity:.28;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70' fill='none' stroke='%23d9a441' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60 58C54 40 54 20 60 6c6 14 6 34 0 52Z'/%3E%3Cpath d='M60 58C50 46 38 34 28 16c14 8 26 26 32 42Z'/%3E%3Cpath d='M60 58c10-12 22-24 32-42-14 8-26 26-32 42Z'/%3E%3C/svg%3E") center/contain no-repeat}
-.pondband h2{color:var(--paper);max-width:26rem}
-.pondband p{color:var(--ink-soft);max-width:34rem}
-.warli-strip{height:18px;margin:0 auto 1rem;max-width:520px;opacity:.9;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 18' fill='none' stroke='%237a5a1c' stroke-width='1.2' stroke-linecap='round'%3E%3Cpath d='M6 14v-6l6-4 6 4v6'/%3E%3Cpath d='M30 14V8l6-4 6 4v6'/%3E%3Ccircle cx='70' cy='9' r='3.4'/%3E%3Cpath d='M90 14v-6l6-4 6 4v6'/%3E%3Cpath d='M118 14V6h14'/%3E%3Ccircle cx='160' cy='9' r='3.4'/%3E%3Cpath d='M180 14v-6l6-4 6 4v6'/%3E%3Cpath d='M212 14V8l6-4 6 4v6'/%3E%3C/svg%3E") center/240px 18px repeat-x}
-@media(max-width:700px){.pillars{grid-template-columns:1fr 1fr}.pondband{padding:1.6rem 1.2rem}}
-@media(max-width:400px){.pillars{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.pondband::before,.pondband::after{animation:none}}
+/* FAQ item wrapper (used in place of .faq details on some pages) */
+.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:1rem 1.2rem;margin-top:.8rem}
+.faq-item .q{font-family:var(--font-ui);font-size:.9rem;font-weight:700;color:var(--ink);cursor:pointer}
+.faq-item p{font-size:.92rem;margin-top:.6rem}
