@@ -7,6 +7,7 @@
   --font-ui:'Alegreya Sans',ui-sans-serif,-apple-system,'Helvetica Neue',Arial,sans-serif;
   --font-body:'Verdana','Arial',sans-serif;
   --sp-sm:16px;--sp-md:24px;--sp-lg:32px;--sp-xl:48px;
+  --ochre-soft:#f0d9a8;--ochre-ink:#7a5a1c;
 }
 @font-face{font-family:'Marcellus';src:url('fonts/marcellus-latin.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Alegreya Sans';src:url('fonts/alegreya-sans-latin.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
